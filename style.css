@@ -251,3 +251,20 @@ a:hover {
 .bi-hand-index {
     font-size: 1.2rem;
 }
+
+/**/
+.card {
+            background-color: #282836;
+            border: none;
+        }
+        .card-title, .card-text {
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #59b3e9;
+            border-color: #59b3e9;
+        }
+        .btn-primary:hover {
+            background-color: #70c5f7;
+            border-color: #70c5f7;
+        }
