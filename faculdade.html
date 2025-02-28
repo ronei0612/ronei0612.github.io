@@ -79,6 +79,15 @@
             videosContainer.appendChild(div);
 
             div.addEventListener('click', function() {
+                // Remove iframes de todos os outros divs
+                var allDivs = document.querySelectorAll('.video-container');
+                allDivs.forEach(function(d) {
+                    d.innerHTML = 'Clique para carregar o vídeo ' + (Array.prototype.indexOf.call(allDivs, d) + 1);
+                    d.style.backgroundColor = '#000';
+                    d.style.cursor = 'pointer';
+                });
+                
+                // Adiciona o iframe ao div clicado
                 var iframe = document.createElement('iframe');
                 iframe.src = this.getAttribute('data-src');
                 iframe.width = '660';
