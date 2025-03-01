@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeos das Unidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .video-container {
+            width: 660px;
+            height: 280px;
+            margin-bottom: 20px;
+            background-color: #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+        }
+        iframe {
+            width: 660px;
+            height: 280px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vídeos das Unidades</h1>
+
+        <div id="videos">
+            <!-- Divs dos vídeos serão inseridos aqui -->
+        </div>
+    </div>
+
+    <script>
+        var videos = [
+            'https://app2.universoead.com.br/videoplayer/player/15196/15196.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15197/15197.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15198/15198.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15199/15199.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15200/15200.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15201/15201.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15202/15202.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15203/15203.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15204/15204.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15205/15205.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15206/15206.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15207/15207.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15208/15208.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15209/15209.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15210/15210.mp4',
+			'https://app2.universoead.com.br/videoplayer/player/15211/15211.mp4'
+        ];
+
+        var videosContainer = document.getElementById('videos');
+        
+        videos.forEach(function(video, index) {
+            var div = document.createElement('div');
+            div.className = 'video-container';
+            div.innerText = 'Clique para carregar o vídeo ' + (index + 1);
+            div.setAttribute('data-src', video);
+
+            videosContainer.appendChild(div);
+
+            div.addEventListener('click', function() {
+                // Remove iframes de todos os outros divs
+                var allDivs = document.querySelectorAll('.video-container');
+                allDivs.forEach(function(d) {
+                    d.innerHTML = 'Clique para carregar o vídeo ' + (Array.prototype.indexOf.call(allDivs, d) + 1);
+                    d.style.backgroundColor = '#000';
+                    d.style.cursor = 'pointer';
+                });
+                
+                // Adiciona o iframe ao div clicado
+                var iframe = document.createElement('iframe');
+                iframe.src = this.getAttribute('data-src');
+                iframe.width = '660';
+                iframe.height = '280';
+                iframe.allowFullscreen = true;
+                this.innerHTML = ''; // Remove o texto após clicar
+                this.appendChild(iframe);
+                this.style.backgroundColor = 'transparent'; // Remove o fundo preto
+                this.style.cursor = 'auto'; // Remove o cursor de pointer
+            });
+        });
+    </script>
+</body>
+</html>
