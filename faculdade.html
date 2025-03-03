@@ -38,10 +38,21 @@
             height: 280px;
             border: none;
         }
+        .reset-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <button class="reset-button" onclick="resetStorage()">Resetar Videos</button>
         <h1>Vídeos das Unidades</h1>
 
         <div id="videos">
@@ -51,44 +62,59 @@
 
     <script>
         var videos = [
-            'https://app2.universoead.com.br/videoplayer/player/14625/14625.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14626/14626.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14627/14627.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14628/14628.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14629/14629.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14630/14630.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14631/14631.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14632/14632.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14633/14633.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14634/14634.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14644/14644.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14635/14635.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14636/14636.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14637/14637.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14646/14646.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14638/14638.mp4',
-			'https://app2.universoead.com.br/videoplayer/player/14643/14643.mp4'
+            'https://app2.universoead.com.br/videoplayer/player/15421/15421.mp4',
+            'https://app2.universoead.com.br/videoplayer/videojs/v7/15422/15422.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15423/15423.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15991/15991.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15424/15424.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15425/15425.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15426/15426.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15427/15427.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15428/15428.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15429/15429.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15430/15430.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15431/15431.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15432/15432.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/159921/159921.mp4',
+            'https://app2.universoead.com.br/videoplayer/player/15433/15433.mp4'
         ];
 
         var videosContainer = document.getElementById('videos');
         
+        // Recuperar vídeos clicados do localStorage
+        var clickedVideos = JSON.parse(localStorage.getItem('clickedVideos')) || [];
+
         videos.forEach(function(video, index) {
             var div = document.createElement('div');
             div.className = 'video-container';
-            div.innerText = 'Clique para carregar o vídeo ' + (index + 1);
             div.setAttribute('data-src', video);
+
+            if (clickedVideos.includes(video)) {
+                div.innerHTML = 'Vídeo já clicado ' + (index + 1);
+            } else {
+                div.innerText = 'Clique para carregar o vídeo ' + (index + 1);
+            }
 
             videosContainer.appendChild(div);
 
             div.addEventListener('click', function() {
+                // Armazenar vídeo clicado no localStorage
+                if (!clickedVideos.includes(video)) {
+                    clickedVideos.push(video);
+                    localStorage.setItem('clickedVideos', JSON.stringify(clickedVideos));
+                }
+
                 // Remove iframes de todos os outros divs
                 var allDivs = document.querySelectorAll('.video-container');
                 allDivs.forEach(function(d) {
-                    d.innerHTML = 'Clique para carregar o vídeo ' + (Array.prototype.indexOf.call(allDivs, d) + 1);
+                    var videoIndex = Array.prototype.indexOf.call(allDivs, d) + 1;
+                    d.innerHTML = clickedVideos.includes(d.getAttribute('data-src')) 
+                        ? 'Vídeo já clicado ' + videoIndex 
+                        : 'Clique para carregar o vídeo ' + videoIndex;
                     d.style.backgroundColor = '#000';
                     d.style.cursor = 'pointer';
                 });
-                
+
                 // Adiciona o iframe ao div clicado
                 var iframe = document.createElement('iframe');
                 iframe.src = this.getAttribute('data-src');
@@ -101,6 +127,11 @@
                 this.style.cursor = 'auto'; // Remove o cursor de pointer
             });
         });
+
+        function resetStorage() {
+            localStorage.removeItem('clickedVideos');
+            location.reload(); // Recarregar a página para aplicar a mudança
+        }
     </script>
 </body>
 </html>
