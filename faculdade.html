@@ -1,131 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vídeos das Unidades</title>
+    <title>Defesa da Fé - Respostas Rápidas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@1.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        .video-container {
-            width: 660px;
-            height: 280px;
-            margin-bottom: 20px;
-            background-color: #000;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 18px;
-        }
-        iframe {
-            width: 660px;
-            height: 280px;
-            border: none;
-        }
-        .reset-button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #ff0000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero-section { background: #2c3e50; color: white; padding: 40px 0; margin-bottom: 30px; }
+        .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; margin-bottom: 20px; }
+        .card:hover { transform: translateY(-5px); }
+        .badge-ataque { background-color: #e74c3c; margin-bottom: 10px; }
+        .versiculo-box { background-color: #e8f4fd; border-left: 4px solid #3498db; padding: 10px; margin-top: 10px; font-style: italic; font-size: 0.9rem; }
+        .search-container { max-width: 600px; margin: -30px auto 30px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="reset-button" onclick="resetStorage()">Resetar Videos</button>
-        <h1>EDUCAÇÃO CORPORATIVA, TREINAMENTO E DESENVOLVIMENTO</h1>
 
-        <div id="videos">
-            <!-- Divs dos vídeos serão inseridos aqui -->
-        </div>
+<div class="hero-section text-center">
+    <div class="container">
+        <h1>Apologética Católica</h1>
+        <p>Respostas diretas para ataques à fé</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="form-control form-control-lg shadow" placeholder="Pesquisar tema (Ex: Maria, Imagens, Papa)...">
     </div>
 
-    <script>
-        var videos = [
-            'https://app2.unicesumarpulse.com.br/videoplayer/player/15969/15969.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/15970/15970.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/videojs/v7/15972/15972.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/15973/15973.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/15974/15974.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/15977/15977.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/20220708131415/20220708131415.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/20220708132840/20220708132840.mp4',
-'https://app2.unicesumarpulse.com.br/videoplayer/player/20220708133500/20220708133500.mp4'
-        ];
-
-        var videosContainer = document.getElementById('videos');
+    <div class="row" id="qaContainer">
         
-        // Recuperar vídeos clicados do localStorage
-        var clickedVideos = JSON.parse(localStorage.getItem('clickedVideos')) || [];
+        <div class="col-md-6 qa-item">
+            <div class="card h-100 p-3">
+                <span class="badge badge-ataque w-25">Imagens</span>
+                <h5>"Vocês adoram imagens, o que a Bíblia proíbe!"</h5>
+                <p class="text-muted">Católicos veneram santos, não adoram estátuas. Deus proibiu ídolos (falsos deuses), mas mandou fazer imagens sagradas como os Querubins.</p>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#v1">Ver Versículo</button>
+                <div id="v1" class="collapse">
+                    <div class="versiculo-box">
+                        "Farás dois querubins de ouro; de ouro batido os farás, nas duas extremidades do propiciatório." (Êxodo 25,18)
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        videos.forEach(function(video, index) {
-            var div = document.createElement('div');
-            div.className = 'video-container';
-            div.setAttribute('data-src', video);
+        <div class="col-md-6 qa-item">
+            <div class="card h-100 p-3">
+                <span class="badge badge-ataque w-25">Basta Crer</span>
+                <h5>"Religião não salva, basta aceitar Jesus no coração."</h5>
+                <p class="text-muted">Jesus fundou uma Igreja visível e ordenou sacramentos. Crer exige obediência; até os demônios creem que Deus existe.</p>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#v2">Ver Versículo</button>
+                <div id="v2" class="collapse">
+                    <div class="versiculo-box">
+                        "Tu crês que há um só Deus? Fazes bem; também os demônios o creem e estremecem." (Tiago 2,19)
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            if (clickedVideos.includes(video)) {
-                div.innerHTML = 'Vídeo já clicado ' + (index + 1);
+        <div class="col-md-6 qa-item">
+            <div class="card h-100 p-3">
+                <span class="badge badge-ataque w-25">Maria</span>
+                <h5>"Maria foi uma mulher comum e teve outros filhos."</h5>
+                <p class="text-muted">Maria é a Mãe de Deus e sempre virgem. Na Bíblia, "irmãos" designa parentes próximos, como primos.</p>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#v3">Ver Versículo</button>
+                <div id="v3" class="collapse">
+                    <div class="versiculo-box">
+                        "Donde me vem esta honra de vir a mim a mãe do meu Senhor?" (Lucas 1,43)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 qa-item">
+            <div class="card h-100 p-3">
+                <span class="badge badge-ataque w-25">Ateísmo</span>
+                <h5>"Deus não existe, a ciência explica tudo."</h5>
+                <p class="text-muted">A ordem do universo exige um Criador inteligente. A ciência estuda o "como", a fé explica o "porquê".</p>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#v4">Ver Versículo</button>
+                <div id="v4" class="collapse">
+                    <div class="versiculo-box">
+                        "Diz o insensato em seu coração: Não há Deus." (Salmo 14,1)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let items = document.querySelectorAll('.qa-item');
+        
+        items.forEach(function(item) {
+            let text = item.innerText.toLowerCase();
+            if (text.includes(filter)) {
+                item.style.display = "";
             } else {
-                div.innerText = 'Clique para carregar o vídeo ' + (index + 1);
+                item.style.display = "none";
             }
-
-            videosContainer.appendChild(div);
-
-            div.addEventListener('click', function() {
-                // Armazenar vídeo clicado no localStorage
-                if (!clickedVideos.includes(video)) {
-                    clickedVideos.push(video);
-                    localStorage.setItem('clickedVideos', JSON.stringify(clickedVideos));
-                }
-
-                // Remove iframes de todos os outros divs
-                var allDivs = document.querySelectorAll('.video-container');
-                allDivs.forEach(function(d) {
-                    var videoIndex = Array.prototype.indexOf.call(allDivs, d) + 1;
-                    d.innerHTML = clickedVideos.includes(d.getAttribute('data-src')) 
-                        ? 'Vídeo já clicado ' + videoIndex 
-                        : 'Clique para carregar o vídeo ' + videoIndex;
-                    d.style.backgroundColor = '#000';
-                    d.style.cursor = 'pointer';
-                });
-
-                // Adiciona o iframe ao div clicado
-                var iframe = document.createElement('iframe');
-                iframe.src = this.getAttribute('data-src');
-                iframe.width = '660';
-                iframe.height = '280';
-                iframe.allowFullscreen = true;
-                this.innerHTML = ''; // Remove o texto após clicar
-                this.appendChild(iframe);
-                this.style.backgroundColor = 'transparent'; // Remove o fundo preto
-                this.style.cursor = 'auto'; // Remove o cursor de pointer
-            });
         });
+    });
+</script>
 
-        function resetStorage() {
-            localStorage.removeItem('clickedVideos');
-            location.reload(); // Recarregar a página para aplicar a mudança
-        }
-    </script>
 </body>
 </html>
