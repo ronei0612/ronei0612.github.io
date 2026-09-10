@@ -96,7 +96,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 25px 0 90px 0;
+            /* Ajuste aqui: 80px no topo para a página nunca ficar embaixo do header */
+            padding: 80px 0 95px 0;
             color: #1e293b;
         }
 
@@ -105,14 +106,17 @@
         /* ======================================================= */
         .top-toolbar, .dev-footer {
             position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
             background: rgba(15, 23, 42, 0.72);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 35px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
             z-index: 9999;
+            white-space: nowrap;
         }
 
             .top-toolbar:hover, .dev-footer:hover {
@@ -123,7 +127,7 @@
 
         /* Header Superior */
         .top-toolbar {
-            top: 12px;
+            top: 14px;
             padding: 8px 18px;
             display: flex;
             align-items: center;
@@ -455,7 +459,7 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Botões pontilhados para adicionar itens */
+        /* Botões pontilhados */
         .add-item-btn {
             width: 100%;
             background: rgba(255, 255, 255, 0.06);
@@ -809,8 +813,8 @@
         @media print {
             body {
                 background: none;
-                padding: 0;
-                margin: 0;
+                padding: 0 !important;
+                margin: 0 !important;
             }
 
             .page {
@@ -1049,11 +1053,11 @@
         // =======================================================
         // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_clean_html_v4';
-        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v4';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v4';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v4';
-        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v4';
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v5';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v5';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v5';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v5';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v5';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1101,7 +1105,7 @@
 
             const data = {
                 app: 'ResumeBuilder',
-                version: '4.0',
+                version: '5.0',
                 author: 'Ronei Costa Soares',
                 theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
                 fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
@@ -1189,7 +1193,7 @@
                 let currentPage = pages[i];
                 let mainCol = currentPage.querySelector('.main');
 
-                // Mede se a folha atual transbordou o limite físico de A4
+                // Se a folha atual transbordou o limite físico de A4
                 while (currentPage.scrollHeight > currentPage.clientHeight + 4) {
                     let nextPage = pages[i + 1];
 
@@ -1212,7 +1216,6 @@
 
                         let targetContainer = nextMain.querySelector(`.${itemType}-target`);
                         if (!targetContainer) {
-                            // Cria seção de continuação na página seguinte
                             let secBlock = document.createElement('div');
                             secBlock.className = 'section-block';
                             let titleText = itemType === 'exp' ? 'EXPERIÊNCIA PROFISSIONAL (CONT.)' :
