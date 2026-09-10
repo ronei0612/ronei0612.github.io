@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Currículo - Ronei Costa Soares</title>
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-bg: #1a2a59;
+            --sidebar-text: #f0f4f8;
+            --accent-cyan: #2aa8e2;
+            --accent-title: #1a2a59;
+            --bar-bg: #293b70;
+            --bar-fill: #38b6ff;
+            --border-color: #d1d5db;
+            --text-gray: #4b5563;
+            --page-w: 210mm;
+            --page-h: 297mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #525659;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0 60px 0;
+        }
+
+        /* BARRA DE AÇÕES FLUTUANTE */
+        .toolbar {
+            position: fixed;
+            top: 15px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 10px 18px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 9999;
+        }
+
+            .toolbar button {
+                background-color: #0070ba;
+                color: white;
+                border: none;
+                padding: 8px 18px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: background-color 0.2s;
+            }
+
+                .toolbar button:hover {
+                    background-color: #00508a;
+                }
+
+            .toolbar .hint {
+                font-size: 12px;
+                color: #555;
+            }
+
+        /* ESTRUTURA DA PÁGINA A4 */
+        .page {
+            width: var(--page-w);
+            height: var(--page-h);
+            background-color: #ffffff;
+            display: grid;
+            grid-template-columns: 72mm 138mm;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* BARRA LATERAL ESQUERDA */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            font-size: 11px;
+        }
+
+        /* Foto de Perfil */
+        .profile-photo-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px solid #38b6ff;
+            margin: 0 auto 20px auto;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            background: #20336b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+            .profile-photo-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .profile-photo-container:hover::after {
+                content: "Trocar Foto";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+            }
+
+        .sidebar-section {
+            margin-bottom: 18px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid var(--accent-cyan);
+            padding-bottom: 3px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+            .contact-item i {
+                color: var(--accent-cyan);
+                width: 14px;
+                margin-top: 2px;
+            }
+
+        /* Barras de Progresso */
+        .skill-item {
+            margin-bottom: 7px;
+        }
+
+        .skill-name {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: var(--bar-bg);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--bar-fill);
+        }
+
+        /* CORPO PRINCIPAL (DIREITA) */
+        .main {
+            padding: 30px 25px;
+            position: relative;
+        }
+
+        /* Logo Empresa Topo */
+        .logo-top {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            text-align: right;
+        }
+
+            .logo-top .logo-text {
+                font-size: 16px;
+                font-weight: 900;
+                color: #0b1f42;
+                letter-spacing: 0.5px;
+            }
+
+            .logo-top .sub {
+                font-size: 6px;
+                letter-spacing: 0.5px;
+                color: #4b5563;
+                text-transform: uppercase;
+            }
+
+        /* Cabeçalho Nome */
+        .header-name {
+            margin-bottom: 20px;
+            margin-top: 5px;
+        }
+
+        .candidate-name {
+            font-size: 30px;
+            line-height: 1.05;
+            font-weight: 800;
+            color: var(--accent-title);
+            text-transform: uppercase;
+        }
+
+        .candidate-role {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-title);
+            letter-spacing: 1px;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Seções */
+        .section-title {
+            color: var(--accent-cyan);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 1.5px solid var(--accent-cyan);
+            padding-bottom: 3px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .about-text {
+            font-size: 10px;
+            line-height: 1.45;
+            color: #2b2b2b;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        /* Linhas de Experiência e Formação */
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 42mm 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 10px;
+        }
+
+        .timeline-left {
+            border-right: 1px solid var(--border-color);
+            padding-right: 8px;
+        }
+
+        .company-name {
+            font-weight: 800;
+            color: #111827;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .job-meta {
+            color: var(--text-gray);
+            margin: 1px 0 4px 0;
+            font-size: 9px;
+        }
+
+        .job-techs {
+            font-style: italic;
+            color: #555;
+            font-size: 8.5px;
+            line-height: 1.25;
+        }
+
+        .timeline-right .job-role {
+            font-weight: 800;
+            color: #111827;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .job-bullets {
+            list-style-type: none;
+            line-height: 1.35;
+            color: #2b2b2b;
+        }
+
+            .job-bullets li {
+                margin-bottom: 3px;
+            }
+
+                .job-bullets li::before {
+                    content: "";
+                }
+
+        /* Formação e Certificados Grid */
+        .grid-row {
+            display: grid;
+            grid-template-columns: 38mm 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 10.5px;
+        }
+
+        .grid-left {
+            border-right: 1px solid var(--border-color);
+            padding-right: 8px;
+        }
+
+        .inst-title {
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #111827;
+            font-size: 10px;
+        }
+
+        .inst-year {
+            font-size: 9px;
+            color: var(--text-gray);
+        }
+
+        .grid-right {
+            font-weight: 700;
+            color: #111827;
+            display: flex;
+            align-items: center;
+        }
+
+        /* EDICÃO DIRETA */
+        [contenteditable="true"] {
+            outline: none;
+            transition: background 0.2s;
+        }
+
+            [contenteditable="true"]:hover {
+                background-color: rgba(42, 168, 226, 0.1);
+                border-radius: 2px;
+            }
+
+            [contenteditable="true"]:focus {
+                background-color: rgba(42, 168, 226, 0.2);
+            }
+
+        /* CONFIGURAÇÃO DE IMPRESSÃO (PDF EXATO A4) */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .toolbar {
+                display: none !important;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                break-after: page;
+                height: 297mm;
+                width: 210mm;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE CONTROLE -->
+    <div class="toolbar">
+        <button onclick="window.print()">
+            <i class="fa-solid fa-file-pdf"></i> Baixar em PDF
+        </button>
+        <div class="hint">💡 Clique em qualquer texto para editar ou na foto para trocá-la.</div>
+    </div>
+
+    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+
+    <!-- ==================== PÁGINA 1 ==================== -->
+    <div class="page" id="page1">
+        <!-- Barra Lateral -->
+        <div class="sidebar">
+            <div class="profile-photo-container" onclick="document.getElementById('photoInput').click()">
+                <!-- Imagem padrão placeholder -->
+                <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto de Perfil">
+            </div>
+
+            <div class="sidebar-section">
+                <div class="contact-item" contenteditable="true">
+                    Brasileiro, casado, 38 anos
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span contenteditable="true">Borda da Mata - MG,<br>37564-000, Brasil</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span contenteditable="true">(19) 98700-6385</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span contenteditable="true">ronei0612@gmail.com</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title" contenteditable="true">LINKS</div>
+                <div class="contact-item">
+                    <i class="fa-solid fa-globe"></i>
+                    <span contenteditable="true">roneicostasoares.com.br</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-brands fa-linkedin"></i>
+                    <span contenteditable="true">linkedin.com/in/ronei0612</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-brands fa-github"></i>
+                    <span contenteditable="true">github.com/ronei0612</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title" contenteditable="true">COMPETÊNCIAS</div>
+
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">.Net / .Net Framework / .Net Core</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">ASP.Net / MVC</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">EntityFramework / LINQ</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">HTML / Javascript / CSS</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Git / GitHub</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">SQL Server / PostgreSQL / Redis</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Linux / Docker / WSL</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Azure DevOps / CI/CD</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">MongoDB / MySQL</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Bootstrap / Jquery</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Node.js / Express.js</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">RabbitMQ / Kafka</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Angular / Vue.js / React</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de Conteúdo Principal -->
+        <div class="main">
+            <div class="logo-top">
+                <div class="logo-text" contenteditable="true">NTT DATA</div>
+                <div class="sub" contenteditable="true">Trusted Global Innovator</div>
+            </div>
+
+            <div class="header-name">
+                <div class="candidate-name" contenteditable="true">RONEI<br>COSTA SOARES</div>
+                <div class="candidate-role" contenteditable="true">DESENVOLVEDOR .NET</div>
+            </div>
+
+            <div class="section-title" contenteditable="true">SOBRE MIM</div>
+            <div class="about-text" contenteditable="true">
+                Programador .Net com mais de 6 anos de experiência com foco em desenvolvimento de Aplicações Web e APIs, me destaco pela capacidade de comunicação, liderança e resolução de desafios. Minha abordagem é centrada na colaboração e no comprometimento com a qualidade e confiabilidade. Busco constantemente aprimorar processos e contribuir para o crescimento dos projetos e da equipe. Se está à busca de alguém proativo, responsável e comprometido com o sucesso, estou à disposição.
+            </div>
+
+            <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
+
+            <!-- Item 1 -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="company-name" contenteditable="true">NTT DATA</div>
+                    <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
+                    <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-role" contenteditable="true">Analista Programador</div>
+                    <ul class="job-bullets" contenteditable="true">
+                        <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
+                        <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
+                        <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
+                    <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
+                    <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-role" contenteditable="true">Programador de Sistemas</div>
+                    <ul class="job-bullets" contenteditable="true">
+                        <li>Tradução da plataforma para outros línguas;</li>
+                        <li>Resolução de chamados abertos pelos clientes;</li>
+                        <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
+                        <li>Implementação de novas funcionalidades;</li>
+                        <li>Liderança de um time para migrações de dados;</li>
+                        <li>Solução de problemas utilizando Scrum.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
+                    <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
+                    <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-role" contenteditable="true">Prestador de Serviços</div>
+                    <ul class="job-bullets" contenteditable="true">
+                        <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 2 ==================== -->
+    <div class="page" id="page2">
+        <!-- Barra Lateral -->
+        <div class="sidebar">
+            <div style="height: 40px;"></div> <!-- Espaçador estético -->
+            <div class="sidebar-section">
+                <div class="sidebar-title" contenteditable="true">LÍNGUAS</div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Português</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-name" contenteditable="true">Inglês</span>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 25%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de Conteúdo Principal -->
+        <div class="main">
+            <div class="logo-top">
+                <div class="logo-text" contenteditable="true">NTT DATA</div>
+                <div class="sub" contenteditable="true">Trusted Global Innovator</div>
+            </div>
+
+            <!-- Continuação Experiências -->
+            <div style="margin-top: 15px;">
+                <!-- Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
+                        <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
+                        <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
+                    </div>
+                    <div class="timeline-right">
+                        <div class="job-role" contenteditable="true">Programador Jr</div>
+                        <ul class="job-bullets" contenteditable="true">
+                            <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
+                            <li>Administração do website da empresa;</li>
+                            <li>Gerenciamento de servidores locais e remotos.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
+                        <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
+                        <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
+                    </div>
+                    <div class="timeline-right">
+                        <div class="job-role" contenteditable="true">Técnico em Informática</div>
+                        <ul class="job-bullets" contenteditable="true">
+                            <li>Resolução de chamados e atendimento ao cliente;</li>
+                            <li>Administração e manutenção de banco SQL Server;</li>
+                            <li>Criação de apps para gerenciamento de servidores;</li>
+                            <li>Criação de aplicações em Windows Forms;</li>
+                            <li>Manutenção do website da empresa e da intranet;</li>
+                            <li>Solução de problemas utilizando Kanban.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formação -->
+            <div class="section-title" contenteditable="true">FORMAÇÃO</div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">UNIP</div>
+                    <div class="inst-year" contenteditable="true">2022</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Análise e Desenvolvimento de Sistemas
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">PEOPLE</div>
+                    <div class="inst-year" contenteditable="true">2017</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Programação em C#
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">INST. MONITOR</div>
+                    <div class="inst-year" contenteditable="true">2015</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Técnico em informática
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">CEMEP</div>
+                    <div class="inst-year" contenteditable="true">2006</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Ensino Médio Completo
+                </div>
+            </div>
+
+            <!-- Certificações -->
+            <div class="section-title" contenteditable="true">CERTIFICAÇÕES</div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">MICROSOFT</div>
+                    <div class="inst-year" contenteditable="true">2025</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    AZ-900 Microsoft Azure Fundamentals
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">CERTIPROF</div>
+                    <div class="inst-year" contenteditable="true">2024</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Scrum Foundation Professional Certification
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">FREECODECAMP</div>
+                    <div class="inst-year" contenteditable="true">2024</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    Foundational C# Microsoft
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-left">
+                    <div class="inst-title" contenteditable="true">FUND BRADESCO</div>
+                    <div class="inst-year" contenteditable="true">2013</div>
+                </div>
+                <div class="grid-right" contenteditable="true">
+                    CSS e HTML / Fundamentos de Rede
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>// Carregamento e troca da foto de perfil
+    const photoInput = document.getElementById('photoInput');
+    const profileImg = document.getElementById('profileImg');
+
+    photoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          profileImg.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });</script>
+</body>
+</html>
