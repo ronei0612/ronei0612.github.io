@@ -3,7 +3,6 @@
   Free Professional Resume Builder & Template
   Designed & Developed by: Ronei Costa Soares
   Website: https://roneicostasoares.com.br
-  GitHub: https://github.com/ronei0612
   License: MIT (Free to use, modify and distribute)
 -->
 <html lang="pt-BR">
@@ -14,10 +13,10 @@
     <meta name="description" content="Free Interactive Resume Template designed and developed by Ronei Costa Soares.">
     <title>Currículo - RONEI COSTA SOARES</title>
 
-    <!-- Tipografia Inter (Google Fonts) -->
+    <!-- Google Fonts: Inter, Montserrat e Merriweather -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 
     <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -27,7 +26,6 @@
             /* Tema Padrão: Azul Marinho */
             --sidebar-bg: #172652;
             --sidebar-text: #f1f5f9;
-            --sidebar-muted: #94a3b8;
             --accent-cyan: #2aa8e2;
             --accent-navy: #172652;
             --bar-track: #253768;
@@ -35,8 +33,7 @@
             --text-main: #2d3748;
             --text-muted: #64748b;
             --border-light: #e2e8f0;
-            --logo-bg: #e9eef8;
-            --logo-border: #cbd7ed;
+            --font-scale: 1;
             --page-w: 210mm;
             --page-h: 297mm;
         }
@@ -48,8 +45,6 @@
             --accent-navy: #0f172a;
             --bar-track: #334155;
             --bar-fill: #38bdf8;
-            --logo-bg: #f1f5f9;
-            --logo-border: #cbd5e1;
         }
 
         body.theme-emerald {
@@ -58,8 +53,6 @@
             --accent-navy: #08241c;
             --bar-track: #174e3e;
             --bar-fill: #34d399;
-            --logo-bg: #e6f4ee;
-            --logo-border: #b8e2ce;
         }
 
         body.theme-burgundy {
@@ -68,8 +61,6 @@
             --accent-navy: #270b16;
             --bar-track: #541d33;
             --bar-fill: #fb7185;
-            --logo-bg: #fbedf2;
-            --logo-border: #f4c8d9;
         }
 
         body.theme-indigo {
@@ -78,8 +69,19 @@
             --accent-navy: #131138;
             --bar-track: #2e2a72;
             --bar-fill: #a5b4fc;
-            --logo-bg: #edf0ff;
-            --logo-border: #cdd4fc;
+        }
+
+        /* Famílias de Fontes */
+        body.font-inter {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body.font-montserrat {
+            font-family: 'Montserrat', system-ui, sans-serif;
+        }
+
+        body.font-merriweather {
+            font-family: 'Merriweather', Georgia, serif;
         }
 
         * {
@@ -91,59 +93,135 @@
 
         body {
             background-color: #475569;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 25px 0 80px 0;
+            padding: 25px 0 90px 0;
+            color: #1e293b;
         }
 
-        /* SELETOR DE TEMAS FLUTUANTE */
-        .theme-panel {
+        /* ======================================================= */
+        /* PAINEL DE CONTROLE SUPERIOR (FERRAMENTAS)               */
+        /* ======================================================= */
+        .top-toolbar {
             position: fixed;
-            top: 15px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            padding: 7px 14px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            top: 12px;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 18px;
+            border-radius: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
             z-index: 9999;
-            font-size: 11px;
-            font-weight: 700;
-            color: #334155;
+            font-size: 11.5px;
+            color: #e2e8f0;
         }
 
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .toolbar-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* Seletor de Cores */
         .theme-dots {
             display: flex;
-            gap: 6px;
+            gap: 5px;
         }
 
         .theme-dot {
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid #ffffff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
             transition: transform 0.15s;
         }
 
             .theme-dot:hover {
-                transform: scale(1.18);
+                transform: scale(1.2);
             }
 
-        /* RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO PARA WEB, OCULTO NO PDF) */
+        /* Botões A- e A+ */
+        .btn-font-size {
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #ffffff;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+            .btn-font-size:hover {
+                background: var(--accent-cyan);
+                border-color: var(--accent-cyan);
+            }
+
+        /* Seletor de Família de Fonte */
+        .font-select {
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Botões de Ação no Painel */
+        .toolbar-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+
+            .toolbar-btn:hover {
+                background: rgba(255,255,255,0.18);
+                color: #ffffff;
+            }
+
+        .toolbar-btn-danger:hover {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        /* ======================================================= */
+        /* RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO WEB)                 */
+        /* ======================================================= */
         .dev-footer {
             position: fixed;
-            bottom: 15px;
+            bottom: 14px;
             background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(8px);
-            color: #e2e8f0;
-            padding: 8px 18px;
+            color: #94a3b8;
+            padding: 7px 18px;
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.35);
             font-size: 11px;
@@ -156,22 +234,22 @@
 
             .dev-footer strong {
                 color: #ffffff;
-                font-weight: 700;
             }
 
             .dev-footer .badge-free {
-                background: #10b981;
-                color: #ffffff;
-                font-size: 9.5px;
-                font-weight: 800;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                color: #cbd5e1;
+                font-size: 9px;
+                font-weight: 600;
                 padding: 2px 7px;
-                border-radius: 12px;
+                border-radius: 10px;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.4px;
             }
 
             .dev-footer .sep {
-                color: #64748b;
+                color: #475569;
             }
 
             .dev-footer a {
@@ -189,7 +267,9 @@
                     text-decoration: underline;
                 }
 
-        /* PÁGINAS A4 */
+        /* ======================================================= */
+        /* ESTRUTURA DAS PÁGINAS A4                                */
+        /* ======================================================= */
         .page {
             width: var(--page-w);
             height: var(--page-h);
@@ -202,18 +282,17 @@
             overflow: hidden;
         }
 
-        /* BARRA LATERAL */
+        /* BARRA LATERAL ESQUERDA */
         .sidebar {
             background-color: var(--sidebar-bg);
             color: var(--sidebar-text);
             padding: 26px 20px;
             display: flex;
             flex-direction: column;
-            font-size: 10.5px;
+            font-size: calc(10px * var(--font-scale));
             transition: background-color 0.2s;
         }
 
-        /* FOTO DE PERFIL COM OVERLAY DE OPÇÕES */
         .profile-container {
             width: 130px;
             height: 130px;
@@ -277,11 +356,11 @@
             }
 
         .sidebar-section {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .sidebar-title {
-            font-size: 11.5px;
+            font-size: calc(11px * var(--font-scale));
             font-weight: 800;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -291,12 +370,11 @@
             color: #ffffff;
         }
 
-        /* ITENS DE CONTATO E LINKS */
         .contact-item {
             display: flex;
             align-items: flex-start;
             gap: 9px;
-            margin-bottom: 7px;
+            margin-bottom: 6.5px;
             line-height: 1.35;
         }
 
@@ -319,9 +397,9 @@
                 color: var(--bar-fill);
             }
 
-        /* COMPETÊNCIAS INTERATIVAS */
+        /* Competências */
         .skill-item {
-            margin-bottom: 6px;
+            margin-bottom: 5.5px;
             position: relative;
         }
 
@@ -329,16 +407,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5px;
+            margin-bottom: 2px;
         }
 
         .skill-name {
-            font-size: 9.5px;
+            font-size: calc(9.2px * var(--font-scale));
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 90%;
+            max-width: 88%;
         }
 
         .skill-del-btn {
@@ -379,7 +457,7 @@
             color: var(--sidebar-text);
             font-size: 9px;
             font-weight: 600;
-            padding: 5px;
+            padding: 4px;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 6px;
@@ -396,91 +474,91 @@
 
         /* CORPO PRINCIPAL (DIREITA) */
         .main {
-            padding: 22px 26px;
+            padding: 24px 26px;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* ÁREA DO CABEÇALHO DO LOGO COM FUNDO ESTILIZADO */
-        .page-logo-header {
-            width: 100%;
-            min-height: 48px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-
-        /* Se não houver logo, o espaço é recolhido */
-        body.no-logo .page-logo-header {
-            min-height: 0 !important;
-            margin-bottom: 0 !important;
-            display: none !important;
-        }
-
-        .logo-box {
-            position: relative;
-            cursor: pointer;
+        /* ======================================================= */
+        /* LOGO GEOMÉTRICO INTEGRADO (OPÇÃO 1 COM DIAGONAL INVERTIDA) */
+        /* ======================================================= */
+        .geo-logo-box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--sidebar-bg);
+            padding: 13px 24px 13px 52px;
+            /* Corte diagonal invertido (\): 0 no topo, recua 44px na base */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 44px 100%);
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            background-color: var(--logo-bg);
-            border: 1px solid var(--logo-border);
-            border-radius: 6px;
-            padding: 6px 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: background-color 0.2s, border-color 0.2s;
+            z-index: 10;
+            transition: background 0.2s;
         }
 
-            .logo-box:hover .logo-tools {
-                opacity: 1;
+            /* Friso Ciano na Base Horizontal */
+            .geo-logo-box::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 3.5px;
+                background: var(--accent-cyan);
             }
 
-        .logo-tools {
+        .geo-logo-tools {
             position: absolute;
-            top: -26px;
-            right: 0;
-            background: #1e293b;
-            padding: 3px 8px;
-            border-radius: 4px;
+            top: 4px;
+            left: 12px;
             display: flex;
-            gap: 8px;
+            gap: 6px;
             opacity: 0;
             transition: opacity 0.15s;
-            z-index: 10;
         }
 
-            .logo-tools button,
-            .logo-tools label {
-                background: none;
-                border: none;
-                color: #ffffff;
-                font-size: 11px;
-                cursor: pointer;
-                padding: 1px 3px;
+        .geo-logo-box:hover .geo-logo-tools {
+            opacity: 1;
+        }
+
+        .geo-logo-tools button,
+        .geo-logo-tools label {
+            background: rgba(0, 0, 0, 0.4);
+            border: none;
+            color: #ffffff;
+            font-size: 10px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .geo-logo-tools button:hover,
+            .geo-logo-tools label:hover {
+                background: var(--accent-cyan);
             }
 
-                .logo-tools button:hover,
-                .logo-tools label:hover {
-                    color: var(--accent-cyan);
-                }
-
-        .logo-text-title {
-            font-size: 14px;
+        .logo-title {
+            font-size: 14.5px;
             font-weight: 900;
-            color: #0d1b3e;
+            color: #ffffff;
             letter-spacing: 0.5px;
             line-height: 1.1;
+            text-align: right;
         }
 
-        .logo-text-sub {
-            font-size: 6.5px;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
+        .logo-sub {
+            font-size: 6.8px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 0.6px;
             text-transform: uppercase;
-            font-weight: 600;
+            text-align: right;
         }
 
         .logo-img {
@@ -490,35 +568,19 @@
             display: none;
         }
 
-        /* Botão sutil para restaurar logo quando oculto */
-        .restore-logo-btn {
-            position: fixed;
-            top: 15px;
-            right: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #334155;
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            padding: 7px 14px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-            display: none;
-            z-index: 9999;
-        }
-
-        body.no-logo .restore-logo-btn {
-            display: block;
+        /* Se o logo for removido */
+        body.no-logo .geo-logo-box {
+            display: none !important;
         }
 
         /* CABEÇALHO NOME */
         .header-name {
             margin-bottom: 12px;
+            margin-top: 4px;
         }
 
         .candidate-name {
-            font-size: 27px;
+            font-size: calc(27px * var(--font-scale));
             line-height: 1.05;
             font-weight: 900;
             color: var(--accent-navy);
@@ -527,7 +589,7 @@
         }
 
         .candidate-role {
-            font-size: 12px;
+            font-size: calc(12px * var(--font-scale));
             font-weight: 700;
             color: var(--accent-navy);
             letter-spacing: 0.8px;
@@ -538,7 +600,7 @@
         /* TÍTULOS DE SEÇÕES */
         .section-title {
             color: var(--accent-cyan);
-            font-size: 12.5px;
+            font-size: calc(12px * var(--font-scale));
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -549,20 +611,40 @@
         }
 
         .about-text {
-            font-size: 9.5px;
+            font-size: calc(9.4px * var(--font-scale));
             line-height: 1.45;
             color: var(--text-main);
             text-align: justify;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
-        /* ITENS DE EXPERIÊNCIA */
+        /* ITENS DE EXPERIÊNCIA COM CONTROLE DE EXCLUSÃO */
         .timeline-item {
             display: grid;
             grid-template-columns: 41mm 1fr;
             gap: 12px;
-            margin-bottom: 10px;
-            font-size: 9.5px;
+            margin-bottom: 9.5px;
+            font-size: calc(9.4px * var(--font-scale));
+            position: relative;
+        }
+
+        .exp-del-btn {
+            position: absolute;
+            top: -3px;
+            right: -2px;
+            background: none;
+            border: none;
+            color: #f87171;
+            cursor: pointer;
+            font-size: 11px;
+            padding: 2px 4px;
+            opacity: 0;
+            transition: opacity 0.15s;
+            z-index: 5;
+        }
+
+        .timeline-item:hover .exp-del-btn {
+            opacity: 1;
         }
 
         .timeline-left {
@@ -574,34 +656,34 @@
             font-weight: 800;
             color: #0f172a;
             text-transform: uppercase;
-            font-size: 9.5px;
+            font-size: calc(9.4px * var(--font-scale));
             line-height: 1.2;
         }
 
         .job-meta {
             color: var(--text-muted);
             margin: 1px 0 3px 0;
-            font-size: 8.8px;
+            font-size: calc(8.6px * var(--font-scale));
             line-height: 1.25;
         }
 
         .job-techs {
             font-style: italic;
             color: #64748b;
-            font-size: 8.3px;
+            font-size: calc(8.2px * var(--font-scale));
             line-height: 1.25;
         }
 
         .timeline-right .job-role {
             font-weight: 700;
             color: #0f172a;
-            font-size: 10.2px;
+            font-size: calc(10px * var(--font-scale));
             margin-bottom: 2px;
         }
 
         .job-bullets {
             list-style-type: none;
-            line-height: 1.38;
+            line-height: 1.36;
             color: var(--text-main);
         }
 
@@ -609,13 +691,38 @@
                 margin-bottom: 2px;
             }
 
+        .add-exp-btn {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            color: #475569;
+            font-size: 9.5px;
+            font-weight: 700;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+
+            .add-exp-btn:hover {
+                background: #f1f5f9;
+                border-color: var(--accent-cyan);
+                color: var(--accent-cyan);
+            }
+
         /* FORMAÇÃO E CERTIFICAÇÕES */
         .grid-row {
             display: grid;
             grid-template-columns: 37mm 1fr;
             gap: 12px;
-            margin-bottom: 9px;
-            font-size: 9.6px;
+            margin-bottom: 8.5px;
+            font-size: calc(9.4px * var(--font-scale));
         }
 
         .grid-left {
@@ -627,11 +734,11 @@
             font-weight: 800;
             text-transform: uppercase;
             color: #0f172a;
-            font-size: 9.5px;
+            font-size: calc(9.3px * var(--font-scale));
         }
 
         .inst-year {
-            font-size: 8.8px;
+            font-size: calc(8.6px * var(--font-scale));
             color: var(--text-muted);
         }
 
@@ -675,7 +782,7 @@
             color: var(--accent-cyan);
         }
 
-        /* MODO EDITÁVEL */
+        /* EDIÇÃO INLINE */
         [contenteditable="true"] {
             outline: none;
             transition: background 0.15s;
@@ -707,12 +814,13 @@
                 width: 210mm;
             }
 
-            .theme-panel,
+            .top-toolbar,
             .dev-footer,
             .skill-del-btn,
             .add-skill-btn,
-            .logo-tools,
-            .restore-logo-btn,
+            .exp-del-btn,
+            .add-exp-btn,
+            .geo-logo-tools,
             .cert-link-btn,
             .profile-overlay {
                 display: none !important;
@@ -730,19 +838,50 @@
         }
     </style>
 </head>
-<body>
+<body class="font-inter">
 
-    <!-- SELETOR DE TEMAS -->
-    <div class="theme-panel">
-        <span>Tema:</span>
-        <div class="theme-dots">
-            <div class="theme-dot" style="background: #172652;" title="Azul Marinho" onclick="applyTheme('')"></div>
-            <div class="theme-dot" style="background: #1e293b;" title="Grafite Minimalista" onclick="applyTheme('theme-graphite')"></div>
-            <div class="theme-dot" style="background: #0f382c;" title="Verde Esmeralda" onclick="applyTheme('theme-emerald')"></div>
-            <div class="theme-dot" style="background: #3d1324;" title="Vinho Executivo" onclick="applyTheme('theme-burgundy')"></div>
-            <div class="theme-dot" style="background: #1e1b4b;" title="Roxo Deep Tech" onclick="applyTheme('theme-indigo')"></div>
+    <!-- ======================================================= -->
+    <!-- PAINEL DE CONTROLE SUPERIOR (FERRAMENTAS COMPLETAS)     -->
+    <!-- ======================================================= -->
+    <header class="top-toolbar">
+        <!-- Cores -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Tema:</span>
+            <div class="theme-dots">
+                <div class="theme-dot" style="background: #172652;" title="Azul Marinho" onclick="applyTheme('')"></div>
+                <div class="theme-dot" style="background: #1e293b;" title="Grafite Minimalista" onclick="applyTheme('theme-graphite')"></div>
+                <div class="theme-dot" style="background: #0f382c;" title="Verde Esmeralda" onclick="applyTheme('theme-emerald')"></div>
+                <div class="theme-dot" style="background: #3d1324;" title="Vinho Executivo" onclick="applyTheme('theme-burgundy')"></div>
+                <div class="theme-dot" style="background: #1e1b4b;" title="Roxo Deep Tech" onclick="applyTheme('theme-indigo')"></div>
+            </div>
         </div>
-    </div>
+
+        <!-- Tamanho da Fonte (A- / A+) -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Fonte:</span>
+            <button class="btn-font-size" title="Diminuir texto" onclick="adjustFontSize(-0.04)">A-</button>
+            <button class="btn-font-size" title="Aumentar texto" onclick="adjustFontSize(0.04)">A+</button>
+        </div>
+
+        <!-- Estilo de Fonte -->
+        <div class="toolbar-group">
+            <select class="font-select" onchange="changeFontFamily(this.value)">
+                <option value="font-inter">Inter (Moderna/Tech)</option>
+                <option value="font-montserrat">Montserrat (Geométrica)</option>
+                <option value="font-merriweather">Merriweather (Clássica)</option>
+            </select>
+        </div>
+
+        <!-- Restaurar Logo caso removido -->
+        <button class="toolbar-btn" id="restoreLogoBtn" style="display:none;" onclick="restoreLogos()">
+            <i class="fa-solid fa-plus"></i> Inserir Logo
+        </button>
+
+        <!-- Resetar Currículo -->
+        <button class="toolbar-btn toolbar-btn-danger" title="Restaurar dados originais de fábrica" onclick="resetAllData()">
+            <i class="fa-solid fa-rotate-left"></i> Resetar
+        </button>
+    </header>
 
     <!-- RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO WEB) -->
     <footer class="dev-footer">
@@ -753,12 +892,7 @@
         <a href="https://roneicostasoares.com.br" target="_blank" rel="noopener noreferrer">
             <i class="fa-solid fa-globe"></i> roneicostasoares.com.br
         </a>
-        <a href="https://github.com/ronei0612" target="_blank" rel="noopener noreferrer" title="GitHub">
-            <i class="fa-brands fa-github"></i>
-        </a>
     </footer>
-
-    <button class="restore-logo-btn" onclick="restoreLogos()"><i class="fa-solid fa-plus"></i> Inserir Logo</button>
 
     <!-- Inputs invisíveis para upload -->
     <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
@@ -770,7 +904,7 @@
         <!-- ==================== PÁGINA 1 ==================== -->
         <div class="page" id="page1">
             <div class="sidebar">
-                <!-- Foto de perfil com ferramentas de troca -->
+                <!-- Foto de perfil com ferramentas -->
                 <div class="profile-container" id="profileContainer">
                     <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto">
                     <div class="profile-overlay">
@@ -779,7 +913,7 @@
                             <button class="profile-btn-icon" title="Carregar do Computador" onclick="document.getElementById('photoFileInput').click()">
                                 <i class="fa-solid fa-upload"></i>
                             </button>
-                            <button class="profile-btn-icon" title="Colar Link da Web (URL)" onclick="promptPhotoUrl()">
+                            <button class="profile-btn-icon" title="Colar Link da Web" onclick="promptPhotoUrl()">
                                 <i class="fa-solid fa-link"></i>
                             </button>
                         </div>
@@ -935,20 +1069,18 @@
             </div>
 
             <div class="main">
-                <!-- Cabeçalho do Logo -->
-                <div class="page-logo-header">
-                    <div class="logo-box">
-                        <div class="logo-tools">
-                            <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
-                            <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                            <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
-                        <div class="logo-text-wrap">
-                            <div class="logo-text-title" contenteditable="true">NTT DATA</div>
-                            <div class="logo-text-sub" contenteditable="true">Trusted Global Innovator</div>
-                        </div>
-                        <img class="logo-img" alt="Logo">
+                <!-- Logo Geométrico Integrado no Canto Superior Direito -->
+                <div class="geo-logo-box">
+                    <div class="geo-logo-tools">
+                        <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
+                        <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
+                        <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
+                    <div class="logo-text-wrap">
+                        <div class="logo-title" contenteditable="true">NTT DATA</div>
+                        <div class="logo-sub" contenteditable="true">Trusted Global Innovator</div>
+                    </div>
+                    <img class="logo-img" alt="Logo">
                 </div>
 
                 <div class="header-name">
@@ -963,74 +1095,84 @@
 
                 <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
 
-                <!-- Experiência 1 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">NTT DATA</div>
-                        <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
-                        <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
+                <div id="expContainerPage1">
+                    <!-- Experiência 1 -->
+                    <div class="timeline-item">
+                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="timeline-left">
+                            <div class="company-name" contenteditable="true">NTT DATA</div>
+                            <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
+                            <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="job-role" contenteditable="true">Analista Programador</div>
+                            <ul class="job-bullets" contenteditable="true">
+                                <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
+                                <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
+                                <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Analista Programador</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
-                            <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
-                            <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
-                        </ul>
+
+                    <!-- Experiência 2 -->
+                    <div class="timeline-item">
+                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="timeline-left">
+                            <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
+                            <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
+                            <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="job-role" contenteditable="true">Programador de Sistemas</div>
+                            <ul class="job-bullets" contenteditable="true">
+                                <li>Tradução da plataforma para outros línguas;</li>
+                                <li>Resolução de chamados abertos pelos clientes;</li>
+                                <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
+                                <li>Implementação de novas funcionalidades;</li>
+                                <li>Liderança de um time para migrações de dados;</li>
+                                <li>Solução de problemas utilizando Scrum.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experiência 3 -->
+                    <div class="timeline-item">
+                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="timeline-left">
+                            <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
+                            <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
+                            <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="job-role" contenteditable="true">Prestador de Serviços</div>
+                            <ul class="job-bullets" contenteditable="true">
+                                <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experiência 4 -->
+                    <div class="timeline-item">
+                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="timeline-left">
+                            <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
+                            <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
+                            <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
+                        </div>
+                        <div class="timeline-right">
+                            <div class="job-role" contenteditable="true">Programador Jr</div>
+                            <ul class="job-bullets" contenteditable="true">
+                                <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
+                                <li>Administração do website da empresa;</li>
+                                <li>Gerenciamento de servidores locais e remotos.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Experiência 2 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
-                        <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
-                        <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Programador de Sistemas</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Tradução da plataforma para outros línguas;</li>
-                            <li>Resolução de chamados abertos pelos clientes;</li>
-                            <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
-                            <li>Implementação de novas funcionalidades;</li>
-                            <li>Liderança de um time para migrações de dados;</li>
-                            <li>Solução de problemas utilizando Scrum.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Experiência 3 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
-                        <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
-                        <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Prestador de Serviços</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Experiência 4 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
-                        <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
-                        <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Programador Jr</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
-                            <li>Administração do website da empresa;</li>
-                            <li>Gerenciamento de servidores locais e remotos.</li>
-                        </ul>
-                    </div>
-                </div>
+                <button class="add-exp-btn" onclick="addNewExperience('expContainerPage1')">
+                    <i class="fa-solid fa-plus"></i> Adicionar Experiência
+                </button>
 
             </div>
         </div>
@@ -1062,41 +1204,48 @@
             </div>
 
             <div class="main">
-                <!-- Cabeçalho do Logo Página 2 -->
-                <div class="page-logo-header">
-                    <div class="logo-box">
-                        <div class="logo-tools">
-                            <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
-                            <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                            <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                <!-- Logo Geométrico Integrado Página 2 -->
+                <div class="geo-logo-box">
+                    <div class="geo-logo-tools">
+                        <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
+                        <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
+                        <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                    <div class="logo-text-wrap">
+                        <div class="logo-title" contenteditable="true">NTT DATA</div>
+                        <div class="logo-sub" contenteditable="true">Trusted Global Innovator</div>
+                    </div>
+                    <img class="logo-img" alt="Logo">
+                </div>
+
+                <div style="height: 48px;"></div> <!-- Respiro simétrico do topo -->
+
+                <div id="expContainerPage2">
+                    <!-- Experiência 5 -->
+                    <div class="timeline-item">
+                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="timeline-left">
+                            <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
+                            <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
+                            <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
                         </div>
-                        <div class="logo-text-wrap">
-                            <div class="logo-text-title" contenteditable="true">NTT DATA</div>
-                            <div class="logo-text-sub" contenteditable="true">Trusted Global Innovator</div>
+                        <div class="timeline-right">
+                            <div class="job-role" contenteditable="true">Técnico em Informática</div>
+                            <ul class="job-bullets" contenteditable="true">
+                                <li>Resolução de chamados e atendimento ao cliente;</li>
+                                <li>Administração e manutenção de banco SQL Server;</li>
+                                <li>Criação de apps para gerenciamento de servidores;</li>
+                                <li>Criação de aplicações em Windows Forms;</li>
+                                <li>Manutenção do website da empresa e da intranet;</li>
+                                <li>Solução de problemas utilizando Kanban.</li>
+                            </ul>
                         </div>
-                        <img class="logo-img" alt="Logo">
                     </div>
                 </div>
 
-                <!-- Experiência 5 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
-                        <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
-                        <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Técnico em Informática</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Resolução de chamados e atendimento ao cliente;</li>
-                            <li>Administração e manutenção de banco SQL Server;</li>
-                            <li>Criação de apps para gerenciamento de servidores;</li>
-                            <li>Criação de aplicações em Windows Forms;</li>
-                            <li>Manutenção do website da empresa e da intranet;</li>
-                            <li>Solução de problemas utilizando Kanban.</li>
-                        </ul>
-                    </div>
-                </div>
+                <button class="add-exp-btn" onclick="addNewExperience('expContainerPage2')">
+                    <i class="fa-solid fa-plus"></i> Adicionar Experiência
+                </button>
 
                 <!-- Formação -->
                 <div class="section-title" contenteditable="true">FORMAÇÃO</div>
@@ -1201,9 +1350,11 @@
         // =======================================================
         // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_content_v2';
-        const STORAGE_KEY_THEME = 'curriculo_theme_v2';
-        const STORAGE_KEY_NOLOGO = 'curriculo_nologo_v2';
+        const STORAGE_KEY_HTML = 'curriculo_final_html_v3';
+        const STORAGE_KEY_THEME = 'curriculo_final_theme_v3';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_final_font_family_v3';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_final_font_scale_v3';
+        const STORAGE_KEY_NOLOGO = 'curriculo_final_nologo_v3';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1213,22 +1364,87 @@
                 if (cvWrapper) {
                     localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
                 }
-            }, 400);
+            }, 350);
         }
 
+        // =======================================================
+        // 2. TEMAS, FONTES E TAMANHO (A- / A+)
+        // =======================================================
         function applyTheme(themeClass) {
-            document.body.className = themeClass;
-            if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
-                document.body.classList.add('no-logo');
-            }
+            document.body.classList.remove('theme-graphite', 'theme-emerald', 'theme-burgundy', 'theme-indigo');
+            if (themeClass) document.body.classList.add(themeClass);
             localStorage.setItem(STORAGE_KEY_THEME, themeClass);
         }
 
+        function changeFontFamily(fontClass) {
+            document.body.classList.remove('font-inter', 'font-montserrat', 'font-merriweather');
+            document.body.classList.add(fontClass);
+            localStorage.setItem(STORAGE_KEY_FONT_FAMILY, fontClass);
+        }
+
+        let currentFontScale = 1.0;
+        function adjustFontSize(delta) {
+            currentFontScale = Math.min(1.22, Math.max(0.82, currentFontScale + delta));
+            document.documentElement.style.setProperty('--font-scale', currentFontScale);
+            localStorage.setItem(STORAGE_KEY_FONT_SCALE, currentFontScale);
+        }
+
         // =======================================================
-        // 2. CONFIGURAÇÃO DE EVENTOS INTERATIVOS
+        // 3. RESETAR CURRÍCULO (RESTAURAR PADRÕES)
+        // =======================================================
+        function resetAllData() {
+            if (confirm('Deseja realmente resetar o currículo para o modelo padrão original? Todas as suas alterações salvas serão perdidas.')) {
+                localStorage.removeItem(STORAGE_KEY_HTML);
+                localStorage.removeItem(STORAGE_KEY_THEME);
+                localStorage.removeItem(STORAGE_KEY_FONT_FAMILY);
+                localStorage.removeItem(STORAGE_KEY_FONT_SCALE);
+                localStorage.removeItem(STORAGE_KEY_NOLOGO);
+                location.reload();
+            }
+        }
+
+        // =======================================================
+        // 4. EXPERIÊNCIAS (ADICIONAR / EXCLUIR)
+        // =======================================================
+        function deleteExperience(btn) {
+            const item = btn.closest('.timeline-item');
+            if (item) {
+                item.remove();
+                triggerAutoSave();
+            }
+        }
+
+        function addNewExperience(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const newItem = document.createElement('div');
+            newItem.className = 'timeline-item';
+            newItem.innerHTML = `
+            <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+            <div class="timeline-left">
+              <div class="company-name" contenteditable="true">NOME DA EMPRESA</div>
+              <div class="job-meta" contenteditable="true">Cidade - UF<br>Mês Ano - Atual</div>
+              <div class="job-techs" contenteditable="true">Tecnologia1, Tecnologia2, Frameworks</div>
+            </div>
+            <div class="timeline-right">
+              <div class="job-role" contenteditable="true">Seu Cargo / Função</div>
+              <ul class="job-bullets" contenteditable="true">
+                <li>Descrição das suas principais entregas e projetos realizados;</li>
+                <li>Resultados alcançados, arquitetura e liderança técnica.</li>
+              </ul>
+            </div>
+          `;
+            container.appendChild(newItem);
+            newItem.querySelector('.company-name').focus();
+            triggerAutoSave();
+        }
+
+        // =======================================================
+        // 5. INICIALIZAÇÃO DE EVENTOS E LINKS
         // =======================================================
         function initInteractiveEvents() {
-            // Título Dinâmico que segue o nome
+            // Título Dinâmico
             const candidateNameEl = document.getElementById('candidateName');
             if (candidateNameEl) {
                 function syncDocumentTitle() {
@@ -1279,7 +1495,7 @@
                 });
             });
 
-            // Foto de perfil via Arquivo do PC
+            // Foto de perfil via Arquivo
             const photoFileInput = document.getElementById('photoFileInput');
             const profileImg = document.getElementById('profileImg');
             if (photoFileInput && profileImg) {
@@ -1299,7 +1515,7 @@
             // Barras de Competência
             document.querySelectorAll('.skill-item').forEach(setupSkillItem);
 
-            // Botão Adicionar Competência
+            // Adicionar Competência
             const addSkillBtn = document.getElementById('addSkillBtn');
             const skillsContainer = document.getElementById('skillsContainer');
             if (addSkillBtn && skillsContainer) {
@@ -1322,7 +1538,7 @@
                 };
             }
 
-            // Captura global de edição para salvar automaticamente
+            // Captura global de edição
             const cvWrapper = document.getElementById('cvWrapper');
             if (cvWrapper) {
                 cvWrapper.addEventListener('input', triggerAutoSave);
@@ -1330,11 +1546,11 @@
         }
 
         // =======================================================
-        // 3. FOTO E LOGO VIA LINK (URL)
+        // 6. FOTO E LOGO (UPLOAD / URL)
         // =======================================================
         function promptPhotoUrl() {
             const currentUrl = document.getElementById('profileImg').src;
-            const url = prompt('Cole o link da imagem da internet (ex: https://github.com/usuario.png):', currentUrl.startsWith('data:') ? '' : currentUrl);
+            const url = prompt('Cole o link da foto de perfil da internet:', currentUrl.startsWith('data:') ? '' : currentUrl);
             if (url && url.trim()) {
                 document.getElementById('profileImg').src = url.trim();
                 triggerAutoSave();
@@ -1342,7 +1558,7 @@
         }
 
         function promptLogoUrl() {
-            const url = prompt('Cole o link do logo da internet (ex: https://exemplo.com/logo.png):');
+            const url = prompt('Cole o link do logo da internet:');
             if (url && url.trim()) {
                 document.querySelectorAll('.logo-img').forEach(img => {
                     img.src = url.trim();
@@ -1353,36 +1569,39 @@
             }
         }
 
-        // Logo via Upload Local
         const logoFileInput = document.getElementById('logoFileInput');
-        logoFileInput.onchange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (evt) => {
-                    document.querySelectorAll('.logo-img').forEach(img => {
-                        img.src = evt.target.result;
-                        img.style.display = 'block';
-                    });
-                    document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
-                    triggerAutoSave();
-                };
-                reader.readAsDataURL(file);
-            }
-        };
+        if (logoFileInput) {
+            logoFileInput.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        document.querySelectorAll('.logo-img').forEach(img => {
+                            img.src = evt.target.result;
+                            img.style.display = 'block';
+                        });
+                        document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                        triggerAutoSave();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+        }
 
         function removeLogos() {
             document.body.classList.add('no-logo');
+            document.getElementById('restoreLogoBtn').style.display = 'flex';
             localStorage.setItem(STORAGE_KEY_NOLOGO, 'true');
         }
 
         function restoreLogos() {
             document.body.classList.remove('no-logo');
+            document.getElementById('restoreLogoBtn').style.display = 'none';
             localStorage.setItem(STORAGE_KEY_NOLOGO, 'false');
         }
 
         // =======================================================
-        // 4. BARRAS E COMPETÊNCIAS
+        // 7. BARRAS DE PROGRESSO
         // =======================================================
         function setupProgressBar(container) {
             let isDragging = false;
@@ -1421,7 +1640,7 @@
         }
 
         // =======================================================
-        // 5. LINKS EM FORMAÇÃO E CERTIFICAÇÕES
+        // 8. LINKS EM FORMAÇÃO E CERTIFICAÇÕES
         // =======================================================
         function editCertLink(btn) {
             const linkEl = btn.parentElement.querySelector('.cert-link');
@@ -1440,25 +1659,41 @@
         }
 
         // =======================================================
-        // 6. INICIALIZAÇÃO E RESTAURAÇÃO
+        // 9. RESTAURAÇÃO E INICIALIZAÇÃO GERAL
         // =======================================================
         window.addEventListener('DOMContentLoaded', () => {
             // 1. Restaura tema
             const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
             if (savedTheme) applyTheme(savedTheme);
 
-            // 2. Restaura visibilidade do logo
-            if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
-                document.body.classList.add('no-logo');
+            // 2. Restaura fonte
+            const savedFont = localStorage.getItem(STORAGE_KEY_FONT_FAMILY);
+            if (savedFont) {
+                changeFontFamily(savedFont);
+                const fontSelect = document.querySelector('.font-select');
+                if (fontSelect) fontSelect.value = savedFont;
             }
 
-            // 3. Restaura dados salvos do currículo se existirem
+            // 3. Restaura escala de tamanho de fonte
+            const savedScale = localStorage.getItem(STORAGE_KEY_FONT_SCALE);
+            if (savedScale) {
+                currentFontScale = parseFloat(savedScale);
+                document.documentElement.style.setProperty('--font-scale', currentFontScale);
+            }
+
+            // 4. Restaura estado do logo
+            if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
+                document.body.classList.add('no-logo');
+                document.getElementById('restoreLogoBtn').style.display = 'flex';
+            }
+
+            // 5. Restaura conteúdo salvo
             const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
             if (savedHtml) {
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // 4. Inicializa todos os ouvintes de eventos
+            // 6. Ativa todos os eventos
             initInteractiveEvents();
         });
     </script>
