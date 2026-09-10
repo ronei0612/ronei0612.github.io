@@ -101,7 +101,7 @@
         }
 
         /* ======================================================= */
-        /* PLACEHOLDERS INTELIGENTES (SEM PRECISAR APAGAR)          */
+        /* PLACEHOLDERS INTELIGENTES                               */
         /* ======================================================= */
         [data-placeholder]:empty::before {
             content: attr(data-placeholder);
@@ -138,7 +138,7 @@
         }
 
         /* ======================================================= */
-        /* HEADER E FOOTER UNIFICADOS                             */
+        /* HEADER E FOOTER UNIFICADOS (SEMI-TRANSPARENTES / SÓLIDOS NO HOVER) */
         /* ======================================================= */
         .top-toolbar, .dev-footer {
             position: fixed;
@@ -161,7 +161,6 @@
                 box-shadow: 0 12px 35px rgba(0,0,0,0.5);
             }
 
-        /* Header Superior */
         .top-toolbar {
             top: 14px;
             padding: 8px 18px;
@@ -185,7 +184,6 @@
             text-transform: uppercase;
         }
 
-        /* Cores */
         .theme-dots {
             display: flex;
             gap: 5px;
@@ -204,7 +202,6 @@
                 transform: scale(1.2);
             }
 
-        /* Botões A- e A+ */
         .btn-font-size {
             background: #1e293b;
             border: 1px solid #475569;
@@ -226,7 +223,6 @@
                 border-color: var(--accent-cyan);
             }
 
-        /* Família de Fonte */
         .font-select {
             background: #1e293b;
             border: 1px solid #475569;
@@ -238,7 +234,6 @@
             cursor: pointer;
         }
 
-        /* Botões de Ação com Ícones */
         .icon-btn {
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.2);
@@ -263,7 +258,6 @@
             border-color: #ef4444;
         }
 
-        /* Rodapé do Desenvolvedor */
         .dev-footer {
             bottom: 14px;
             padding: 7px 20px;
@@ -352,7 +346,17 @@
             transition: all 0.2s ease;
         }
 
-        /* Botão na página para adicionar foto quando removida */
+        .profile-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 54px;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         .add-photo-placeholder {
             display: none;
             border: 1.5px dashed rgba(255, 255, 255, 0.35);
@@ -390,6 +394,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: none;
         }
 
         .profile-overlay {
@@ -462,7 +467,12 @@
             gap: 9px;
             margin-bottom: 6.5px;
             line-height: 1.35;
+            transition: opacity 0.2s;
         }
+
+            .contact-item:has([data-placeholder]:empty) {
+                opacity: 0.45;
+            }
 
             .contact-item i {
                 color: var(--accent-cyan);
@@ -537,7 +547,7 @@
             transition: width 0.1s ease-out;
         }
 
-        /* Soft Skills (Opção B - Tags/Pílulas) */
+        /* Soft Skills */
         .soft-skills-wrap {
             display: flex;
             flex-wrap: wrap;
@@ -581,7 +591,6 @@
                 color: #ef4444;
             }
 
-        /* Botões pontilhados */
         .add-item-btn {
             width: 100%;
             background: rgba(255, 255, 255, 0.06);
@@ -665,7 +674,6 @@
                 background: var(--accent-cyan);
             }
 
-        /* Botão na página para adicionar logo quando removido */
         .add-logo-placeholder {
             display: none;
             position: absolute;
@@ -818,7 +826,7 @@
             min-height: 20px;
         }
 
-        /* SEÇÕES VAZIAS (MAIS CLARAS NA TELA / OCULTAS NO PDF) */
+        /* SEÇÕES VAZIAS */
         .section-block, .sidebar-section {
             transition: opacity 0.2s;
         }
@@ -828,26 +836,27 @@
                 opacity: 0.45;
             }
 
-        @media print {
-            .section-block.is-empty,
-            .sidebar-section.is-empty,
-            .add-photo-placeholder,
-            .add-logo-placeholder,
-            [data-placeholder]:empty::before {
-                display: none !important;
-                content: "" !important;
-            }
-        }
-
-        /* ITENS DINÂMICOS */
+        /* ======================================================= */
+        /* ITENS DINÂMICOS & SEPARADOR SÓLIDO DE EXPERIÊNCIAS      */
+        /* ======================================================= */
         .timeline-item {
             display: grid;
             grid-template-columns: 41mm 1fr;
             gap: 12px;
-            margin-bottom: 9.5px;
+            margin-bottom: 11px;
+            padding-bottom: 11px;
+            /* Linha sólida contínua com a mesma cor e espessura da divisão vertical */
+            border-bottom: 1px solid var(--border-light);
             font-size: calc(9.4px * var(--font-scale));
             position: relative;
         }
+
+            /* O último item não tem linha divisória */
+            .timeline-item:last-child {
+                border-bottom: none;
+                margin-bottom: 6px;
+                padding-bottom: 0;
+            }
 
         .del-btn {
             position: absolute;
@@ -1008,7 +1017,9 @@
                 background-color: rgba(42, 168, 226, 0.16);
             }
 
-        /* REGRAS DE IMPRESSÃO (Ctrl + P) */
+        /* ======================================================= */
+        /* REGRAS DE IMPRESSÃO (Ctrl + P)                          */
+        /* ======================================================= */
         @media print {
             body {
                 background: none;
@@ -1035,18 +1046,19 @@
             .add-content-btn,
             .geo-logo-tools,
             .cert-link-btn,
-            .profile-overlay {
+            .profile-overlay,
+            .add-photo-placeholder,
+            .add-logo-placeholder,
+            .section-block.is-empty,
+            .sidebar-section.is-empty,
+            [data-placeholder]:empty::before {
                 display: none !important;
+                content: "" !important;
             }
 
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            @page {
-                size: A4 portrait;
-                margin: 0;
+            /* Contatos e links vazios somem do PDF */
+            .contact-item:has([data-placeholder]:empty) {
+                display: none !important;
             }
         }
     </style>
@@ -1137,9 +1149,12 @@
         <!-- PÁGINA 1 INICIAL -->
         <div class="page" id="page-1" data-page-index="1">
             <div class="sidebar">
-                <!-- Foto de perfil -->
+                <!-- Foto de perfil com avatar neutro inicial -->
                 <div class="profile-container" id="profileContainer">
-                    <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto">
+                    <div class="profile-avatar-placeholder" id="profileAvatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <img id="profileImg" src="" alt="Foto">
                     <div class="profile-overlay">
                         <span style="font-size: 10px; font-weight: 700;">Foto de Perfil</span>
                         <div class="profile-overlay-btns">
@@ -1176,7 +1191,7 @@
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-envelope"></i>
-                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="seunome@email.com"></a>
+                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="seusuario@email.com"></a>
                     </div>
                 </div>
 
@@ -1188,11 +1203,11 @@
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-linkedin"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="linkedin.com/in/seunome"></a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="linkedin.com/in/seusuario"></a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-github"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="github.com/seunome"></a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="github.com/seusuario"></a>
                     </div>
                 </div>
 
@@ -1232,7 +1247,7 @@
                     <img class="logo-img" alt="Logo">
                 </div>
 
-                <!-- Botão visível na página para adicionar logo/ícone quando removido -->
+                <!-- Botão visível na página para adicionar logo quando removido -->
                 <div class="add-logo-placeholder" onclick="restoreLogos()">
                     <i class="fa-solid fa-image"></i>
                     <span>+ Adicionar Logo / Ícone</span>
@@ -1282,13 +1297,15 @@
         // =======================================================
         // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_clean_html_v7';
-        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v7';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v7';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v7';
-        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v7';
-        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v7';
-        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v7';
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v9';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v9';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v9';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v9';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v9';
+        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v9';
+        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v9';
+        const STORAGE_KEY_PHOTO_URL = 'curriculo_clean_photourl_v9';
+        const STORAGE_KEY_LOGO_URL = 'curriculo_clean_logourl_v9';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1328,16 +1345,22 @@
         }
 
         // =======================================================
-        // 3. EXPORTAR E IMPORTAR JSON
+        // 3. EXPORTAR E IMPORTAR JSON (CORREÇÃO DE FOTOS E LOGOS)
         // =======================================================
         function exportJSON() {
             const candidateNameEl = document.getElementById('candidateName');
             let rawName = candidateNameEl ? candidateNameEl.innerText.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim() : '';
             const fileName = rawName ? `Currículo - ${rawName}.json` : 'Currículo.json';
 
+            // Captura exata das imagens atuais
+            const profileImg = document.getElementById('profileImg');
+            const logoImg = document.querySelector('.logo-img');
+            const photoUrl = (profileImg && profileImg.style.display !== 'none') ? profileImg.getAttribute('src') || profileImg.src : '';
+            const logoUrl = (logoImg && logoImg.style.display !== 'none') ? logoImg.getAttribute('src') || logoImg.src : '';
+
             const data = {
                 app: 'ResumeBuilder',
-                version: '7.0',
+                version: '9.0',
                 author: 'Ronei Costa Soares',
                 theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
                 fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
@@ -1345,6 +1368,8 @@
                 noLogo: document.body.classList.contains('no-logo'),
                 noPhoto: document.body.classList.contains('no-photo'),
                 logoInvert: localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true',
+                photoUrl: photoUrl,
+                logoUrl: logoUrl,
                 html: document.getElementById('cvWrapper').innerHTML
             };
 
@@ -1376,6 +1401,32 @@
                         document.documentElement.style.setProperty('--font-scale', currentFontScale);
                         localStorage.setItem(STORAGE_KEY_FONT_SCALE, currentFontScale);
                     }
+
+                    // Restaura e garante a imagem da foto
+                    if (data.photoUrl) {
+                        const pImg = document.getElementById('profileImg');
+                        const pAvatar = document.getElementById('profileAvatar');
+                        if (pImg) {
+                            pImg.src = data.photoUrl;
+                            pImg.setAttribute('src', data.photoUrl);
+                            pImg.style.display = 'block';
+                        }
+                        if (pAvatar) pAvatar.style.display = 'none';
+                        localStorage.setItem(STORAGE_KEY_PHOTO_URL, data.photoUrl);
+                    }
+
+                    // Restaura e garante a imagem do logo
+                    if (data.logoUrl) {
+                        document.querySelectorAll('.logo-img').forEach(img => {
+                            img.src = data.logoUrl;
+                            img.setAttribute('src', data.logoUrl);
+                            img.style.display = 'block';
+                        });
+                        document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                        localStorage.setItem(STORAGE_KEY_LOGO_URL, data.logoUrl);
+                    }
+
+                    // Restaura visibilidade do logo
                     if (data.noLogo) {
                         document.body.classList.add('no-logo');
                         document.getElementById('restoreLogoBtn').style.display = 'flex';
@@ -1383,6 +1434,8 @@
                         document.body.classList.remove('no-logo');
                         document.getElementById('restoreLogoBtn').style.display = 'none';
                     }
+
+                    // Restaura visibilidade da foto
                     if (data.noPhoto) {
                         document.body.classList.add('no-photo');
                         document.getElementById('restorePhotoBtn').style.display = 'flex';
@@ -1390,6 +1443,8 @@
                         document.body.classList.remove('no-photo');
                         document.getElementById('restorePhotoBtn').style.display = 'none';
                     }
+
+                    // Restaura inversão de cor do logo
                     if (data.logoInvert) {
                         document.querySelectorAll('.logo-img').forEach(img => img.classList.add('inverted-logo'));
                         localStorage.setItem(STORAGE_KEY_LOGO_INVERT, 'true');
@@ -1422,6 +1477,8 @@
                 localStorage.removeItem(STORAGE_KEY_NOLOGO);
                 localStorage.removeItem(STORAGE_KEY_NOPHOTO);
                 localStorage.removeItem(STORAGE_KEY_LOGO_INVERT);
+                localStorage.removeItem(STORAGE_KEY_PHOTO_URL);
+                localStorage.removeItem(STORAGE_KEY_LOGO_URL);
                 location.reload();
             }
         }
@@ -1525,6 +1582,9 @@
             newPage.className = 'page';
             newPage.id = `page-${index}`;
             newPage.dataset.pageIndex = index;
+            const isLogoInvert = localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true';
+            const savedLogoUrl = localStorage.getItem(STORAGE_KEY_LOGO_URL) || '';
+
             newPage.innerHTML = `
             <div class="sidebar">
               <div style="height: 40px;"></div>
@@ -1537,11 +1597,11 @@
                   <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
                   <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
-                <div class="logo-text-wrap">
+                <div class="logo-text-wrap" style="${savedLogoUrl ? 'display:none;' : ''}">
                   <div class="logo-title" contenteditable="true" data-placeholder="SUA EMPRESA"></div>
                   <div class="logo-sub" contenteditable="true" data-placeholder="CONSULTORIA & INOVAÇÃO"></div>
                 </div>
-                <img class="logo-img ${localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true' ? 'inverted-logo' : ''}" alt="Logo">
+                <img class="logo-img ${isLogoInvert ? 'inverted-logo' : ''}" src="${savedLogoUrl}" style="${savedLogoUrl ? 'display:block;' : 'display:none;'}" alt="Logo">
               </div>
               <div style="height: 48px;"></div>
             </div>
@@ -1550,7 +1610,7 @@
         }
 
         // =======================================================
-        // 7. ADICIONAR E EXCLUIR ITENS COM PLACEHOLDERS
+        // 7. ADICIONAR E EXCLUIR ITENS COM LINHA SÓLIDA
         // =======================================================
         function deleteItem(btn) {
             const item = btn.closest('.timeline-item, .grid-row, .soft-skill-tag');
@@ -1573,7 +1633,7 @@
             <div class="timeline-left">
               <div class="company-name" contenteditable="true" data-placeholder="NOME DA EMPRESA"></div>
               <div class="job-meta" contenteditable="true" data-placeholder="Cidade - UF | Mês Ano - Atual"></div>
-              <div class="job-techs" contenteditable="true" data-placeholder="Tecnologias utilizadas (ex: .NET, Docker, SQL)"></div>
+              <div class="job-techs" contenteditable="true" data-placeholder="Competências e ferramentas aplicadas"></div>
             </div>
             <div class="timeline-right">
               <div class="job-role" contenteditable="true" data-placeholder="Seu Cargo / Função"></div>
@@ -1707,16 +1767,23 @@
                 });
             });
 
-            // Upload de Foto
+            // Upload de Foto via Arquivo Local
             const photoFileInput = document.getElementById('photoFileInput');
             const profileImg = document.getElementById('profileImg');
+            const profileAvatar = document.getElementById('profileAvatar');
+
             if (photoFileInput && profileImg) {
                 photoFileInput.onchange = (e) => {
                     const file = e.target.files[0];
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (evt) => {
-                            profileImg.src = evt.target.result;
+                            const res = evt.target.result;
+                            profileImg.src = res;
+                            profileImg.setAttribute('src', res);
+                            profileImg.style.display = 'block';
+                            if (profileAvatar) profileAvatar.style.display = 'none';
+                            localStorage.setItem(STORAGE_KEY_PHOTO_URL, res);
                             restorePhoto();
                             triggerAutoSave();
                         };
@@ -1737,7 +1804,7 @@
                     newItem.className = 'skill-item';
                     newItem.innerHTML = `
                 <div class="skill-header">
-                  <span class="skill-name" contenteditable="true" data-placeholder="Nome da Hard Skill (ex: C#, React)"></span>
+                  <span class="skill-name" contenteditable="true" data-placeholder="Nome da Hard Skill"></span>
                   <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="progress-bar-container" title="Clique ou arraste para ajustar">
@@ -1784,10 +1851,16 @@
         // 9. FOTO E LOGO (UPLOAD / URL / REMOÇÃO / INVERSÃO)
         // =======================================================
         function promptPhotoUrl() {
-            const currentUrl = document.getElementById('profileImg').src;
-            const url = prompt('Cole o link da foto de perfil da internet:', currentUrl.startsWith('data:') ? '' : currentUrl);
+            const url = prompt('Cole o link da foto de perfil da internet:');
             if (url && url.trim()) {
-                document.getElementById('profileImg').src = url.trim();
+                const clean = url.trim();
+                const profileImg = document.getElementById('profileImg');
+                const profileAvatar = document.getElementById('profileAvatar');
+                profileImg.src = clean;
+                profileImg.setAttribute('src', clean);
+                profileImg.style.display = 'block';
+                if (profileAvatar) profileAvatar.style.display = 'none';
+                localStorage.setItem(STORAGE_KEY_PHOTO_URL, clean);
                 restorePhoto();
                 triggerAutoSave();
             }
@@ -1810,11 +1883,14 @@
         function promptLogoUrl() {
             const url = prompt('Cole o link da imagem do logo:');
             if (url && url.trim()) {
+                const clean = url.trim();
                 document.querySelectorAll('.logo-img').forEach(img => {
-                    img.src = url.trim();
+                    img.src = clean;
+                    img.setAttribute('src', clean);
                     img.style.display = 'block';
                 });
                 document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                localStorage.setItem(STORAGE_KEY_LOGO_URL, clean);
                 restoreLogos();
                 triggerAutoSave();
             }
@@ -1827,11 +1903,14 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (evt) => {
+                        const res = evt.target.result;
                         document.querySelectorAll('.logo-img').forEach(img => {
-                            img.src = evt.target.result;
+                            img.src = res;
+                            img.setAttribute('src', res);
                             img.style.display = 'block';
                         });
                         document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                        localStorage.setItem(STORAGE_KEY_LOGO_URL, res);
                         restoreLogos();
                         triggerAutoSave();
                     };
@@ -1920,7 +1999,7 @@
         }
 
         // =======================================================
-        // 12. INICIALIZAÇÃO GERAL
+        // 12. INICIALIZAÇÃO GERAL E RESTAURAÇÃO DE IMAGENS
         // =======================================================
         window.addEventListener('DOMContentLoaded', () => {
             // 1. Restaura tema
@@ -1959,13 +2038,37 @@
                 document.querySelectorAll('.logo-img').forEach(img => img.classList.add('inverted-logo'));
             }
 
-            // 7. Restaura conteúdo salvo se existir
+            // 7. Restaura conteúdo salvo
             const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
             if (savedHtml) {
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // 8. Ativa eventos, monitora estados e paginação
+            // 8. Garante a restauração da foto se houver URL salva
+            const savedPhotoUrl = localStorage.getItem(STORAGE_KEY_PHOTO_URL);
+            if (savedPhotoUrl) {
+                const pImg = document.getElementById('profileImg');
+                const pAvatar = document.getElementById('profileAvatar');
+                if (pImg) {
+                    pImg.src = savedPhotoUrl;
+                    pImg.setAttribute('src', savedPhotoUrl);
+                    pImg.style.display = 'block';
+                }
+                if (pAvatar) pAvatar.style.display = 'none';
+            }
+
+            // 9. Garante a restauração do logo se houver URL salva
+            const savedLogoUrl = localStorage.getItem(STORAGE_KEY_LOGO_URL);
+            if (savedLogoUrl) {
+                document.querySelectorAll('.logo-img').forEach(img => {
+                    img.src = savedLogoUrl;
+                    img.setAttribute('src', savedLogoUrl);
+                    img.style.display = 'block';
+                });
+                document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+            }
+
+            // 10. Ativa eventos, monitora estados e paginação
             initInteractiveEvents();
             updateEmptyStates();
             schedulePagination();
