@@ -96,13 +96,49 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Ajuste aqui: 80px no topo para a página nunca ficar embaixo do header */
             padding: 80px 0 95px 0;
             color: #1e293b;
         }
 
         /* ======================================================= */
-        /* HEADER E FOOTER UNIFICADOS (SEMI-TRANSPARENTES / SÓLIDOS NO HOVER) */
+        /* PLACEHOLDERS INTELIGENTES (SEM PRECISAR APAGAR)          */
+        /* ======================================================= */
+        [data-placeholder]:empty::before {
+            content: attr(data-placeholder);
+            color: #94a3b8;
+            opacity: 0.65;
+            font-style: italic;
+            font-weight: 400;
+            pointer-events: none;
+            display: inline-block;
+            cursor: text;
+        }
+
+        .candidate-name[data-placeholder]:empty::before,
+        .candidate-role[data-placeholder]:empty::before,
+        .company-name[data-placeholder]:empty::before,
+        .inst-title[data-placeholder]:empty::before {
+            text-transform: uppercase;
+            font-style: normal;
+        }
+
+        .candidate-name[data-placeholder]:empty::before {
+            font-weight: 900;
+            opacity: 0.35;
+        }
+
+        .candidate-role[data-placeholder]:empty::before {
+            font-weight: 700;
+            opacity: 0.45;
+        }
+
+        .sidebar [data-placeholder]:empty::before {
+            color: var(--sidebar-text);
+            opacity: 0.45;
+        }
+
+        /* ======================================================= */
+        /* HEADER E FOOTER UNIFICADOS                             */
         /* ======================================================= */
         .top-toolbar, .dev-footer {
             position: fixed;
@@ -114,7 +150,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 35px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             z-index: 9999;
             white-space: nowrap;
         }
@@ -207,21 +243,19 @@
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.2);
             color: #f1f5f9;
-            width: 28px;
-            height: 28px;
+            padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11.5px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 5px;
             transition: all 0.15s;
         }
 
             .icon-btn:hover {
                 background: rgba(255,255,255,0.2);
                 color: #ffffff;
-                transform: translateY(-1px);
             }
 
         .icon-btn-danger:hover {
@@ -246,18 +280,20 @@
 
             .dev-footer .badge-free {
                 background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.18);
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 color: #cbd5e1;
-                font-size: 9px;
-                font-weight: 600;
+                font-size: 9.5px;
+                font-weight: 700;
                 padding: 2px 7px;
-                border-radius: 10px;
+                border-radius: 12px;
                 text-transform: uppercase;
                 letter-spacing: 0.4px;
             }
 
             .dev-footer .sep {
-                color: #475569;
+                color: rgba(255, 255, 255, 0.4);
+                font-size: 12px;
+                line-height: 1;
             }
 
             .dev-footer a {
@@ -313,13 +349,48 @@
             background: rgba(255,255,255,0.05);
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
 
-            .profile-container img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+        /* Botão na página para adicionar foto quando removida */
+        .add-photo-placeholder {
+            display: none;
+            border: 1.5px dashed rgba(255, 255, 255, 0.35);
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px auto;
+            color: var(--sidebar-text);
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+            .add-photo-placeholder:hover {
+                border-color: var(--accent-cyan);
+                color: var(--accent-cyan);
+                background: rgba(255, 255, 255, 0.06);
             }
+
+        body.no-photo .profile-container {
+            display: none !important;
+        }
+
+        body.no-photo .add-photo-placeholder {
+            display: flex;
+        }
+
+        .profile-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         .profile-overlay {
             position: absolute;
@@ -341,21 +412,21 @@
 
         .profile-overlay-btns {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .profile-btn-icon {
             background: #1e293b;
             border: 1px solid rgba(255,255,255,0.2);
             color: #ffffff;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             transition: background 0.15s, transform 0.15s;
         }
 
@@ -364,8 +435,14 @@
                 transform: scale(1.1);
             }
 
+            .profile-btn-icon.btn-del-photo:hover {
+                background: #ef4444 !important;
+                border-color: #ef4444 !important;
+            }
+
         .sidebar-section {
             margin-bottom: 14px;
+            transition: opacity 0.2s;
         }
 
         .sidebar-title {
@@ -406,7 +483,7 @@
                 color: var(--bar-fill);
             }
 
-        /* Competências */
+        /* Hard Skills */
         .skill-item {
             margin-bottom: 5.5px;
             position: relative;
@@ -426,6 +503,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 88%;
+            min-width: 60px;
         }
 
         .skill-del-btn {
@@ -458,6 +536,50 @@
             pointer-events: none;
             transition: width 0.1s ease-out;
         }
+
+        /* Soft Skills (Opção B - Tags/Pílulas) */
+        .soft-skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        .soft-skill-tag {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: var(--sidebar-text);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: calc(9px * var(--font-scale));
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+
+            .soft-skill-tag:hover {
+                background: rgba(255, 255, 255, 0.16);
+                border-color: var(--accent-cyan);
+            }
+
+        .soft-del-btn {
+            background: none;
+            border: none;
+            color: #f87171;
+            cursor: pointer;
+            font-size: 9px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+            .soft-del-btn:hover {
+                opacity: 1;
+                color: #ef4444;
+            }
 
         /* Botões pontilhados */
         .add-item-btn {
@@ -525,7 +647,6 @@
             right: 0;
             background: var(--sidebar-bg);
             padding: 13px 24px 13px 52px;
-            /* Corte diagonal invertido (\) */
             clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 44px 100%);
             display: flex;
             flex-direction: column;
@@ -544,12 +665,46 @@
                 background: var(--accent-cyan);
             }
 
+        /* Botão na página para adicionar logo quando removido */
+        .add-logo-placeholder {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            border: 1.5px dashed #cbd5e1;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            z-index: 5;
+        }
+
+            .add-logo-placeholder:hover {
+                border-color: var(--accent-cyan);
+                color: var(--accent-cyan);
+                background: #f1f5f9;
+            }
+
+        body.no-logo .geo-logo-box {
+            display: none !important;
+        }
+
+        body.no-logo .add-logo-placeholder {
+            display: flex;
+        }
+
         .geo-logo-tools {
             position: absolute;
             top: 4px;
-            left: 12px;
+            left: 10px;
             display: flex;
-            gap: 6px;
+            gap: 5px;
             opacity: 0;
             transition: opacity 0.15s;
         }
@@ -560,7 +715,7 @@
 
         .geo-logo-tools button,
         .geo-logo-tools label {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
             border: none;
             color: #ffffff;
             font-size: 10px;
@@ -571,12 +726,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background 0.15s;
         }
 
             .geo-logo-tools button:hover,
             .geo-logo-tools label:hover {
                 background: var(--accent-cyan);
             }
+
+        .geo-logo-tools .btn-del-logo:hover {
+            background: #ef4444 !important;
+        }
 
         .logo-title {
             font-size: 14.5px;
@@ -585,6 +745,7 @@
             letter-spacing: 0.5px;
             line-height: 1.1;
             text-align: right;
+            min-width: 80px;
         }
 
         .logo-sub {
@@ -594,6 +755,7 @@
             letter-spacing: 0.6px;
             text-transform: uppercase;
             text-align: right;
+            min-width: 80px;
         }
 
         .logo-img {
@@ -601,11 +763,12 @@
             max-width: 140px;
             object-fit: contain;
             display: none;
+            transition: filter 0.2s;
         }
 
-        body.no-logo .geo-logo-box {
-            display: none !important;
-        }
+            .logo-img.inverted-logo {
+                filter: invert(1) brightness(1.2);
+            }
 
         /* CABEÇALHO NOME */
         .header-name {
@@ -620,6 +783,7 @@
             color: var(--accent-navy);
             text-transform: uppercase;
             letter-spacing: -0.3px;
+            min-height: 30px;
         }
 
         .candidate-role {
@@ -629,6 +793,7 @@
             letter-spacing: 0.8px;
             margin-top: 4px;
             text-transform: uppercase;
+            min-height: 16px;
         }
 
         /* TÍTULOS DE SEÇÕES */
@@ -650,9 +815,31 @@
             color: var(--text-main);
             text-align: justify;
             margin-bottom: 4px;
+            min-height: 20px;
         }
 
-        /* ITENS DINÂMICOS (EXPERIÊNCIA, FORMAÇÃO, CERTIFICAÇÃO) */
+        /* SEÇÕES VAZIAS (MAIS CLARAS NA TELA / OCULTAS NO PDF) */
+        .section-block, .sidebar-section {
+            transition: opacity 0.2s;
+        }
+
+            .section-block.is-empty,
+            .sidebar-section.is-empty {
+                opacity: 0.45;
+            }
+
+        @media print {
+            .section-block.is-empty,
+            .sidebar-section.is-empty,
+            .add-photo-placeholder,
+            .add-logo-placeholder,
+            [data-placeholder]:empty::before {
+                display: none !important;
+                content: "" !important;
+            }
+        }
+
+        /* ITENS DINÂMICOS */
         .timeline-item {
             display: grid;
             grid-template-columns: 41mm 1fr;
@@ -673,9 +860,13 @@
             font-size: 11px;
             padding: 2px 4px;
             opacity: 0;
-            transition: opacity 0.15s;
+            transition: opacity 0.15s, color 0.15s;
             z-index: 5;
         }
+
+            .del-btn:hover {
+                color: #ef4444 !important;
+            }
 
         .timeline-item:hover .del-btn,
         .grid-row:hover .del-btn {
@@ -693,6 +884,7 @@
             text-transform: uppercase;
             font-size: calc(9.4px * var(--font-scale));
             line-height: 1.2;
+            min-height: 14px;
         }
 
         .job-meta {
@@ -700,6 +892,7 @@
             margin: 1px 0 3px 0;
             font-size: calc(8.6px * var(--font-scale));
             line-height: 1.25;
+            min-height: 12px;
         }
 
         .job-techs {
@@ -707,6 +900,7 @@
             color: #64748b;
             font-size: calc(8.2px * var(--font-scale));
             line-height: 1.25;
+            min-height: 12px;
         }
 
         .timeline-right .job-role {
@@ -714,6 +908,7 @@
             color: #0f172a;
             font-size: calc(10px * var(--font-scale));
             margin-bottom: 2px;
+            min-height: 14px;
         }
 
         .job-bullets {
@@ -724,6 +919,7 @@
 
             .job-bullets li {
                 margin-bottom: 2px;
+                min-height: 14px;
             }
 
         /* Grid Formação & Certificações */
@@ -746,11 +942,13 @@
             text-transform: uppercase;
             color: #0f172a;
             font-size: calc(9.3px * var(--font-scale));
+            min-height: 14px;
         }
 
         .inst-year {
             font-size: calc(8.6px * var(--font-scale));
             color: var(--text-muted);
+            min-height: 12px;
         }
 
         .grid-right {
@@ -761,6 +959,7 @@
             color: #1e293b;
             font-weight: 600;
             padding-right: 14px;
+            min-height: 14px;
         }
 
         .cert-link {
@@ -830,6 +1029,8 @@
             .top-toolbar,
             .dev-footer,
             .del-btn,
+            .skill-del-btn,
+            .soft-del-btn,
             .add-item-btn,
             .add-content-btn,
             .geo-logo-tools,
@@ -884,10 +1085,13 @@
             </select>
         </div>
 
-        <!-- Botões de Ação com Ícones -->
+        <!-- Botões de Restauração -->
         <div class="toolbar-group">
-            <button class="icon-btn" id="restoreLogoBtn" style="display:none;" onclick="restoreLogos()" title="Restaurar Logo">
-                <i class="fa-solid fa-image"></i>
+            <button class="icon-btn" id="restorePhotoBtn" style="display:none;" onclick="restorePhoto()" title="Adicionar / Restaurar Foto">
+                <i class="fa-solid fa-camera"></i> + Foto
+            </button>
+            <button class="icon-btn" id="restoreLogoBtn" style="display:none;" onclick="restoreLogos()" title="Adicionar / Restaurar Logo">
+                <i class="fa-solid fa-image"></i> + Logo/Ícone
             </button>
 
             <!-- Exportar JSON -->
@@ -914,7 +1118,7 @@
     <footer class="dev-footer">
         <span>Designed &amp; Developed by <strong>Ronei Costa Soares</strong></span>
         <span class="sep">•</span>
-        <span class="badge-free">Free to use</span>
+        <span class="badge-free">FREE TO USE</span>
         <span class="sep">•</span>
         <a href="https://roneicostasoares.com.br" target="_blank" rel="noopener noreferrer">
             <i class="fa-solid fa-globe"></i> roneicostasoares.com.br
@@ -945,51 +1149,71 @@
                             <button class="profile-btn-icon" title="Colar Link da Web" onclick="promptPhotoUrl()">
                                 <i class="fa-solid fa-link"></i>
                             </button>
+                            <button class="profile-btn-icon btn-del-photo" title="Remover Foto" onclick="removePhoto()">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="sidebar-section">
+                <!-- Botão visível na página para adicionar foto quando removida -->
+                <div class="add-photo-placeholder" onclick="restorePhoto()">
+                    <i class="fa-solid fa-camera" style="font-size: 16px;"></i>
+                    <span>+ Adicionar Foto</span>
+                </div>
+
+                <div class="sidebar-section sidebar-contact">
                     <div class="contact-item">
-                        <span contenteditable="true">Brasileiro(a), Solteiro(a), 30 anos</span>
+                        <span contenteditable="true" data-placeholder="Brasileiro(a), Solteiro(a), 30 anos"></span>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-location-dot"></i>
-                        <a class="smart-link" id="linkAddress" target="_blank" rel="noopener noreferrer" contenteditable="true">Sua Cidade - UF,<br>Brasil</a>
+                        <a class="smart-link" id="linkAddress" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="Sua Cidade - UF, Brasil"></a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-phone"></i>
-                        <a class="smart-link" id="linkPhone" target="_blank" rel="noopener noreferrer" contenteditable="true">(00) 00000-0000</a>
+                        <a class="smart-link" id="linkPhone" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="(00) 00000-0000"></a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-envelope"></i>
-                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true">seunome@email.com</a>
+                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="seunome@email.com"></a>
                     </div>
                 </div>
 
-                <div class="sidebar-section">
+                <div class="sidebar-section sidebar-links">
                     <div class="sidebar-title" contenteditable="true">LINKS</div>
                     <div class="contact-item">
                         <i class="fa-solid fa-globe"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">seusite.com.br</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="seusite.com.br"></a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-linkedin"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">linkedin.com/in/seunome</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="linkedin.com/in/seunome"></a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-github"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">github.com/seunome</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true" data-placeholder="github.com/seunome"></a>
                     </div>
                 </div>
 
-                <div class="sidebar-section">
-                    <div class="sidebar-title" contenteditable="true">COMPETÊNCIAS</div>
+                <!-- HARD SKILLS -->
+                <div class="sidebar-section" id="sec-hard-skills">
+                    <div class="sidebar-title" contenteditable="true">HARD SKILLS</div>
                     <div id="skillsContainer">
-                        <!-- Competências Dinâmicas -->
+                        <!-- Hard Skills Dinâmicas -->
                     </div>
-                    <button class="add-item-btn" id="addSkillBtn"><i class="fa-solid fa-plus"></i> Adicionar Competência</button>
+                    <button class="add-item-btn" id="addSkillBtn"><i class="fa-solid fa-plus"></i> Adicionar Hard Skill</button>
                 </div>
+
+                <!-- SOFT SKILLS -->
+                <div class="sidebar-section" id="sec-soft-skills">
+                    <div class="sidebar-title" contenteditable="true">SOFT SKILLS</div>
+                    <div class="soft-skills-wrap" id="softSkillsContainer">
+                        <!-- Soft Skills Dinâmicas -->
+                    </div>
+                    <button class="add-item-btn" id="addSoftSkillBtn" onclick="addSoftSkill()"><i class="fa-solid fa-plus"></i> Adicionar Soft Skill</button>
+                </div>
+
             </div>
 
             <div class="main">
@@ -998,24 +1222,29 @@
                     <div class="geo-logo-tools">
                         <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
                         <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                        <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                        <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                        <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                     <div class="logo-text-wrap">
-                        <div class="logo-title" contenteditable="true">SUA EMPRESA</div>
-                        <div class="logo-sub" contenteditable="true">Consultoria & Inovação</div>
+                        <div class="logo-title" contenteditable="true" data-placeholder="SUA EMPRESA"></div>
+                        <div class="logo-sub" contenteditable="true" data-placeholder="CONSULTORIA & INOVAÇÃO"></div>
                     </div>
                     <img class="logo-img" alt="Logo">
                 </div>
 
+                <!-- Botão visível na página para adicionar logo/ícone quando removido -->
+                <div class="add-logo-placeholder" onclick="restoreLogos()">
+                    <i class="fa-solid fa-image"></i>
+                    <span>+ Adicionar Logo / Ícone</span>
+                </div>
+
                 <div class="header-name">
-                    <div class="candidate-name" id="candidateName" contenteditable="true">SEU NOME COMPLETO</div>
-                    <div class="candidate-role" contenteditable="true">SEU CARGO / ÁREA DE ATUAÇÃO</div>
+                    <div class="candidate-name" id="candidateName" contenteditable="true" data-placeholder="SEU NOME COMPLETO"></div>
+                    <div class="candidate-role" contenteditable="true" data-placeholder="SEU CARGO / ÁREA DE ATUAÇÃO"></div>
                 </div>
 
                 <div class="section-title" contenteditable="true">SOBRE MIM</div>
-                <div class="about-text" contenteditable="true">
-                    Escreva aqui um breve resumo sobre sua trajetória profissional, principais qualificações técnicas e comportamentais, desafios superados e objetivos de carreira.
-                </div>
+                <div class="about-text" contenteditable="true" data-placeholder="Escreva aqui um breve resumo sobre sua trajetória profissional, principais qualificações técnicas e comportamentais, desafios superados e objetivos de carreira..."></div>
 
                 <!-- Seção Experiência Profissional -->
                 <div class="section-block" id="sec-exp">
@@ -1053,11 +1282,13 @@
         // =======================================================
         // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_clean_html_v5';
-        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v5';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v5';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v5';
-        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v5';
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v7';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v7';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v7';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v7';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v7';
+        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v7';
+        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v7';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1067,6 +1298,7 @@
                 if (cvWrapper) {
                     localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
                 }
+                updateEmptyStates();
             }, 300);
         }
 
@@ -1105,12 +1337,14 @@
 
             const data = {
                 app: 'ResumeBuilder',
-                version: '5.0',
+                version: '7.0',
                 author: 'Ronei Costa Soares',
                 theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
                 fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
                 fontScale: currentFontScale,
                 noLogo: document.body.classList.contains('no-logo'),
+                noPhoto: document.body.classList.contains('no-photo'),
+                logoInvert: localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true',
                 html: document.getElementById('cvWrapper').innerHTML
             };
 
@@ -1149,7 +1383,23 @@
                         document.body.classList.remove('no-logo');
                         document.getElementById('restoreLogoBtn').style.display = 'none';
                     }
+                    if (data.noPhoto) {
+                        document.body.classList.add('no-photo');
+                        document.getElementById('restorePhotoBtn').style.display = 'flex';
+                    } else {
+                        document.body.classList.remove('no-photo');
+                        document.getElementById('restorePhotoBtn').style.display = 'none';
+                    }
+                    if (data.logoInvert) {
+                        document.querySelectorAll('.logo-img').forEach(img => img.classList.add('inverted-logo'));
+                        localStorage.setItem(STORAGE_KEY_LOGO_INVERT, 'true');
+                    } else {
+                        document.querySelectorAll('.logo-img').forEach(img => img.classList.remove('inverted-logo'));
+                        localStorage.setItem(STORAGE_KEY_LOGO_INVERT, 'false');
+                    }
+
                     initInteractiveEvents();
+                    updateEmptyStates();
                     triggerAutoSave();
                     alert('Currículo importado com sucesso!');
                 } catch (err) {
@@ -1161,7 +1411,7 @@
         });
 
         // =======================================================
-        // 4. RESETAR CURRÍCULO (PADRÕES ORIGINAIS)
+        // 4. RESETAR CURRÍCULO
         // =======================================================
         function resetAllData() {
             if (confirm('Deseja realmente resetar o currículo para o modelo limpo inicial? Todas as suas alterações salvas serão perdidas.')) {
@@ -1170,12 +1420,39 @@
                 localStorage.removeItem(STORAGE_KEY_FONT_FAMILY);
                 localStorage.removeItem(STORAGE_KEY_FONT_SCALE);
                 localStorage.removeItem(STORAGE_KEY_NOLOGO);
+                localStorage.removeItem(STORAGE_KEY_NOPHOTO);
+                localStorage.removeItem(STORAGE_KEY_LOGO_INVERT);
                 location.reload();
             }
         }
 
         // =======================================================
-        // 5. MOTOR DE PAGINAÇÃO AUTOMÁTICA INTELIGENTE
+        // 5. ESTADOS VAZIOS
+        // =======================================================
+        function updateEmptyStates() {
+            document.querySelectorAll('.section-block').forEach(sec => {
+                const count = sec.querySelectorAll('.timeline-item, .grid-row').length;
+                if (count === 0) sec.classList.add('is-empty');
+                else sec.classList.remove('is-empty');
+            });
+
+            const hardSkillsSec = document.getElementById('sec-hard-skills');
+            if (hardSkillsSec) {
+                const count = hardSkillsSec.querySelectorAll('.skill-item').length;
+                if (count === 0) hardSkillsSec.classList.add('is-empty');
+                else hardSkillsSec.classList.remove('is-empty');
+            }
+
+            const softSkillsSec = document.getElementById('sec-soft-skills');
+            if (softSkillsSec) {
+                const count = softSkillsSec.querySelectorAll('.soft-skill-tag').length;
+                if (count === 0) softSkillsSec.classList.add('is-empty');
+                else softSkillsSec.classList.remove('is-empty');
+            }
+        }
+
+        // =======================================================
+        // 6. MOTOR DE PAGINAÇÃO AUTOMÁTICA
         // =======================================================
         let paginationTimer = null;
         function schedulePagination() {
@@ -1193,11 +1470,9 @@
                 let currentPage = pages[i];
                 let mainCol = currentPage.querySelector('.main');
 
-                // Se a folha atual transbordou o limite físico de A4
                 while (currentPage.scrollHeight > currentPage.clientHeight + 4) {
                     let nextPage = pages[i + 1];
 
-                    // Cria a página seguinte se ainda não existir
                     if (!nextPage) {
                         nextPage = createNewPage(i + 2);
                         wrapper.appendChild(nextPage);
@@ -1206,8 +1481,6 @@
                     }
 
                     let nextMain = nextPage.querySelector('.main');
-
-                    // Localiza o último bloco/item disponível para transbordar
                     let items = mainCol.querySelectorAll('.timeline-item, .grid-row');
                     if (items.length > 0) {
                         let lastItem = items[items.length - 1];
@@ -1234,7 +1507,6 @@
                 }
             }
 
-            // Limpeza automática de páginas excedentes vazias
             pages = Array.from(wrapper.querySelectorAll('.page'));
             for (let i = pages.length - 1; i > 0; i--) {
                 let page = pages[i];
@@ -1244,6 +1516,7 @@
                 }
             }
 
+            updateEmptyStates();
             triggerAutoSave();
         }
 
@@ -1257,18 +1530,18 @@
               <div style="height: 40px;"></div>
             </div>
             <div class="main">
-              <!-- Logo Geométrico Integrado na nova página -->
               <div class="geo-logo-box">
                 <div class="geo-logo-tools">
                   <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
                   <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                  <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                  <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                  <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
                 <div class="logo-text-wrap">
-                  <div class="logo-title" contenteditable="true">SUA EMPRESA</div>
-                  <div class="logo-sub" contenteditable="true">Consultoria & Inovação</div>
+                  <div class="logo-title" contenteditable="true" data-placeholder="SUA EMPRESA"></div>
+                  <div class="logo-sub" contenteditable="true" data-placeholder="CONSULTORIA & INOVAÇÃO"></div>
                 </div>
-                <img class="logo-img" alt="Logo">
+                <img class="logo-img ${localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true' ? 'inverted-logo' : ''}" alt="Logo">
               </div>
               <div style="height: 48px;"></div>
             </div>
@@ -1277,12 +1550,13 @@
         }
 
         // =======================================================
-        // 6. ADICIONAR E EXCLUIR ITENS (CRUD TOTAL)
+        // 7. ADICIONAR E EXCLUIR ITENS COM PLACEHOLDERS
         // =======================================================
         function deleteItem(btn) {
-            const item = btn.closest('.timeline-item, .grid-row');
+            const item = btn.closest('.timeline-item, .grid-row, .soft-skill-tag');
             if (item) {
                 item.remove();
+                updateEmptyStates();
                 schedulePagination();
             }
         }
@@ -1297,20 +1571,20 @@
             newItem.innerHTML = `
             <button class="del-btn" title="Excluir experiência" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
             <div class="timeline-left">
-              <div class="company-name" contenteditable="true">NOME DA EMPRESA</div>
-              <div class="job-meta" contenteditable="true">Cidade - UF<br>Mês Ano - Atual</div>
-              <div class="job-techs" contenteditable="true">Competências, Tecnologias, Ferramentas</div>
+              <div class="company-name" contenteditable="true" data-placeholder="NOME DA EMPRESA"></div>
+              <div class="job-meta" contenteditable="true" data-placeholder="Cidade - UF | Mês Ano - Atual"></div>
+              <div class="job-techs" contenteditable="true" data-placeholder="Tecnologias utilizadas (ex: .NET, Docker, SQL)"></div>
             </div>
             <div class="timeline-right">
-              <div class="job-role" contenteditable="true">Seu Cargo / Função</div>
-              <ul class="job-bullets" contenteditable="true">
-                <li>Descrição das suas principais realizações, projetos e entregas;</li>
-                <li>Resultados de impacto, liderança e soluções arquitetadas.</li>
+              <div class="job-role" contenteditable="true" data-placeholder="Seu Cargo / Função"></div>
+              <ul class="job-bullets">
+                <li contenteditable="true" data-placeholder="Descreva suas realizações, projetos ou entregas..."></li>
               </ul>
             </div>
           `;
             container.appendChild(newItem);
             newItem.querySelector('.company-name').focus();
+            updateEmptyStates();
             schedulePagination();
         }
 
@@ -1324,16 +1598,17 @@
             newItem.innerHTML = `
             <button class="del-btn" title="Excluir formação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
             <div class="grid-left">
-              <div class="inst-title" contenteditable="true">INSTITUIÇÃO</div>
-              <div class="inst-year" contenteditable="true">Ano Conclusão</div>
+              <div class="inst-title" contenteditable="true" data-placeholder="INSTITUIÇÃO"></div>
+              <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
             </div>
             <div class="grid-right">
-              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Nome do Curso / Graduação</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome do Curso ou Graduação"></a>
               <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
             </div>
           `;
             container.appendChild(newItem);
             newItem.querySelector('.inst-title').focus();
+            updateEmptyStates();
             schedulePagination();
         }
 
@@ -1347,29 +1622,46 @@
             newItem.innerHTML = `
             <button class="del-btn" title="Excluir certificação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
             <div class="grid-left">
-              <div class="inst-title" contenteditable="true">EMISSOR</div>
-              <div class="inst-year" contenteditable="true">Ano</div>
+              <div class="inst-title" contenteditable="true" data-placeholder="EMISSOR"></div>
+              <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
             </div>
             <div class="grid-right">
-              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Nome da Certificação</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome da Certificação"></a>
               <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
             </div>
           `;
             container.appendChild(newItem);
             newItem.querySelector('.inst-title').focus();
+            updateEmptyStates();
             schedulePagination();
         }
 
+        // Adicionar Soft Skill
+        function addSoftSkill() {
+            const container = document.getElementById('softSkillsContainer');
+            if (!container) return;
+
+            const newTag = document.createElement('div');
+            newTag.className = 'soft-skill-tag';
+            newTag.innerHTML = `
+            <span contenteditable="true" data-placeholder="Nova Habilidade"></span>
+            <button class="soft-del-btn" title="Excluir" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+          `;
+            container.appendChild(newTag);
+            newTag.querySelector('span').focus();
+            updateEmptyStates();
+            triggerAutoSave();
+        }
+
         // =======================================================
-        // 7. INICIALIZAÇÃO DE EVENTOS E LINKS
+        // 8. INICIALIZAÇÃO DE EVENTOS E LINKS
         // =======================================================
         function initInteractiveEvents() {
-            // Título Dinâmico
             const candidateNameEl = document.getElementById('candidateName');
             if (candidateNameEl) {
                 function syncDocumentTitle() {
                     const rawText = candidateNameEl.innerText.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
-                    document.title = rawText ? `Currículo - ${rawText}` : 'Currículo Profissional';
+                    document.title = rawText ? `Currículo - ${rawText}` : 'Currículo';
                 }
                 candidateNameEl.addEventListener('input', () => {
                     syncDocumentTitle();
@@ -1415,7 +1707,7 @@
                 });
             });
 
-            // Foto de perfil
+            // Upload de Foto
             const photoFileInput = document.getElementById('photoFileInput');
             const profileImg = document.getElementById('profileImg');
             if (photoFileInput && profileImg) {
@@ -1425,6 +1717,7 @@
                         const reader = new FileReader();
                         reader.onload = (evt) => {
                             profileImg.src = evt.target.result;
+                            restorePhoto();
                             triggerAutoSave();
                         };
                         reader.readAsDataURL(file);
@@ -1432,10 +1725,10 @@
                 };
             }
 
-            // Barras de Competência
+            // Barras de Hard Skills
             document.querySelectorAll('.skill-item').forEach(setupSkillItem);
 
-            // Botão Adicionar Competência
+            // Botão Adicionar Hard Skill
             const addSkillBtn = document.getElementById('addSkillBtn');
             const skillsContainer = document.getElementById('skillsContainer');
             if (addSkillBtn && skillsContainer) {
@@ -1444,7 +1737,7 @@
                     newItem.className = 'skill-item';
                     newItem.innerHTML = `
                 <div class="skill-header">
-                  <span class="skill-name" contenteditable="true">Nova Competência</span>
+                  <span class="skill-name" contenteditable="true" data-placeholder="Nome da Hard Skill (ex: C#, React)"></span>
                   <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="progress-bar-container" title="Clique ou arraste para ajustar">
@@ -1454,9 +1747,28 @@
                     skillsContainer.appendChild(newItem);
                     setupSkillItem(newItem);
                     newItem.querySelector('.skill-name').focus();
+                    updateEmptyStates();
                     triggerAutoSave();
                 };
             }
+
+            // Limpeza de texto vazio para garantir que o placeholder reapareça
+            document.addEventListener('input', (e) => {
+                const el = e.target;
+                if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
+                    if (el.innerText.trim() === '') {
+                        el.innerHTML = '';
+                    }
+                }
+            });
+            document.addEventListener('focusout', (e) => {
+                const el = e.target;
+                if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
+                    if (el.innerText.trim() === '') {
+                        el.innerHTML = '';
+                    }
+                }
+            });
 
             // Captura global de edição
             const cvWrapper = document.getElementById('cvWrapper');
@@ -1469,15 +1781,30 @@
         }
 
         // =======================================================
-        // 8. FOTO E LOGO (UPLOAD / URL)
+        // 9. FOTO E LOGO (UPLOAD / URL / REMOÇÃO / INVERSÃO)
         // =======================================================
         function promptPhotoUrl() {
             const currentUrl = document.getElementById('profileImg').src;
             const url = prompt('Cole o link da foto de perfil da internet:', currentUrl.startsWith('data:') ? '' : currentUrl);
             if (url && url.trim()) {
                 document.getElementById('profileImg').src = url.trim();
+                restorePhoto();
                 triggerAutoSave();
             }
+        }
+
+        function removePhoto() {
+            document.body.classList.add('no-photo');
+            document.getElementById('restorePhotoBtn').style.display = 'flex';
+            localStorage.setItem(STORAGE_KEY_NOPHOTO, 'true');
+            triggerAutoSave();
+        }
+
+        function restorePhoto() {
+            document.body.classList.remove('no-photo');
+            document.getElementById('restorePhotoBtn').style.display = 'none';
+            localStorage.setItem(STORAGE_KEY_NOPHOTO, 'false');
+            triggerAutoSave();
         }
 
         function promptLogoUrl() {
@@ -1488,6 +1815,7 @@
                     img.style.display = 'block';
                 });
                 document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                restoreLogos();
                 triggerAutoSave();
             }
         }
@@ -1504,11 +1832,20 @@
                             img.style.display = 'block';
                         });
                         document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+                        restoreLogos();
                         triggerAutoSave();
                     };
                     reader.readAsDataURL(file);
                 }
             };
+        }
+
+        function toggleLogoInvert() {
+            const logos = document.querySelectorAll('.logo-img');
+            const isInverted = logos.length > 0 && logos[0].classList.contains('inverted-logo');
+            logos.forEach(img => img.classList.toggle('inverted-logo'));
+            localStorage.setItem(STORAGE_KEY_LOGO_INVERT, !isInverted ? 'true' : 'false');
+            triggerAutoSave();
         }
 
         function removeLogos() {
@@ -1524,7 +1861,7 @@
         }
 
         // =======================================================
-        // 9. BARRAS DE PROGRESSO
+        // 10. BARRAS DE PROGRESSO (HARD SKILLS)
         // =======================================================
         function setupProgressBar(container) {
             let isDragging = false;
@@ -1557,13 +1894,14 @@
                 delBtn.onclick = (e) => {
                     e.stopPropagation();
                     item.remove();
+                    updateEmptyStates();
                     triggerAutoSave();
                 };
             }
         }
 
         // =======================================================
-        // 10. LINKS DE CERTIFICADOS
+        // 11. LINKS DE CERTIFICADOS
         // =======================================================
         function editCertLink(btn) {
             const linkEl = btn.parentElement.querySelector('.cert-link');
@@ -1582,7 +1920,7 @@
         }
 
         // =======================================================
-        // 11. INICIALIZAÇÃO GERAL
+        // 12. INICIALIZAÇÃO GERAL
         // =======================================================
         window.addEventListener('DOMContentLoaded', () => {
             // 1. Restaura tema
@@ -1610,14 +1948,26 @@
                 document.getElementById('restoreLogoBtn').style.display = 'flex';
             }
 
-            // 5. Restaura conteúdo salvo se existir
+            // 5. Restaura estado da foto
+            if (localStorage.getItem(STORAGE_KEY_NOPHOTO) === 'true') {
+                document.body.classList.add('no-photo');
+                document.getElementById('restorePhotoBtn').style.display = 'flex';
+            }
+
+            // 6. Restaura inversão do logo
+            if (localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true') {
+                document.querySelectorAll('.logo-img').forEach(img => img.classList.add('inverted-logo'));
+            }
+
+            // 7. Restaura conteúdo salvo se existir
             const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
             if (savedHtml) {
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // 6. Ativa todos os eventos e monitora paginação
+            // 8. Ativa eventos, monitora estados e paginação
             initInteractiveEvents();
+            updateEmptyStates();
             schedulePagination();
         });
     </script>
