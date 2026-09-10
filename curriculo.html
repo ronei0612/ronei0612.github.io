@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Ronei Costa Soares">
     <meta name="description" content="Free Interactive Resume Template designed and developed by Ronei Costa Soares.">
-    <title>Currículo - RONEI COSTA SOARES</title>
+    <title>Currículo - SEU NOME COMPLETO</title>
 
     <!-- Google Fonts: Inter, Montserrat e Merriweather -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,21 +101,33 @@
         }
 
         /* ======================================================= */
-        /* PAINEL DE CONTROLE SUPERIOR (FERRAMENTAS)               */
+        /* HEADER E FOOTER UNIFICADOS (SEMI-TRANSPARENTES / SÓLIDOS NO HOVER) */
         /* ======================================================= */
-        .top-toolbar {
+        .top-toolbar, .dev-footer {
             position: fixed;
-            top: 12px;
-            background: rgba(15, 23, 42, 0.94);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 8px 18px;
             border-radius: 35px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            z-index: 9999;
+        }
+
+            .top-toolbar:hover, .dev-footer:hover {
+                background: rgba(15, 23, 42, 0.98);
+                border-color: rgba(255, 255, 255, 0.25);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+            }
+
+        /* Header Superior */
+        .top-toolbar {
+            top: 12px;
+            padding: 8px 18px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            z-index: 9999;
+            gap: 14px;
             font-size: 11.5px;
             color: #e2e8f0;
         }
@@ -123,7 +135,7 @@
         .toolbar-group {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
         }
 
         .toolbar-label {
@@ -133,7 +145,7 @@
             text-transform: uppercase;
         }
 
-        /* Seletor de Cores */
+        /* Cores */
         .theme-dots {
             display: flex;
             gap: 5px;
@@ -174,62 +186,54 @@
                 border-color: var(--accent-cyan);
             }
 
-        /* Seletor de Família de Fonte */
+        /* Família de Fonte */
         .font-select {
             background: #1e293b;
             border: 1px solid #475569;
             color: #ffffff;
-            padding: 3px 8px;
+            padding: 3px 7px;
             border-radius: 6px;
             font-size: 11px;
             outline: none;
             cursor: pointer;
         }
 
-        /* Botões de Ação no Painel */
-        .toolbar-btn {
+        /* Botões de Ação com Ícones */
+        .icon-btn {
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.2);
             color: #f1f5f9;
-            padding: 4px 10px;
+            width: 28px;
+            height: 28px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 12px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
             transition: all 0.15s;
         }
 
-            .toolbar-btn:hover {
-                background: rgba(255,255,255,0.18);
+            .icon-btn:hover {
+                background: rgba(255,255,255,0.2);
                 color: #ffffff;
+                transform: translateY(-1px);
             }
 
-        .toolbar-btn-danger:hover {
-            background: #dc2626;
-            border-color: #dc2626;
+        .icon-btn-danger:hover {
+            background: #ef4444;
+            border-color: #ef4444;
         }
 
-        /* ======================================================= */
-        /* RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO WEB)                 */
-        /* ======================================================= */
+        /* Rodapé do Desenvolvedor */
         .dev-footer {
-            position: fixed;
             bottom: 14px;
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(8px);
-            color: #94a3b8;
-            padding: 7px 18px;
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+            padding: 7px 20px;
             font-size: 11px;
+            color: #94a3b8;
             display: flex;
             align-items: center;
             gap: 10px;
-            z-index: 9999;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
             .dev-footer strong {
@@ -273,6 +277,7 @@
         .page {
             width: var(--page-w);
             height: var(--page-h);
+            max-height: var(--page-h);
             background-color: #ffffff;
             display: grid;
             grid-template-columns: 72mm 138mm;
@@ -450,7 +455,8 @@
             transition: width 0.1s ease-out;
         }
 
-        .add-skill-btn {
+        /* Botões pontilhados para adicionar itens */
+        .add-item-btn {
             width: 100%;
             background: rgba(255, 255, 255, 0.06);
             border: 1px dashed rgba(255, 255, 255, 0.25);
@@ -465,11 +471,37 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            transition: all 0.15s;
         }
 
-            .add-skill-btn:hover {
-                background: rgba(255, 255, 255, 0.12);
+            .add-item-btn:hover {
+                background: rgba(255, 255, 255, 0.14);
                 border-color: var(--accent-cyan);
+            }
+
+        .add-content-btn {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            color: #475569;
+            font-size: 9.5px;
+            font-weight: 700;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+
+            .add-content-btn:hover {
+                background: #f1f5f9;
+                border-color: var(--accent-cyan);
+                color: var(--accent-cyan);
             }
 
         /* CORPO PRINCIPAL (DIREITA) */
@@ -481,7 +513,7 @@
         }
 
         /* ======================================================= */
-        /* LOGO GEOMÉTRICO INTEGRADO (OPÇÃO 1 COM DIAGONAL INVERTIDA) */
+        /* LOGO GEOMÉTRICO INTEGRADO                               */
         /* ======================================================= */
         .geo-logo-box {
             position: absolute;
@@ -489,7 +521,7 @@
             right: 0;
             background: var(--sidebar-bg);
             padding: 13px 24px 13px 52px;
-            /* Corte diagonal invertido (\): 0 no topo, recua 44px na base */
+            /* Corte diagonal invertido (\) */
             clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 44px 100%);
             display: flex;
             flex-direction: column;
@@ -498,7 +530,6 @@
             transition: background 0.2s;
         }
 
-            /* Friso Ciano na Base Horizontal */
             .geo-logo-box::after {
                 content: "";
                 position: absolute;
@@ -568,7 +599,6 @@
             display: none;
         }
 
-        /* Se o logo for removido */
         body.no-logo .geo-logo-box {
             display: none !important;
         }
@@ -618,7 +648,7 @@
             margin-bottom: 4px;
         }
 
-        /* ITENS DE EXPERIÊNCIA COM CONTROLE DE EXCLUSÃO */
+        /* ITENS DINÂMICOS (EXPERIÊNCIA, FORMAÇÃO, CERTIFICAÇÃO) */
         .timeline-item {
             display: grid;
             grid-template-columns: 41mm 1fr;
@@ -628,7 +658,7 @@
             position: relative;
         }
 
-        .exp-del-btn {
+        .del-btn {
             position: absolute;
             top: -3px;
             right: -2px;
@@ -643,7 +673,8 @@
             z-index: 5;
         }
 
-        .timeline-item:hover .exp-del-btn {
+        .timeline-item:hover .del-btn,
+        .grid-row:hover .del-btn {
             opacity: 1;
         }
 
@@ -691,38 +722,14 @@
                 margin-bottom: 2px;
             }
 
-        .add-exp-btn {
-            width: 100%;
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            color: #475569;
-            font-size: 9.5px;
-            font-weight: 700;
-            padding: 5px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 4px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.15s;
-        }
-
-            .add-exp-btn:hover {
-                background: #f1f5f9;
-                border-color: var(--accent-cyan);
-                color: var(--accent-cyan);
-            }
-
-        /* FORMAÇÃO E CERTIFICAÇÕES */
+        /* Grid Formação & Certificações */
         .grid-row {
             display: grid;
             grid-template-columns: 37mm 1fr;
             gap: 12px;
             margin-bottom: 8.5px;
             font-size: calc(9.4px * var(--font-scale));
+            position: relative;
         }
 
         .grid-left {
@@ -749,6 +756,7 @@
             gap: 8px;
             color: #1e293b;
             font-weight: 600;
+            padding-right: 14px;
         }
 
         .cert-link {
@@ -782,7 +790,7 @@
             color: var(--accent-cyan);
         }
 
-        /* EDIÇÃO INLINE */
+        /* MODO EDITÁVEL INLINE */
         [contenteditable="true"] {
             outline: none;
             transition: background 0.15s;
@@ -811,15 +819,15 @@
                 page-break-after: always;
                 break-after: page;
                 height: 297mm;
-                width: 210mm;
+                max-height: 297mm;
+                overflow: hidden;
             }
 
             .top-toolbar,
             .dev-footer,
-            .skill-del-btn,
-            .add-skill-btn,
-            .exp-del-btn,
-            .add-exp-btn,
+            .del-btn,
+            .add-item-btn,
+            .add-content-btn,
             .geo-logo-tools,
             .cert-link-btn,
             .profile-overlay {
@@ -841,7 +849,7 @@
 <body class="font-inter">
 
     <!-- ======================================================= -->
-    <!-- PAINEL DE CONTROLE SUPERIOR (FERRAMENTAS COMPLETAS)     -->
+    <!-- HEADER COM FERRAMENTAS UNIFICADAS                       -->
     <!-- ======================================================= -->
     <header class="top-toolbar">
         <!-- Cores -->
@@ -866,22 +874,37 @@
         <!-- Estilo de Fonte -->
         <div class="toolbar-group">
             <select class="font-select" onchange="changeFontFamily(this.value)">
-                <option value="font-inter">Inter (Moderna/Tech)</option>
-                <option value="font-montserrat">Montserrat (Geométrica)</option>
-                <option value="font-merriweather">Merriweather (Clássica)</option>
+                <option value="font-inter">Inter (Tech)</option>
+                <option value="font-montserrat">Montserrat</option>
+                <option value="font-merriweather">Merriweather</option>
             </select>
         </div>
 
-        <!-- Restaurar Logo caso removido -->
-        <button class="toolbar-btn" id="restoreLogoBtn" style="display:none;" onclick="restoreLogos()">
-            <i class="fa-solid fa-plus"></i> Inserir Logo
-        </button>
+        <!-- Botões de Ação com Ícones -->
+        <div class="toolbar-group">
+            <button class="icon-btn" id="restoreLogoBtn" style="display:none;" onclick="restoreLogos()" title="Restaurar Logo">
+                <i class="fa-solid fa-image"></i>
+            </button>
 
-        <!-- Resetar Currículo -->
-        <button class="toolbar-btn toolbar-btn-danger" title="Restaurar dados originais de fábrica" onclick="resetAllData()">
-            <i class="fa-solid fa-rotate-left"></i> Resetar
-        </button>
+            <!-- Exportar JSON -->
+            <button class="icon-btn" onclick="exportJSON()" title="Exportar Dados (JSON)">
+                <i class="fa-solid fa-file-export"></i>
+            </button>
+
+            <!-- Importar JSON -->
+            <button class="icon-btn" onclick="document.getElementById('importJsonInput').click()" title="Importar Dados (JSON)">
+                <i class="fa-solid fa-file-import"></i>
+            </button>
+
+            <!-- Resetar Currículo -->
+            <button class="icon-btn icon-btn-danger" onclick="resetAllData()" title="Resetar Currículo">
+                <i class="fa-solid fa-rotate-left"></i>
+            </button>
+        </div>
     </header>
+
+    <!-- Input invisível para carregar arquivo JSON -->
+    <input type="file" id="importJsonInput" accept=".json" style="display: none;">
 
     <!-- RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO WEB) -->
     <footer class="dev-footer">
@@ -894,17 +917,19 @@
         </a>
     </footer>
 
-    <!-- Inputs invisíveis para upload -->
+    <!-- Inputs invisíveis para upload de imagens -->
     <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
     <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
 
-    <!-- CONTÊINER DO CURRÍCULO (SALVO AUTOMATICAMENTE) -->
+    <!-- ======================================================= -->
+    <!-- CONTÊINER DINÂMICO DE PÁGINAS DO CURRÍCULO              -->
+    <!-- ======================================================= -->
     <div id="cvWrapper">
 
-        <!-- ==================== PÁGINA 1 ==================== -->
-        <div class="page" id="page1">
+        <!-- PÁGINA 1 INICIAL -->
+        <div class="page" id="page-1" data-page-index="1">
             <div class="sidebar">
-                <!-- Foto de perfil com ferramentas -->
+                <!-- Foto de perfil -->
                 <div class="profile-container" id="profileContainer">
                     <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto">
                     <div class="profile-overlay">
@@ -922,19 +947,19 @@
 
                 <div class="sidebar-section">
                     <div class="contact-item">
-                        <span contenteditable="true">Brasileiro, casado, 38 anos</span>
+                        <span contenteditable="true">Brasileiro(a), Solteiro(a), 30 anos</span>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-location-dot"></i>
-                        <a class="smart-link" id="linkAddress" target="_blank" rel="noopener noreferrer" contenteditable="true">Borda da Mata - MG,<br>37564-000, Brasil</a>
+                        <a class="smart-link" id="linkAddress" target="_blank" rel="noopener noreferrer" contenteditable="true">Sua Cidade - UF,<br>Brasil</a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-phone"></i>
-                        <a class="smart-link" id="linkPhone" target="_blank" rel="noopener noreferrer" contenteditable="true">(19) 98700-6385</a>
+                        <a class="smart-link" id="linkPhone" target="_blank" rel="noopener noreferrer" contenteditable="true">(00) 00000-0000</a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-solid fa-envelope"></i>
-                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true">ronei0612@gmail.com</a>
+                        <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true">seunome@email.com</a>
                     </div>
                 </div>
 
@@ -942,134 +967,29 @@
                     <div class="sidebar-title" contenteditable="true">LINKS</div>
                     <div class="contact-item">
                         <i class="fa-solid fa-globe"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">roneicostasoares.com.br</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">seusite.com.br</a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-linkedin"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">linkedin.com/in/ronei0612</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">linkedin.com/in/seunome</a>
                     </div>
                     <div class="contact-item">
                         <i class="fa-brands fa-github"></i>
-                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">github.com/ronei0612</a>
+                        <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">github.com/seunome</a>
                     </div>
                 </div>
 
                 <div class="sidebar-section">
                     <div class="sidebar-title" contenteditable="true">COMPETÊNCIAS</div>
                     <div id="skillsContainer">
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">.Net / .Net Framework / .Net Core</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 95%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">ASP.Net / MVC</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 90%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">EntityFramework / LINQ</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">HTML / Javascript / CSS</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 80%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Git / GitHub</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">SQL Server / PostgreSQL / Redis</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 80%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Linux / Docker / WSL</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 75%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Azure DevOps / CI/CD</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 75%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">MongoDB / MySQL</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 70%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Bootstrap / Jquery</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Node.js / Express.js</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 65%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">RabbitMQ / Kafka</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 60%;"></div></div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name" contenteditable="true">Angular / Vue.js / React</span>
-                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 65%;"></div></div>
-                        </div>
-
+                        <!-- Competências Dinâmicas -->
                     </div>
-
-                    <button class="add-skill-btn" id="addSkillBtn"><i class="fa-solid fa-plus"></i> Adicionar Competência</button>
+                    <button class="add-item-btn" id="addSkillBtn"><i class="fa-solid fa-plus"></i> Adicionar Competência</button>
                 </div>
             </div>
 
             <div class="main">
-                <!-- Logo Geométrico Integrado no Canto Superior Direito -->
+                <!-- Logo Geométrico Integrado -->
                 <div class="geo-logo-box">
                     <div class="geo-logo-tools">
                         <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
@@ -1077,268 +997,47 @@
                         <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                     <div class="logo-text-wrap">
-                        <div class="logo-title" contenteditable="true">NTT DATA</div>
-                        <div class="logo-sub" contenteditable="true">Trusted Global Innovator</div>
+                        <div class="logo-title" contenteditable="true">SUA EMPRESA</div>
+                        <div class="logo-sub" contenteditable="true">Consultoria & Inovação</div>
                     </div>
                     <img class="logo-img" alt="Logo">
                 </div>
 
                 <div class="header-name">
-                    <div class="candidate-name" id="candidateName" contenteditable="true">RONEI<br>COSTA SOARES</div>
-                    <div class="candidate-role" contenteditable="true">DESENVOLVEDOR .NET</div>
+                    <div class="candidate-name" id="candidateName" contenteditable="true">SEU NOME COMPLETO</div>
+                    <div class="candidate-role" contenteditable="true">SEU CARGO / ÁREA DE ATUAÇÃO</div>
                 </div>
 
                 <div class="section-title" contenteditable="true">SOBRE MIM</div>
                 <div class="about-text" contenteditable="true">
-                    Programador .Net com mais de 6 anos de experiência com foco em desenvolvimento de Aplicações Web e APIs, me destaco pela capacidade de comunicação, liderança e resolução de desafios. Minha abordagem é centrada na colaboração e no comprometimento com a qualidade e confiabilidade. Busco constantemente aprimorar processos e contribuir para o crescimento dos projetos e da equipe. Se está à busca de alguém proativo, responsável e comprometido com o sucesso, estou à disposição.
+                    Escreva aqui um breve resumo sobre sua trajetória profissional, principais qualificações técnicas e comportamentais, desafios superados e objetivos de carreira.
                 </div>
 
-                <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
-
-                <div id="expContainerPage1">
-                    <!-- Experiência 1 -->
-                    <div class="timeline-item">
-                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="timeline-left">
-                            <div class="company-name" contenteditable="true">NTT DATA</div>
-                            <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
-                            <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
-                        </div>
-                        <div class="timeline-right">
-                            <div class="job-role" contenteditable="true">Analista Programador</div>
-                            <ul class="job-bullets" contenteditable="true">
-                                <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
-                                <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
-                                <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
-                            </ul>
-                        </div>
+                <!-- Seção Experiência Profissional -->
+                <div class="section-block" id="sec-exp">
+                    <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
+                    <div class="items-list" id="expContainer">
+                        <!-- Experiências Dinâmicas -->
                     </div>
-
-                    <!-- Experiência 2 -->
-                    <div class="timeline-item">
-                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="timeline-left">
-                            <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
-                            <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
-                            <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
-                        </div>
-                        <div class="timeline-right">
-                            <div class="job-role" contenteditable="true">Programador de Sistemas</div>
-                            <ul class="job-bullets" contenteditable="true">
-                                <li>Tradução da plataforma para outros línguas;</li>
-                                <li>Resolução de chamados abertos pelos clientes;</li>
-                                <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
-                                <li>Implementação de novas funcionalidades;</li>
-                                <li>Liderança de um time para migrações de dados;</li>
-                                <li>Solução de problemas utilizando Scrum.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Experiência 3 -->
-                    <div class="timeline-item">
-                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="timeline-left">
-                            <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
-                            <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
-                            <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
-                        </div>
-                        <div class="timeline-right">
-                            <div class="job-role" contenteditable="true">Prestador de Serviços</div>
-                            <ul class="job-bullets" contenteditable="true">
-                                <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Experiência 4 -->
-                    <div class="timeline-item">
-                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="timeline-left">
-                            <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
-                            <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
-                            <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
-                        </div>
-                        <div class="timeline-right">
-                            <div class="job-role" contenteditable="true">Programador Jr</div>
-                            <ul class="job-bullets" contenteditable="true">
-                                <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
-                                <li>Administração do website da empresa;</li>
-                                <li>Gerenciamento de servidores locais e remotos.</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <button class="add-content-btn" onclick="addNewExperience()"><i class="fa-solid fa-plus"></i> Adicionar Experiência</button>
                 </div>
 
-                <button class="add-exp-btn" onclick="addNewExperience('expContainerPage1')">
-                    <i class="fa-solid fa-plus"></i> Adicionar Experiência
-                </button>
-
-            </div>
-        </div>
-
-        <!-- ==================== PÁGINA 2 ==================== -->
-        <div class="page" id="page2">
-            <div class="sidebar">
-                <div style="height: 38px;"></div>
-                <div class="sidebar-section">
-                    <div class="sidebar-title" contenteditable="true">LÍNGUAS</div>
-
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-name" contenteditable="true">Português</span>
-                            <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 100%;"></div></div>
+                <!-- Seção Formação -->
+                <div class="section-block" id="sec-edu">
+                    <div class="section-title" contenteditable="true">FORMAÇÃO</div>
+                    <div class="items-list" id="eduContainer">
+                        <!-- Formações Dinâmicas -->
                     </div>
-
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-name" contenteditable="true">Inglês</span>
-                            <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 25%;"></div></div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="main">
-                <!-- Logo Geométrico Integrado Página 2 -->
-                <div class="geo-logo-box">
-                    <div class="geo-logo-tools">
-                        <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
-                        <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                        <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                    <div class="logo-text-wrap">
-                        <div class="logo-title" contenteditable="true">NTT DATA</div>
-                        <div class="logo-sub" contenteditable="true">Trusted Global Innovator</div>
-                    </div>
-                    <img class="logo-img" alt="Logo">
+                    <button class="add-content-btn" onclick="addNewEducation()"><i class="fa-solid fa-plus"></i> Adicionar Formação</button>
                 </div>
 
-                <div style="height: 48px;"></div> <!-- Respiro simétrico do topo -->
-
-                <div id="expContainerPage2">
-                    <!-- Experiência 5 -->
-                    <div class="timeline-item">
-                        <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="timeline-left">
-                            <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
-                            <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
-                            <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
-                        </div>
-                        <div class="timeline-right">
-                            <div class="job-role" contenteditable="true">Técnico em Informática</div>
-                            <ul class="job-bullets" contenteditable="true">
-                                <li>Resolução de chamados e atendimento ao cliente;</li>
-                                <li>Administração e manutenção de banco SQL Server;</li>
-                                <li>Criação de apps para gerenciamento de servidores;</li>
-                                <li>Criação de aplicações em Windows Forms;</li>
-                                <li>Manutenção do website da empresa e da intranet;</li>
-                                <li>Solução de problemas utilizando Kanban.</li>
-                            </ul>
-                        </div>
+                <!-- Seção Certificações -->
+                <div class="section-block" id="sec-cert">
+                    <div class="section-title" contenteditable="true">CERTIFICAÇÕES</div>
+                    <div class="items-list" id="certContainer">
+                        <!-- Certificações Dinâmicas -->
                     </div>
-                </div>
-
-                <button class="add-exp-btn" onclick="addNewExperience('expContainerPage2')">
-                    <i class="fa-solid fa-plus"></i> Adicionar Experiência
-                </button>
-
-                <!-- Formação -->
-                <div class="section-title" contenteditable="true">FORMAÇÃO</div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">UNIP</div>
-                        <div class="inst-year" contenteditable="true">2022</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="https://www.unip.br" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Análise e Desenvolvimento de Sistemas</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">PEOPLE</div>
-                        <div class="inst-year" contenteditable="true">2017</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Programação em C#</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">INST. MONITOR</div>
-                        <div class="inst-year" contenteditable="true">2015</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Técnico em informática</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">CEMEP</div>
-                        <div class="inst-year" contenteditable="true">2006</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Ensino Médio Completo</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <!-- Certificações -->
-                <div class="section-title" contenteditable="true">CERTIFICAÇÕES</div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">MICROSOFT</div>
-                        <div class="inst-year" contenteditable="true">2025</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="https://learn.microsoft.com" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">AZ-900 Microsoft Azure Fundamentals</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">CERTIPROF</div>
-                        <div class="inst-year" contenteditable="true">2024</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="https://certiprof.com" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Scrum Foundation Professional Certification</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">FREECODECAMP</div>
-                        <div class="inst-year" contenteditable="true">2024</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Foundational C# Microsoft</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-left">
-                        <div class="inst-title" contenteditable="true">FUND BRADESCO</div>
-                        <div class="inst-year" contenteditable="true">2013</div>
-                    </div>
-                    <div class="grid-right">
-                        <a href="https://www.ev.org.br" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">CSS e HTML / Fundamentos de Rede</a>
-                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-                    </div>
+                    <button class="add-content-btn" onclick="addNewCertification()"><i class="fa-solid fa-plus"></i> Adicionar Certificação</button>
                 </div>
 
             </div>
@@ -1350,11 +1049,11 @@
         // =======================================================
         // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_final_html_v3';
-        const STORAGE_KEY_THEME = 'curriculo_final_theme_v3';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_final_font_family_v3';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_final_font_scale_v3';
-        const STORAGE_KEY_NOLOGO = 'curriculo_final_nologo_v3';
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v4';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v4';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v4';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v4';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v4';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1364,7 +1063,7 @@
                 if (cvWrapper) {
                     localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
                 }
-            }, 350);
+            }, 300);
         }
 
         // =======================================================
@@ -1380,20 +1079,88 @@
             document.body.classList.remove('font-inter', 'font-montserrat', 'font-merriweather');
             document.body.classList.add(fontClass);
             localStorage.setItem(STORAGE_KEY_FONT_FAMILY, fontClass);
+            triggerAutoSave();
         }
 
         let currentFontScale = 1.0;
         function adjustFontSize(delta) {
-            currentFontScale = Math.min(1.22, Math.max(0.82, currentFontScale + delta));
+            currentFontScale = Math.min(1.25, Math.max(0.80, currentFontScale + delta));
             document.documentElement.style.setProperty('--font-scale', currentFontScale);
             localStorage.setItem(STORAGE_KEY_FONT_SCALE, currentFontScale);
+            schedulePagination();
+            triggerAutoSave();
         }
 
         // =======================================================
-        // 3. RESETAR CURRÍCULO (RESTAURAR PADRÕES)
+        // 3. EXPORTAR E IMPORTAR JSON
+        // =======================================================
+        function exportJSON() {
+            const candidateNameEl = document.getElementById('candidateName');
+            let rawName = candidateNameEl ? candidateNameEl.innerText.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim() : '';
+            const fileName = rawName ? `Currículo - ${rawName}.json` : 'Currículo.json';
+
+            const data = {
+                app: 'ResumeBuilder',
+                version: '4.0',
+                author: 'Ronei Costa Soares',
+                theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
+                fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
+                fontScale: currentFontScale,
+                noLogo: document.body.classList.contains('no-logo'),
+                html: document.getElementById('cvWrapper').innerHTML
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        const importJsonInput = document.getElementById('importJsonInput');
+        importJsonInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                try {
+                    const data = JSON.parse(evt.target.result);
+                    if (data.html) {
+                        document.getElementById('cvWrapper').innerHTML = data.html;
+                    }
+                    if (data.theme !== undefined) applyTheme(data.theme);
+                    if (data.fontFamily) changeFontFamily(data.fontFamily);
+                    if (data.fontScale) {
+                        currentFontScale = data.fontScale;
+                        document.documentElement.style.setProperty('--font-scale', currentFontScale);
+                        localStorage.setItem(STORAGE_KEY_FONT_SCALE, currentFontScale);
+                    }
+                    if (data.noLogo) {
+                        document.body.classList.add('no-logo');
+                        document.getElementById('restoreLogoBtn').style.display = 'flex';
+                    } else {
+                        document.body.classList.remove('no-logo');
+                        document.getElementById('restoreLogoBtn').style.display = 'none';
+                    }
+                    initInteractiveEvents();
+                    triggerAutoSave();
+                    alert('Currículo importado com sucesso!');
+                } catch (err) {
+                    alert('Erro ao carregar o arquivo JSON. Certifique-se de que é um backup válido.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
+        // =======================================================
+        // 4. RESETAR CURRÍCULO (PADRÕES ORIGINAIS)
         // =======================================================
         function resetAllData() {
-            if (confirm('Deseja realmente resetar o currículo para o modelo padrão original? Todas as suas alterações salvas serão perdidas.')) {
+            if (confirm('Deseja realmente resetar o currículo para o modelo limpo inicial? Todas as suas alterações salvas serão perdidas.')) {
                 localStorage.removeItem(STORAGE_KEY_HTML);
                 localStorage.removeItem(STORAGE_KEY_THEME);
                 localStorage.removeItem(STORAGE_KEY_FONT_FAMILY);
@@ -1404,44 +1171,194 @@
         }
 
         // =======================================================
-        // 4. EXPERIÊNCIAS (ADICIONAR / EXCLUIR)
+        // 5. MOTOR DE PAGINAÇÃO AUTOMÁTICA INTELIGENTE
         // =======================================================
-        function deleteExperience(btn) {
-            const item = btn.closest('.timeline-item');
+        let paginationTimer = null;
+        function schedulePagination() {
+            clearTimeout(paginationTimer);
+            paginationTimer = setTimeout(autoPaginate, 200);
+        }
+
+        function autoPaginate() {
+            const wrapper = document.getElementById('cvWrapper');
+            if (!wrapper) return;
+
+            let pages = Array.from(wrapper.querySelectorAll('.page'));
+
+            for (let i = 0; i < pages.length; i++) {
+                let currentPage = pages[i];
+                let mainCol = currentPage.querySelector('.main');
+
+                // Mede se a folha atual transbordou o limite físico de A4
+                while (currentPage.scrollHeight > currentPage.clientHeight + 4) {
+                    let nextPage = pages[i + 1];
+
+                    // Cria a página seguinte se ainda não existir
+                    if (!nextPage) {
+                        nextPage = createNewPage(i + 2);
+                        wrapper.appendChild(nextPage);
+                        pages = Array.from(wrapper.querySelectorAll('.page'));
+                        initInteractiveEvents();
+                    }
+
+                    let nextMain = nextPage.querySelector('.main');
+
+                    // Localiza o último bloco/item disponível para transbordar
+                    let items = mainCol.querySelectorAll('.timeline-item, .grid-row');
+                    if (items.length > 0) {
+                        let lastItem = items[items.length - 1];
+                        let itemType = lastItem.classList.contains('timeline-item') ? 'exp' :
+                            (lastItem.closest('#sec-edu') || lastItem.closest('.edu-target') ? 'edu' : 'cert');
+
+                        let targetContainer = nextMain.querySelector(`.${itemType}-target`);
+                        if (!targetContainer) {
+                            // Cria seção de continuação na página seguinte
+                            let secBlock = document.createElement('div');
+                            secBlock.className = 'section-block';
+                            let titleText = itemType === 'exp' ? 'EXPERIÊNCIA PROFISSIONAL (CONT.)' :
+                                (itemType === 'edu' ? 'FORMAÇÃO' : 'CERTIFICAÇÕES');
+                            secBlock.innerHTML = `
+                    <div class="section-title" contenteditable="true">${titleText}</div>
+                    <div class="items-list ${itemType}-target"></div>
+                  `;
+                            nextMain.appendChild(secBlock);
+                            targetContainer = secBlock.querySelector(`.${itemType}-target`);
+                        }
+                        targetContainer.prepend(lastItem);
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // Limpeza automática de páginas excedentes vazias
+            pages = Array.from(wrapper.querySelectorAll('.page'));
+            for (let i = pages.length - 1; i > 0; i--) {
+                let page = pages[i];
+                let itemsCount = page.querySelectorAll('.timeline-item, .grid-row').length;
+                if (itemsCount === 0) {
+                    page.remove();
+                }
+            }
+
+            triggerAutoSave();
+        }
+
+        function createNewPage(index) {
+            const newPage = document.createElement('div');
+            newPage.className = 'page';
+            newPage.id = `page-${index}`;
+            newPage.dataset.pageIndex = index;
+            newPage.innerHTML = `
+            <div class="sidebar">
+              <div style="height: 40px;"></div>
+            </div>
+            <div class="main">
+              <!-- Logo Geométrico Integrado na nova página -->
+              <div class="geo-logo-box">
+                <div class="geo-logo-tools">
+                  <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
+                  <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
+                  <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="logo-text-wrap">
+                  <div class="logo-title" contenteditable="true">SUA EMPRESA</div>
+                  <div class="logo-sub" contenteditable="true">Consultoria & Inovação</div>
+                </div>
+                <img class="logo-img" alt="Logo">
+              </div>
+              <div style="height: 48px;"></div>
+            </div>
+          `;
+            return newPage;
+        }
+
+        // =======================================================
+        // 6. ADICIONAR E EXCLUIR ITENS (CRUD TOTAL)
+        // =======================================================
+        function deleteItem(btn) {
+            const item = btn.closest('.timeline-item, .grid-row');
             if (item) {
                 item.remove();
-                triggerAutoSave();
+                schedulePagination();
             }
         }
 
-        function addNewExperience(containerId) {
-            const container = document.getElementById(containerId);
+        // Adicionar Experiência
+        function addNewExperience() {
+            const container = document.getElementById('expContainer');
             if (!container) return;
 
             const newItem = document.createElement('div');
             newItem.className = 'timeline-item';
             newItem.innerHTML = `
-            <button class="exp-del-btn" title="Excluir experiência" onclick="deleteExperience(this)"><i class="fa-solid fa-xmark"></i></button>
+            <button class="del-btn" title="Excluir experiência" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
             <div class="timeline-left">
               <div class="company-name" contenteditable="true">NOME DA EMPRESA</div>
               <div class="job-meta" contenteditable="true">Cidade - UF<br>Mês Ano - Atual</div>
-              <div class="job-techs" contenteditable="true">Tecnologia1, Tecnologia2, Frameworks</div>
+              <div class="job-techs" contenteditable="true">Competências, Tecnologias, Ferramentas</div>
             </div>
             <div class="timeline-right">
               <div class="job-role" contenteditable="true">Seu Cargo / Função</div>
               <ul class="job-bullets" contenteditable="true">
-                <li>Descrição das suas principais entregas e projetos realizados;</li>
-                <li>Resultados alcançados, arquitetura e liderança técnica.</li>
+                <li>Descrição das suas principais realizações, projetos e entregas;</li>
+                <li>Resultados de impacto, liderança e soluções arquitetadas.</li>
               </ul>
             </div>
           `;
             container.appendChild(newItem);
             newItem.querySelector('.company-name').focus();
-            triggerAutoSave();
+            schedulePagination();
+        }
+
+        // Adicionar Formação
+        function addNewEducation() {
+            const container = document.getElementById('eduContainer');
+            if (!container) return;
+
+            const newItem = document.createElement('div');
+            newItem.className = 'grid-row';
+            newItem.innerHTML = `
+            <button class="del-btn" title="Excluir formação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+            <div class="grid-left">
+              <div class="inst-title" contenteditable="true">INSTITUIÇÃO</div>
+              <div class="inst-year" contenteditable="true">Ano Conclusão</div>
+            </div>
+            <div class="grid-right">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Nome do Curso / Graduação</a>
+              <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+            </div>
+          `;
+            container.appendChild(newItem);
+            newItem.querySelector('.inst-title').focus();
+            schedulePagination();
+        }
+
+        // Adicionar Certificação
+        function addNewCertification() {
+            const container = document.getElementById('certContainer');
+            if (!container) return;
+
+            const newItem = document.createElement('div');
+            newItem.className = 'grid-row';
+            newItem.innerHTML = `
+            <button class="del-btn" title="Excluir certificação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+            <div class="grid-left">
+              <div class="inst-title" contenteditable="true">EMISSOR</div>
+              <div class="inst-year" contenteditable="true">Ano</div>
+            </div>
+            <div class="grid-right">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Nome da Certificação</a>
+              <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+            </div>
+          `;
+            container.appendChild(newItem);
+            newItem.querySelector('.inst-title').focus();
+            schedulePagination();
         }
 
         // =======================================================
-        // 5. INICIALIZAÇÃO DE EVENTOS E LINKS
+        // 7. INICIALIZAÇÃO DE EVENTOS E LINKS
         // =======================================================
         function initInteractiveEvents() {
             // Título Dinâmico
@@ -1495,7 +1412,7 @@
                 });
             });
 
-            // Foto de perfil via Arquivo
+            // Foto de perfil
             const photoFileInput = document.getElementById('photoFileInput');
             const profileImg = document.getElementById('profileImg');
             if (photoFileInput && profileImg) {
@@ -1515,7 +1432,7 @@
             // Barras de Competência
             document.querySelectorAll('.skill-item').forEach(setupSkillItem);
 
-            // Adicionar Competência
+            // Botão Adicionar Competência
             const addSkillBtn = document.getElementById('addSkillBtn');
             const skillsContainer = document.getElementById('skillsContainer');
             if (addSkillBtn && skillsContainer) {
@@ -1528,7 +1445,7 @@
                   <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="progress-bar-container" title="Clique ou arraste para ajustar">
-                  <div class="progress-fill" style="width: 70%;"></div>
+                  <div class="progress-fill" style="width: 75%;"></div>
                 </div>
               `;
                     skillsContainer.appendChild(newItem);
@@ -1541,12 +1458,15 @@
             // Captura global de edição
             const cvWrapper = document.getElementById('cvWrapper');
             if (cvWrapper) {
-                cvWrapper.addEventListener('input', triggerAutoSave);
+                cvWrapper.addEventListener('input', () => {
+                    triggerAutoSave();
+                    schedulePagination();
+                });
             }
         }
 
         // =======================================================
-        // 6. FOTO E LOGO (UPLOAD / URL)
+        // 8. FOTO E LOGO (UPLOAD / URL)
         // =======================================================
         function promptPhotoUrl() {
             const currentUrl = document.getElementById('profileImg').src;
@@ -1558,7 +1478,7 @@
         }
 
         function promptLogoUrl() {
-            const url = prompt('Cole o link do logo da internet:');
+            const url = prompt('Cole o link da imagem do logo:');
             if (url && url.trim()) {
                 document.querySelectorAll('.logo-img').forEach(img => {
                     img.src = url.trim();
@@ -1601,7 +1521,7 @@
         }
 
         // =======================================================
-        // 7. BARRAS DE PROGRESSO
+        // 9. BARRAS DE PROGRESSO
         // =======================================================
         function setupProgressBar(container) {
             let isDragging = false;
@@ -1640,7 +1560,7 @@
         }
 
         // =======================================================
-        // 8. LINKS EM FORMAÇÃO E CERTIFICAÇÕES
+        // 10. LINKS DE CERTIFICADOS
         // =======================================================
         function editCertLink(btn) {
             const linkEl = btn.parentElement.querySelector('.cert-link');
@@ -1659,7 +1579,7 @@
         }
 
         // =======================================================
-        // 9. RESTAURAÇÃO E INICIALIZAÇÃO GERAL
+        // 11. INICIALIZAÇÃO GERAL
         // =======================================================
         window.addEventListener('DOMContentLoaded', () => {
             // 1. Restaura tema
@@ -1687,14 +1607,15 @@
                 document.getElementById('restoreLogoBtn').style.display = 'flex';
             }
 
-            // 5. Restaura conteúdo salvo
+            // 5. Restaura conteúdo salvo se existir
             const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
             if (savedHtml) {
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // 6. Ativa todos os eventos
+            // 6. Ativa todos os eventos e monitora paginação
             initInteractiveEvents();
+            schedulePagination();
         });
     </script>
 </body>
