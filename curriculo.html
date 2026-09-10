@@ -1,752 +1,1299 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Currículo - Ronei Costa Soares</title>
-    <!-- Ícones Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --sidebar-bg: #1a2a59;
-            --sidebar-text: #f0f4f8;
-            --accent-cyan: #2aa8e2;
-            --accent-title: #1a2a59;
-            --bar-bg: #293b70;
-            --bar-fill: #38b6ff;
-            --border-color: #d1d5db;
-            --text-gray: #4b5563;
-            --page-w: 210mm;
-            --page-h: 297mm;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currículo - RONEI COSTA SOARES</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+  <!-- Tipografia Inter (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        body {
-            background-color: #525659;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0 60px 0;
-        }
+  <!-- Ícones Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        /* BARRA DE AÇÕES FLUTUANTE */
-        .toolbar {
-            position: fixed;
-            top: 15px;
-            right: 25px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            padding: 10px 18px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 9999;
-        }
+  <style>
+    :root {
+      /* Tema Padrão: Azul Marinho */
+      --sidebar-bg: #172652;
+      --sidebar-text: #f1f5f9;
+      --sidebar-muted: #94a3b8;
+      --accent-cyan: #2aa8e2;
+      --accent-navy: #172652;
+      --bar-track: #253768;
+      --bar-fill: #38b6ff;
+      --text-main: #2d3748;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --page-w: 210mm;
+      --page-h: 297mm;
+    }
 
-            .toolbar button {
-                background-color: #0070ba;
-                color: white;
-                border: none;
-                padding: 8px 18px;
-                border-radius: 20px;
-                font-size: 14px;
-                font-weight: bold;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                transition: background-color 0.2s;
-            }
+    /* Variações de Temas */
+    body.theme-graphite {
+      --sidebar-bg: #1e293b;
+      --accent-cyan: #38bdf8;
+      --accent-navy: #0f172a;
+      --bar-track: #334155;
+      --bar-fill: #38bdf8;
+    }
+    body.theme-emerald {
+      --sidebar-bg: #0f382c;
+      --accent-cyan: #10b981;
+      --accent-navy: #08241c;
+      --bar-track: #174e3e;
+      --bar-fill: #34d399;
+    }
+    body.theme-burgundy {
+      --sidebar-bg: #3d1324;
+      --accent-cyan: #f43f5e;
+      --accent-navy: #270b16;
+      --bar-track: #541d33;
+      --bar-fill: #fb7185;
+    }
+    body.theme-indigo {
+      --sidebar-bg: #1e1b4b;
+      --accent-cyan: #818cf8;
+      --accent-navy: #131138;
+      --bar-track: #2e2a72;
+      --bar-fill: #a5b4fc;
+    }
 
-                .toolbar button:hover {
-                    background-color: #00508a;
-                }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
 
-            .toolbar .hint {
-                font-size: 12px;
-                color: #555;
-            }
+    body {
+      background-color: #4a5568;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px 0 60px 0;
+    }
 
-        /* ESTRUTURA DA PÁGINA A4 */
-        .page {
-            width: var(--page-w);
-            height: var(--page-h);
-            background-color: #ffffff;
-            display: grid;
-            grid-template-columns: 72mm 138mm;
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
-            position: relative;
-            overflow: hidden;
-        }
+    /* SELETOR DE TEMAS FLUTUANTE (NÃO SAI NA IMPRESSÃO) */
+    .theme-panel {
+      position: fixed;
+      top: 15px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 8px 14px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 9999;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+    }
 
-        /* BARRA LATERAL ESQUERDA */
-        .sidebar {
-            background-color: var(--sidebar-bg);
-            color: var(--sidebar-text);
-            padding: 25px 20px;
-            display: flex;
-            flex-direction: column;
-            font-size: 11px;
-        }
+    .theme-dots {
+      display: flex;
+      gap: 6px;
+    }
 
-        /* Foto de Perfil */
-        .profile-photo-container {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 3px solid #38b6ff;
-            margin: 0 auto 20px auto;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            background: #20336b;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
+    .theme-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      transition: transform 0.15s;
+    }
 
-            .profile-photo-container img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+    .theme-dot:hover {
+      transform: scale(1.18);
+    }
 
-            .profile-photo-container:hover::after {
-                content: "Trocar Foto";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.6);
-                color: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 11px;
-            }
+    /* PÁGINAS A4 */
+    .page {
+      width: var(--page-w);
+      height: var(--page-h);
+      background-color: #ffffff;
+      display: grid;
+      grid-template-columns: 72mm 138mm;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .sidebar-section {
-            margin-bottom: 18px;
-        }
+    /* BARRA LATERAL */
+    .sidebar {
+      background-color: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 26px 20px;
+      display: flex;
+      flex-direction: column;
+      font-size: 10.5px;
+      transition: background-color 0.2s;
+    }
 
-        .sidebar-title {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            border-bottom: 1.5px solid var(--accent-cyan);
-            padding-bottom: 3px;
-        }
+    /* FOTO DE PERFIL */
+    .profile-container {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px solid var(--accent-cyan);
+      margin: 0 auto 18px auto;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
 
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
+    .profile-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-            .contact-item i {
-                color: var(--accent-cyan);
-                width: 14px;
-                margin-top: 2px;
-            }
+    .profile-container:hover::after {
+      content: "Trocar Foto";
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
 
-        /* Barras de Progresso */
-        .skill-item {
-            margin-bottom: 7px;
-        }
+    .sidebar-section {
+      margin-bottom: 16px;
+    }
 
-        .skill-name {
-            display: block;
-            font-size: 10px;
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    .sidebar-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      border-bottom: 1.5px solid var(--accent-cyan);
+      padding-bottom: 3px;
+      color: #ffffff;
+    }
 
-        .progress-bar {
-            height: 5px;
-            background-color: var(--bar-bg);
-            border-radius: 3px;
-            overflow: hidden;
-        }
+    /* ITENS DE CONTATO E LINKS */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 7px;
+      line-height: 1.35;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background-color: var(--bar-fill);
-        }
+    .contact-item i {
+      color: var(--accent-cyan);
+      width: 13px;
+      margin-top: 2px;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
 
-        /* CORPO PRINCIPAL (DIREITA) */
-        .main {
-            padding: 30px 25px;
-            position: relative;
-        }
+    .smart-link {
+      color: var(--sidebar-text);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
 
-        /* Logo Empresa Topo */
-        .logo-top {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            text-align: right;
-        }
+    .smart-link:hover {
+      text-decoration: underline !important;
+      color: var(--bar-fill);
+    }
 
-            .logo-top .logo-text {
-                font-size: 16px;
-                font-weight: 900;
-                color: #0b1f42;
-                letter-spacing: 0.5px;
-            }
+    /* COMPETÊNCIAS INTERATIVAS */
+    .skill-item {
+      margin-bottom: 6px;
+      position: relative;
+    }
 
-            .logo-top .sub {
-                font-size: 6px;
-                letter-spacing: 0.5px;
-                color: #4b5563;
-                text-transform: uppercase;
-            }
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5px;
+    }
 
-        /* Cabeçalho Nome */
-        .header-name {
-            margin-bottom: 20px;
-            margin-top: 5px;
-        }
+    .skill-name {
+      font-size: 9.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90%;
+    }
 
-        .candidate-name {
-            font-size: 30px;
-            line-height: 1.05;
-            font-weight: 800;
-            color: var(--accent-title);
-            text-transform: uppercase;
-        }
+    .skill-del-btn {
+      background: none;
+      border: none;
+      color: #f87171;
+      cursor: pointer;
+      font-size: 10px;
+      padding: 0 3px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
 
-        .candidate-role {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--accent-title);
-            letter-spacing: 1px;
-            margin-top: 5px;
-            text-transform: uppercase;
-        }
+    .skill-item:hover .skill-del-btn {
+      opacity: 1;
+    }
 
-        /* Seções */
-        .section-title {
-            color: var(--accent-cyan);
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border-bottom: 1.5px solid var(--accent-cyan);
-            padding-bottom: 3px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
+    .progress-bar-container {
+      height: 5.5px;
+      background-color: var(--bar-track);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
 
-        .about-text {
-            font-size: 10px;
-            line-height: 1.45;
-            color: #2b2b2b;
-            text-align: justify;
-            margin-bottom: 10px;
-        }
+    .progress-fill {
+      height: 100%;
+      background-color: var(--bar-fill);
+      pointer-events: none;
+      transition: width 0.1s ease-out;
+    }
 
-        /* Linhas de Experiência e Formação */
-        .timeline-item {
-            display: grid;
-            grid-template-columns: 42mm 1fr;
-            gap: 12px;
-            margin-bottom: 14px;
-            font-size: 10px;
-        }
+    .add-skill-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      color: var(--sidebar-text);
+      font-size: 9px;
+      font-weight: 600;
+      padding: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
 
-        .timeline-left {
-            border-right: 1px solid var(--border-color);
-            padding-right: 8px;
-        }
+    .add-skill-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent-cyan);
+    }
 
-        .company-name {
-            font-weight: 800;
-            color: #111827;
-            text-transform: uppercase;
-            font-size: 10px;
-        }
+    /* CORPO PRINCIPAL (DIREITA) */
+    .main {
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
 
-        .job-meta {
-            color: var(--text-gray);
-            margin: 1px 0 4px 0;
-            font-size: 9px;
-        }
+    /* ÁREA DO CABEÇALHO DO LOGO (COM ESPAÇAMENTO ADAPTATIVO) */
+    .page-logo-header {
+      width: 100%;
+      min-height: 46px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
 
-        .job-techs {
-            font-style: italic;
-            color: #555;
-            font-size: 8.5px;
-            line-height: 1.25;
-        }
+    /* Se não houver logo, o cabeçalho some e o conteúdo sobe */
+    body.no-logo .page-logo-header {
+      min-height: 0 !important;
+      margin-bottom: 0 !important;
+      display: none !important;
+    }
 
-        .timeline-right .job-role {
-            font-weight: 800;
-            color: #111827;
-            font-size: 11px;
-            margin-bottom: 3px;
-        }
+    .logo-box {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
 
-        .job-bullets {
-            list-style-type: none;
-            line-height: 1.35;
-            color: #2b2b2b;
-        }
+    .logo-box:hover .logo-tools {
+      opacity: 1;
+    }
 
-            .job-bullets li {
-                margin-bottom: 3px;
-            }
+    .logo-tools {
+      position: absolute;
+      top: -24px;
+      right: 0;
+      background: #1e293b;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
 
-                .job-bullets li::before {
-                    content: "";
-                }
+    .logo-tools button,
+    .logo-tools label {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 1px 3px;
+    }
 
-        /* Formação e Certificados Grid */
-        .grid-row {
-            display: grid;
-            grid-template-columns: 38mm 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 10.5px;
-        }
+    .logo-tools button:hover,
+    .logo-tools label:hover {
+      color: var(--accent-cyan);
+    }
 
-        .grid-left {
-            border-right: 1px solid var(--border-color);
-            padding-right: 8px;
-        }
+    .logo-text-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #0d1b3e;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
 
-        .inst-title {
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #111827;
-            font-size: 10px;
-        }
+    .logo-text-sub {
+      font-size: 6.5px;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
 
-        .inst-year {
-            font-size: 9px;
-            color: var(--text-gray);
-        }
+    .logo-img {
+      max-height: 28px;
+      max-width: 140px;
+      object-fit: contain;
+      display: none;
+    }
 
-        .grid-right {
-            font-weight: 700;
-            color: #111827;
-            display: flex;
-            align-items: center;
-        }
+    /* Botão sutil para restaurar logo quando oculto */
+    .restore-logo-btn {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #334155;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: none;
+      z-index: 9999;
+    }
 
-        /* EDICÃO DIRETA */
-        [contenteditable="true"] {
-            outline: none;
-            transition: background 0.2s;
-        }
+    body.no-logo .restore-logo-btn {
+      display: block;
+    }
 
-            [contenteditable="true"]:hover {
-                background-color: rgba(42, 168, 226, 0.1);
-                border-radius: 2px;
-            }
+    /* CABEÇALHO NOME */
+    .header-name {
+      margin-bottom: 14px;
+    }
 
-            [contenteditable="true"]:focus {
-                background-color: rgba(42, 168, 226, 0.2);
-            }
+    .candidate-name {
+      font-size: 28px;
+      line-height: 1.05;
+      font-weight: 900;
+      color: var(--accent-navy);
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+    }
 
-        /* CONFIGURAÇÃO DE IMPRESSÃO (PDF EXATO A4) */
-        @media print {
-            body {
-                background: none;
-                padding: 0;
-                margin: 0;
-            }
+    .candidate-role {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--accent-navy);
+      letter-spacing: 0.8px;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
 
-            .toolbar {
-                display: none !important;
-            }
+    /* TÍTULOS DE SEÇÕES */
+    .section-title {
+      color: var(--accent-cyan);
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-bottom: 1.5px solid var(--accent-cyan);
+      padding-bottom: 3px;
+      margin-top: 11px;
+      margin-bottom: 8px;
+    }
 
-            .page {
-                margin: 0;
-                box-shadow: none;
-                page-break-after: always;
-                break-after: page;
-                height: 297mm;
-                width: 210mm;
-            }
+    .about-text {
+      font-size: 9.6px;
+      line-height: 1.45;
+      color: var(--text-main);
+      text-align: justify;
+      margin-bottom: 6px;
+    }
 
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
+    /* ITENS DE EXPERIÊNCIA */
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 41mm 1fr;
+      gap: 12px;
+      margin-bottom: 11px;
+      font-size: 9.6px;
+    }
 
-            @page {
-                size: A4 portrait;
-                margin: 0;
-            }
-        }
-    </style>
+    .timeline-left {
+      border-right: 1px solid var(--border-light);
+      padding-right: 8px;
+    }
+
+    .company-name {
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      font-size: 9.6px;
+      line-height: 1.2;
+    }
+
+    .job-meta {
+      color: var(--text-muted);
+      margin: 1px 0 3px 0;
+      font-size: 8.8px;
+      line-height: 1.25;
+    }
+
+    .job-techs {
+      font-style: italic;
+      color: #64748b;
+      font-size: 8.3px;
+      line-height: 1.25;
+    }
+
+    .timeline-right .job-role {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 10.3px;
+      margin-bottom: 2px;
+    }
+
+    .job-bullets {
+      list-style-type: none;
+      line-height: 1.38;
+      color: var(--text-main);
+    }
+
+    .job-bullets li {
+      margin-bottom: 2px;
+    }
+
+    /* FORMAÇÃO E CERTIFICAÇÕES */
+    .grid-row {
+      display: grid;
+      grid-template-columns: 37mm 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 9.8px;
+    }
+
+    .grid-left {
+      border-right: 1px solid var(--border-light);
+      padding-right: 8px;
+    }
+
+    .inst-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0f172a;
+      font-size: 9.5px;
+    }
+
+    .inst-year {
+      font-size: 8.8px;
+      color: var(--text-muted);
+    }
+
+    .grid-right {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    .cert-link {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .cert-link:hover {
+      text-decoration: underline !important;
+      color: var(--accent-cyan);
+    }
+
+    .cert-link-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 10px;
+      padding: 2px 4px;
+      opacity: 0.6;
+      transition: opacity 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .grid-right:hover .cert-link-btn {
+      opacity: 1;
+    }
+
+    .cert-link-btn:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* MODO EDITÁVEL */
+    [contenteditable="true"] {
+      outline: none;
+      transition: background 0.15s;
+    }
+
+    [contenteditable="true"]:hover {
+      background-color: rgba(42, 168, 226, 0.08);
+      border-radius: 2px;
+    }
+
+    [contenteditable="true"]:focus {
+      background-color: rgba(42, 168, 226, 0.16);
+    }
+
+    /* REGRAS DE IMPRESSÃO (Ctrl + P) */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+        margin: 0;
+      }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+        height: 297mm;
+        width: 210mm;
+      }
+      .theme-panel,
+      .skill-del-btn,
+      .add-skill-btn,
+      .logo-tools,
+      .restore-logo-btn,
+      .cert-link-btn {
+        display: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- BARRA DE CONTROLE -->
-    <div class="toolbar">
-        <button onclick="window.print()">
-            <i class="fa-solid fa-file-pdf"></i> Baixar em PDF
-        </button>
-        <div class="hint">💡 Clique em qualquer texto para editar ou na foto para trocá-la.</div>
+  <!-- SELETOR DE TEMAS -->
+  <div class="theme-panel">
+    <span>Tema:</span>
+    <div class="theme-dots">
+      <div class="theme-dot" style="background: #172652;" title="Azul Marinho" onclick="applyTheme('')"></div>
+      <div class="theme-dot" style="background: #1e293b;" title="Grafite Minimalista" onclick="applyTheme('theme-graphite')"></div>
+      <div class="theme-dot" style="background: #0f382c;" title="Verde Esmeralda" onclick="applyTheme('theme-emerald')"></div>
+      <div class="theme-dot" style="background: #3d1324;" title="Vinho Executivo" onclick="applyTheme('theme-burgundy')"></div>
+      <div class="theme-dot" style="background: #1e1b4b;" title="Roxo Deep Tech" onclick="applyTheme('theme-indigo')"></div>
     </div>
+  </div>
 
-    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+  <button class="restore-logo-btn" onclick="restoreLogos()"><i class="fa-solid fa-plus"></i> Inserir Logo</button>
+
+  <!-- Inputs invisíveis para upload -->
+  <input type="file" id="photoInput" accept="image/*" style="display: none;">
+  <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+
+  <!-- CONTÊINER DO CURRÍCULO (SALVO AUTOMATICAMENTE) -->
+  <div id="cvWrapper">
 
     <!-- ==================== PÁGINA 1 ==================== -->
     <div class="page" id="page1">
-        <!-- Barra Lateral -->
-        <div class="sidebar">
-            <div class="profile-photo-container" onclick="document.getElementById('photoInput').click()">
-                <!-- Imagem padrão placeholder -->
-                <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto de Perfil">
-            </div>
-
-            <div class="sidebar-section">
-                <div class="contact-item" contenteditable="true">
-                    Brasileiro, casado, 38 anos
-                </div>
-                <div class="contact-item">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <span contenteditable="true">Borda da Mata - MG,<br>37564-000, Brasil</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-solid fa-phone"></i>
-                    <span contenteditable="true">(19) 98700-6385</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-solid fa-envelope"></i>
-                    <span contenteditable="true">ronei0612@gmail.com</span>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title" contenteditable="true">LINKS</div>
-                <div class="contact-item">
-                    <i class="fa-solid fa-globe"></i>
-                    <span contenteditable="true">roneicostasoares.com.br</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-brands fa-linkedin"></i>
-                    <span contenteditable="true">linkedin.com/in/ronei0612</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-brands fa-github"></i>
-                    <span contenteditable="true">github.com/ronei0612</span>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <div class="sidebar-title" contenteditable="true">COMPETÊNCIAS</div>
-
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">.Net / .Net Framework / .Net Core</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">ASP.Net / MVC</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">EntityFramework / LINQ</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">HTML / Javascript / CSS</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Git / GitHub</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">SQL Server / PostgreSQL / Redis</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Linux / Docker / WSL</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Azure DevOps / CI/CD</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">MongoDB / MySQL</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Bootstrap / Jquery</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Node.js / Express.js</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">RabbitMQ / Kafka</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Angular / Vue.js / React</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
-                </div>
-            </div>
+      <div class="sidebar">
+        <div class="profile-container" id="profileBtn" title="Clique para trocar sua foto">
+          <img id="profileImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80" alt="Foto">
         </div>
 
-        <!-- Área de Conteúdo Principal -->
-        <div class="main">
-            <div class="logo-top">
-                <div class="logo-text" contenteditable="true">NTT DATA</div>
-                <div class="sub" contenteditable="true">Trusted Global Innovator</div>
-            </div>
-
-            <div class="header-name">
-                <div class="candidate-name" contenteditable="true">RONEI<br>COSTA SOARES</div>
-                <div class="candidate-role" contenteditable="true">DESENVOLVEDOR .NET</div>
-            </div>
-
-            <div class="section-title" contenteditable="true">SOBRE MIM</div>
-            <div class="about-text" contenteditable="true">
-                Programador .Net com mais de 6 anos de experiência com foco em desenvolvimento de Aplicações Web e APIs, me destaco pela capacidade de comunicação, liderança e resolução de desafios. Minha abordagem é centrada na colaboração e no comprometimento com a qualidade e confiabilidade. Busco constantemente aprimorar processos e contribuir para o crescimento dos projetos e da equipe. Se está à busca de alguém proativo, responsável e comprometido com o sucesso, estou à disposição.
-            </div>
-
-            <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
-
-            <!-- Item 1 -->
-            <div class="timeline-item">
-                <div class="timeline-left">
-                    <div class="company-name" contenteditable="true">NTT DATA</div>
-                    <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
-                    <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
-                </div>
-                <div class="timeline-right">
-                    <div class="job-role" contenteditable="true">Analista Programador</div>
-                    <ul class="job-bullets" contenteditable="true">
-                        <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
-                        <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
-                        <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="timeline-item">
-                <div class="timeline-left">
-                    <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
-                    <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
-                    <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
-                </div>
-                <div class="timeline-right">
-                    <div class="job-role" contenteditable="true">Programador de Sistemas</div>
-                    <ul class="job-bullets" contenteditable="true">
-                        <li>Tradução da plataforma para outros línguas;</li>
-                        <li>Resolução de chamados abertos pelos clientes;</li>
-                        <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
-                        <li>Implementação de novas funcionalidades;</li>
-                        <li>Liderança de um time para migrações de dados;</li>
-                        <li>Solução de problemas utilizando Scrum.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="timeline-item">
-                <div class="timeline-left">
-                    <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
-                    <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
-                    <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
-                </div>
-                <div class="timeline-right">
-                    <div class="job-role" contenteditable="true">Prestador de Serviços</div>
-                    <ul class="job-bullets" contenteditable="true">
-                        <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="sidebar-section">
+          <div class="contact-item">
+            <span contenteditable="true">Brasileiro, casado, 38 anos</span>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <a class="smart-link" id="linkAddress" target="_blank" rel="noopener noreferrer" contenteditable="true">Borda da Mata - MG,<br>37564-000, Brasil</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-phone"></i>
+            <a class="smart-link" id="linkPhone" target="_blank" rel="noopener noreferrer" contenteditable="true">(19) 98700-6385</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-solid fa-envelope"></i>
+            <a class="smart-link" id="linkEmail" target="_blank" rel="noopener noreferrer" contenteditable="true">ronei0612@gmail.com</a>
+          </div>
         </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title" contenteditable="true">LINKS</div>
+          <div class="contact-item">
+            <i class="fa-solid fa-globe"></i>
+            <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">roneicostasoares.com.br</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-brands fa-linkedin"></i>
+            <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">linkedin.com/in/ronei0612</a>
+          </div>
+          <div class="contact-item">
+            <i class="fa-brands fa-github"></i>
+            <a class="smart-link weblink" target="_blank" rel="noopener noreferrer" contenteditable="true">github.com/ronei0612</a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title" contenteditable="true">COMPETÊNCIAS</div>
+          <div id="skillsContainer">
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">.Net / .Net Framework / .Net Core</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">ASP.Net / MVC</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">EntityFramework / LINQ</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">HTML / Javascript / CSS</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Git / GitHub</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">SQL Server / PostgreSQL / Redis</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Linux / Docker / WSL</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Azure DevOps / CI/CD</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">MongoDB / MySQL</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 70%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Bootstrap / Jquery</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Node.js / Express.js</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 65%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">RabbitMQ / Kafka</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 60%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name" contenteditable="true">Angular / Vue.js / React</span>
+                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 65%;"></div></div>
+            </div>
+
+          </div>
+
+          <button class="add-skill-btn" id="addSkillBtn"><i class="fa-solid fa-plus"></i> Adicionar Competência</button>
+        </div>
+      </div>
+
+      <div class="main">
+        <!-- Cabeçalho do Logo -->
+        <div class="page-logo-header">
+          <div class="logo-box">
+            <div class="logo-tools">
+              <label title="Carregar imagem" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-camera"></i></label>
+              <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+            <div class="logo-text-wrap">
+              <div class="logo-text-title" contenteditable="true">NTT DATA</div>
+              <div class="logo-text-sub" contenteditable="true">Trusted Global Innovator</div>
+            </div>
+            <img class="logo-img" alt="Logo">
+          </div>
+        </div>
+
+        <div class="header-name">
+          <div class="candidate-name" id="candidateName" contenteditable="true">RONEI<br>COSTA SOARES</div>
+          <div class="candidate-role" contenteditable="true">DESENVOLVEDOR .NET</div>
+        </div>
+
+        <div class="section-title" contenteditable="true">SOBRE MIM</div>
+        <div class="about-text" contenteditable="true">
+          Programador .Net com mais de 6 anos de experiência com foco em desenvolvimento de Aplicações Web e APIs, me destaco pela capacidade de comunicação, liderança e resolução de desafios. Minha abordagem é centrada na colaboração e no comprometimento com a qualidade e confiabilidade. Busco constantemente aprimorar processos e contribuir para o crescimento dos projetos e da equipe. Se está à busca de alguém proativo, responsável e comprometido com o sucesso, estou à disposição.
+        </div>
+
+        <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
+
+        <!-- Experiência 1 -->
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="company-name" contenteditable="true">NTT DATA</div>
+            <div class="job-meta" contenteditable="true">São Paulo - SP<br>dez 2024 - atual</div>
+            <div class="job-techs" contenteditable="true">.Net8, .Net Core, .Net Framework, MSSQL, Redis, RabbitMq, Kafka, MongoDB, Dynatrace, DevOps, Microserviços, Api</div>
+          </div>
+          <div class="timeline-right">
+            <div class="job-role" contenteditable="true">Analista Programador</div>
+            <ul class="job-bullets" contenteditable="true">
+              <li>Migração de aplicações em .Net Framework para .Net lidando com diferentes tipos de arquiteturas;</li>
+              <li>Refatoração de código, testes unitários, de integração e funcionais, garantia de entrega rápida com qualidade e bom desempenho das aplicações;</li>
+              <li>Desenvolvimento de microserviços e implementação de APIs REST.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Experiência 2 -->
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="company-name" contenteditable="true">APLICATIVO.NET</div>
+            <div class="job-meta" contenteditable="true">Paulínia - SP<br>jun 2022 - jul 2024</div>
+            <div class="job-techs" contenteditable="true">.Net6, .Net Core, .Net Framework, Redis, PostgreeSql, Jquery, DevOps, SignalR</div>
+          </div>
+          <div class="timeline-right">
+            <div class="job-role" contenteditable="true">Programador de Sistemas</div>
+            <ul class="job-bullets" contenteditable="true">
+              <li>Tradução da plataforma para outros línguas;</li>
+              <li>Resolução de chamados abertos pelos clientes;</li>
+              <li>Gerenciamento de Pipelines no Microsoft Azure;</li>
+              <li>Implementação de novas funcionalidades;</li>
+              <li>Liderança de um time para migrações de dados;</li>
+              <li>Solução de problemas utilizando Scrum.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Experiência 3 -->
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="company-name" contenteditable="true">NET CLOUD BRASIL</div>
+            <div class="job-meta" contenteditable="true">Campinas - SP<br>fev 2022 - jun 2022</div>
+            <div class="job-techs" contenteditable="true">SQLite, HTML5, CSS, JS, Node, Bootstrap</div>
+          </div>
+          <div class="timeline-right">
+            <div class="job-role" contenteditable="true">Prestador de Serviços</div>
+            <ul class="job-bullets" contenteditable="true">
+              <li>Manutenção de serviços web de chat e email utilizando tecnologias Web desenvolvidas em Node.js, Javascript e Jquery, trabalhando com HTML, CSS e Bootstrap.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Experiência 4 (Movida para preencher a Página 1) -->
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
+            <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
+            <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
+          </div>
+          <div class="timeline-right">
+            <div class="job-role" contenteditable="true">Programador Jr</div>
+            <ul class="job-bullets" contenteditable="true">
+              <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
+              <li>Administração do website da empresa;</li>
+              <li>Gerenciamento de servidores locais e remotos.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- ==================== PÁGINA 2 ==================== -->
     <div class="page" id="page2">
-        <!-- Barra Lateral -->
-        <div class="sidebar">
-            <div style="height: 40px;"></div> <!-- Espaçador estético -->
-            <div class="sidebar-section">
-                <div class="sidebar-title" contenteditable="true">LÍNGUAS</div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Português</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span class="skill-name" contenteditable="true">Inglês</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 25%;"></div></div>
-                </div>
+      <div class="sidebar">
+        <div style="height: 38px;"></div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" contenteditable="true">LÍNGUAS</div>
+
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name" contenteditable="true">Português</span>
+              <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
             </div>
-        </div>
+            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 100%;"></div></div>
+          </div>
 
-        <!-- Área de Conteúdo Principal -->
-        <div class="main">
-            <div class="logo-top">
-                <div class="logo-text" contenteditable="true">NTT DATA</div>
-                <div class="sub" contenteditable="true">Trusted Global Innovator</div>
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name" contenteditable="true">Inglês</span>
+              <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Continuação Experiências -->
-            <div style="margin-top: 15px;">
-                <!-- Item 4 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">OTRANTO CONTABILIDADE</div>
-                        <div class="job-meta" contenteditable="true">Campinas - SP<br>out 2019 - jan 2022</div>
-                        <div class="job-techs" contenteditable="true">.Net Framework, Angular, Python</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Programador Jr</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Criação de aplicações para automação de processos contábeis e fiscal;</li>
-                            <li>Administração do website da empresa;</li>
-                            <li>Gerenciamento de servidores locais e remotos.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
-                        <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
-                        <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
-                    </div>
-                    <div class="timeline-right">
-                        <div class="job-role" contenteditable="true">Técnico em Informática</div>
-                        <ul class="job-bullets" contenteditable="true">
-                            <li>Resolução de chamados e atendimento ao cliente;</li>
-                            <li>Administração e manutenção de banco SQL Server;</li>
-                            <li>Criação de apps para gerenciamento de servidores;</li>
-                            <li>Criação de aplicações em Windows Forms;</li>
-                            <li>Manutenção do website da empresa e da intranet;</li>
-                            <li>Solução de problemas utilizando Kanban.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Formação -->
-            <div class="section-title" contenteditable="true">FORMAÇÃO</div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">UNIP</div>
-                    <div class="inst-year" contenteditable="true">2022</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Análise e Desenvolvimento de Sistemas
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">PEOPLE</div>
-                    <div class="inst-year" contenteditable="true">2017</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Programação em C#
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">INST. MONITOR</div>
-                    <div class="inst-year" contenteditable="true">2015</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Técnico em informática
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">CEMEP</div>
-                    <div class="inst-year" contenteditable="true">2006</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Ensino Médio Completo
-                </div>
-            </div>
-
-            <!-- Certificações -->
-            <div class="section-title" contenteditable="true">CERTIFICAÇÕES</div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">MICROSOFT</div>
-                    <div class="inst-year" contenteditable="true">2025</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    AZ-900 Microsoft Azure Fundamentals
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">CERTIPROF</div>
-                    <div class="inst-year" contenteditable="true">2024</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Scrum Foundation Professional Certification
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">FREECODECAMP</div>
-                    <div class="inst-year" contenteditable="true">2024</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    Foundational C# Microsoft
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="grid-left">
-                    <div class="inst-title" contenteditable="true">FUND BRADESCO</div>
-                    <div class="inst-year" contenteditable="true">2013</div>
-                </div>
-                <div class="grid-right" contenteditable="true">
-                    CSS e HTML / Fundamentos de Rede
-                </div>
-            </div>
+            <div class="progress-bar-container" title="Clique ou arraste para ajustar"><div class="progress-fill" style="width: 25%;"></div></div>
+          </div>
 
         </div>
+      </div>
+
+      <div class="main">
+        <!-- Cabeçalho do Logo Página 2 -->
+        <div class="page-logo-header">
+          <div class="logo-box">
+            <div class="logo-tools">
+              <label title="Carregar imagem" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-camera"></i></label>
+              <button title="Remover logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+            <div class="logo-text-wrap">
+              <div class="logo-text-title" contenteditable="true">NTT DATA</div>
+              <div class="logo-text-sub" contenteditable="true">Trusted Global Innovator</div>
+            </div>
+            <img class="logo-img" alt="Logo">
+          </div>
+        </div>
+
+        <!-- Experiência 5 -->
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="company-name" contenteditable="true">BANN QUÍMICA</div>
+            <div class="job-meta" contenteditable="true">Paulínia - SP<br>mar 2013 - out 2019</div>
+            <div class="job-techs" contenteditable="true">.Net Framework, Oracle, HTML, PHP, SAP, Linux, Docker</div>
+          </div>
+          <div class="timeline-right">
+            <div class="job-role" contenteditable="true">Técnico em Informática</div>
+            <ul class="job-bullets" contenteditable="true">
+              <li>Resolução de chamados e atendimento ao cliente;</li>
+              <li>Administração e manutenção de banco SQL Server;</li>
+              <li>Criação de apps para gerenciamento de servidores;</li>
+              <li>Criação de aplicações em Windows Forms;</li>
+              <li>Manutenção do website da empresa e da intranet;</li>
+              <li>Solução de problemas utilizando Kanban.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Formação -->
+        <div class="section-title" contenteditable="true">FORMAÇÃO</div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">UNIP</div>
+            <div class="inst-year" contenteditable="true">2022</div>
+          </div>
+          <div class="grid-right">
+            <a href="https://www.unip.br" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Análise e Desenvolvimento de Sistemas</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">PEOPLE</div>
+            <div class="inst-year" contenteditable="true">2017</div>
+          </div>
+          <div class="grid-right">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Programação em C#</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">INST. MONITOR</div>
+            <div class="inst-year" contenteditable="true">2015</div>
+          </div>
+          <div class="grid-right">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Técnico em informática</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">CEMEP</div>
+            <div class="inst-year" contenteditable="true">2006</div>
+          </div>
+          <div class="grid-right">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Ensino Médio Completo</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <!-- Certificações -->
+        <div class="section-title" contenteditable="true">CERTIFICAÇÕES</div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">MICROSOFT</div>
+            <div class="inst-year" contenteditable="true">2025</div>
+          </div>
+          <div class="grid-right">
+            <a href="https://learn.microsoft.com" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">AZ-900 Microsoft Azure Fundamentals</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">CERTIPROF</div>
+            <div class="inst-year" contenteditable="true">2024</div>
+          </div>
+          <div class="grid-right">
+            <a href="https://certiprof.com" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Scrum Foundation Professional Certification</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">FREECODECAMP</div>
+            <div class="inst-year" contenteditable="true">2024</div>
+          </div>
+          <div class="grid-right">
+            <a href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">Foundational C# Microsoft</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <div class="grid-left">
+            <div class="inst-title" contenteditable="true">FUND BRADESCO</div>
+            <div class="inst-year" contenteditable="true">2013</div>
+          </div>
+          <div class="grid-right">
+            <a href="https://www.ev.org.br" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true">CSS e HTML / Fundamentos de Rede</a>
+            <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <script>// Carregamento e troca da foto de perfil
-    const photoInput = document.getElementById('photoInput');
-    const profileImg = document.getElementById('profileImg');
+  </div>
 
-    photoInput.addEventListener('change', function(e) {
+  <script>
+    // =======================================================
+    // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
+    // =======================================================
+    const STORAGE_KEY_HTML = 'curriculo_content_v1';
+    const STORAGE_KEY_THEME = 'curriculo_theme_v1';
+    const STORAGE_KEY_NOLOGO = 'curriculo_nologo_v1';
+
+    let saveTimeout = null;
+    function triggerAutoSave() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const cvWrapper = document.getElementById('cvWrapper');
+        if (cvWrapper) {
+          localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
+        }
+      }, 400);
+    }
+
+    function applyTheme(themeClass) {
+      document.body.className = themeClass;
+      if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
+        document.body.classList.add('no-logo');
+      }
+      localStorage.setItem(STORAGE_KEY_THEME, themeClass);
+    }
+
+    // =======================================================
+    // 2. CONFIGURAÇÃO DE EVENTOS INTERATIVOS
+    // =======================================================
+    function initInteractiveEvents() {
+      // Título Dinâmico
+      const candidateNameEl = document.getElementById('candidateName');
+      if (candidateNameEl) {
+        function syncDocumentTitle() {
+          const rawText = candidateNameEl.innerText.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ').trim();
+          document.title = rawText ? `Currículo - ${rawText}` : 'Currículo Profissional';
+        }
+        candidateNameEl.addEventListener('input', () => {
+          syncDocumentTitle();
+          triggerAutoSave();
+        });
+        syncDocumentTitle();
+      }
+
+      // Links Inteligentes
+      const linkAddress = document.getElementById('linkAddress');
+      const linkPhone = document.getElementById('linkPhone');
+      const linkEmail = document.getElementById('linkEmail');
+
+      if (linkAddress) {
+        linkAddress.addEventListener('input', () => {
+          const text = linkAddress.innerText.replace(/\r?\n|\r/g, ' ').trim();
+          linkAddress.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`;
+          triggerAutoSave();
+        });
+      }
+
+      if (linkPhone) {
+        linkPhone.addEventListener('input', () => {
+          let digits = linkPhone.innerText.replace(/\D/g, '');
+          if (digits.length === 10 || digits.length === 11) digits = '55' + digits;
+          linkPhone.href = digits ? `https://wa.me/${digits}` : '#';
+          triggerAutoSave();
+        });
+      }
+
+      if (linkEmail) {
+        linkEmail.addEventListener('input', () => {
+          linkEmail.href = `mailto:${linkEmail.innerText.trim()}`;
+          triggerAutoSave();
+        });
+      }
+
+      document.querySelectorAll('.weblink').forEach(link => {
+        link.addEventListener('input', () => {
+          let text = link.innerText.trim();
+          link.href = text && !/^https?:\/\//i.test(text) ? 'https://' + text : (text || '#');
+          triggerAutoSave();
+        });
+      });
+
+      // Foto de perfil
+      const profileBtn = document.getElementById('profileBtn');
+      const profileImg = document.getElementById('profileImg');
+      const photoInput = document.getElementById('photoInput');
+
+      if (profileBtn && photoInput) {
+        profileBtn.onclick = () => photoInput.click();
+        photoInput.onchange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+              profileImg.src = evt.target.result;
+              triggerAutoSave();
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+      }
+
+      // Barras de Competência
+      document.querySelectorAll('.skill-item').forEach(setupSkillItem);
+
+      // Botão Adicionar Competência
+      const addSkillBtn = document.getElementById('addSkillBtn');
+      const skillsContainer = document.getElementById('skillsContainer');
+      if (addSkillBtn && skillsContainer) {
+        addSkillBtn.onclick = () => {
+          const newItem = document.createElement('div');
+          newItem.className = 'skill-item';
+          newItem.innerHTML = `
+            <div class="skill-header">
+              <span class="skill-name" contenteditable="true">Nova Competência</span>
+              <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="progress-bar-container" title="Clique ou arraste para ajustar">
+              <div class="progress-fill" style="width: 70%;"></div>
+            </div>
+          `;
+          skillsContainer.appendChild(newItem);
+          setupSkillItem(newItem);
+          newItem.querySelector('.skill-name').focus();
+          triggerAutoSave();
+        };
+      }
+
+      // Captura global de edição de texto para salvar automaticamente
+      document.getElementById('cvWrapper').addEventListener('input', triggerAutoSave);
+    }
+
+    function setupProgressBar(container) {
+      let isDragging = false;
+      function updateFill(e) {
+        const rect = container.getBoundingClientRect();
+        let percent = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+        percent = Math.max(0, Math.min(100, percent));
+        container.querySelector('.progress-fill').style.width = percent + '%';
+        triggerAutoSave();
+      }
+
+      container.onmousedown = (e) => {
+        isDragging = true;
+        updateFill(e);
+      };
+      window.addEventListener('mousemove', (e) => {
+        if (isDragging) updateFill(e);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+    }
+
+    function setupSkillItem(item) {
+      const bar = item.querySelector('.progress-bar-container');
+      if (bar) setupProgressBar(bar);
+
+      const delBtn = item.querySelector('.skill-del-btn');
+      if (delBtn) {
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          item.remove();
+          triggerAutoSave();
+        };
+      }
+    }
+
+    // =======================================================
+    // 3. EDIÇÃO DE LINKS EM FORMAÇÃO E CERTIFICADOS
+    // =======================================================
+    function editCertLink(btn) {
+      const linkEl = btn.parentElement.querySelector('.cert-link');
+      if (!linkEl) return;
+      const currentUrl = linkEl.getAttribute('href') || '';
+      const newUrl = prompt('Insira o link oficial do certificado ou curso:', currentUrl === '#' ? 'https://' : currentUrl);
+
+      if (newUrl !== null) {
+        let cleanUrl = newUrl.trim();
+        if (cleanUrl && !/^https?:\/\//i.test(cleanUrl) && cleanUrl !== '#') {
+          cleanUrl = 'https://' + cleanUrl;
+        }
+        linkEl.href = cleanUrl || '#';
+        triggerAutoSave();
+      }
+    }
+
+    // =======================================================
+    // 4. CONTROLE DO LOGO E ESPAÇAMENTOS
+    // =======================================================
+    const logoFileInput = document.getElementById('logoFileInput');
+    logoFileInput.onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(evt) {
-          profileImg.src = evt.target.result;
+        reader.onload = (evt) => {
+          document.querySelectorAll('.logo-img').forEach(img => {
+            img.src = evt.target.result;
+            img.style.display = 'block';
+          });
+          document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+          triggerAutoSave();
         };
         reader.readAsDataURL(file);
       }
-    });</script>
+    };
+
+    function removeLogos() {
+      document.body.classList.add('no-logo');
+      localStorage.setItem(STORAGE_KEY_NOLOGO, 'true');
+    }
+
+    function restoreLogos() {
+      document.body.classList.remove('no-logo');
+      localStorage.setItem(STORAGE_KEY_NOLOGO, 'false');
+    }
+
+    // =======================================================
+    // 5. INICIALIZAÇÃO E RESTAURAÇÃO
+    // =======================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Restaura tema
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+      if (savedTheme) applyTheme(savedTheme);
+
+      // 2. Restaura visibilidade do logo
+      if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
+        document.body.classList.add('no-logo');
+      }
+
+      // 3. Restaura dados do currículo se já existirem
+      const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
+      if (savedHtml) {
+        document.getElementById('cvWrapper').innerHTML = savedHtml;
+      }
+
+      // 4. Inicializa todos os ouvintes de eventos
+      initInteractiveEvents();
+    });
+  </script>
 </body>
 </html>
