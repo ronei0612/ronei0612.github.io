@@ -141,6 +141,20 @@
             opacity: 0.45;
         }
 
+        .client-badge[data-placeholder]:empty::before {
+            color: #0284c7;
+            opacity: 0.65;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .squad-period[data-placeholder]:empty::before {
+            color: #94a3b8;
+            opacity: 0.65;
+            font-style: italic;
+            font-weight: 500;
+        }
+
         /* ======================================================= */
         /* HEADER E FOOTER UNIFICADOS                             */
         /* ======================================================= */
@@ -839,10 +853,12 @@
                 opacity: 0.45;
             }
 
-        /* ITENS DINÂMICOS */
+        /* ======================================================= */
+        /* EXPERIÊNCIAS E SUB-EXPERIÊNCIAS                         */
+        /* ======================================================= */
         .timeline-item {
             display: grid;
-            grid-template-columns: 41mm 1fr;
+            grid-template-columns: 42mm 1fr;
             gap: 12px;
             margin-bottom: 11px;
             padding-bottom: 11px;
@@ -915,9 +931,97 @@
             font-weight: 700;
             color: #0f172a;
             font-size: calc(10px * var(--font-scale));
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             min-height: 14px;
         }
+
+        /* ESTRUTURA DE SUB-EXPERIÊNCIAS (SQUADS/CLIENTES) */
+        .squad-block {
+            margin-bottom: 7px;
+            position: relative;
+        }
+
+            .squad-block:last-child {
+                margin-bottom: 2px;
+            }
+
+        .squad-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
+            gap: 8px;
+        }
+
+        .squad-header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .client-badge {
+            display: inline-block;
+            background: rgba(42, 168, 226, 0.12);
+            color: #0284c7;
+            font-size: calc(8.2px * var(--font-scale));
+            font-weight: 700;
+            padding: 1.5px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            min-width: 40px;
+        }
+
+        .squad-period {
+            font-size: calc(8px * var(--font-scale));
+            font-weight: 600;
+            color: var(--text-muted);
+            font-style: italic;
+            white-space: nowrap;
+            min-width: 30px;
+        }
+
+        .squad-del-btn {
+            background: none;
+            border: none;
+            color: #f87171;
+            cursor: pointer;
+            font-size: 9px;
+            padding: 0 2px;
+            opacity: 0;
+            transition: opacity 0.15s, color 0.15s;
+        }
+
+        .squad-block:hover .squad-del-btn {
+            opacity: 1;
+        }
+
+        .squad-del-btn:hover {
+            color: #ef4444;
+        }
+
+        /* BOTÃO SOLICITADO */
+        .add-subexp-btn {
+            background: rgba(42, 168, 226, 0.08);
+            border: 1px dashed rgba(42, 168, 226, 0.45);
+            color: #0284c7;
+            font-size: calc(8.5px * var(--font-scale));
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
+        }
+
+            .add-subexp-btn:hover {
+                background: rgba(42, 168, 226, 0.18);
+                border-color: var(--accent-cyan);
+                color: var(--accent-navy);
+            }
 
         .job-bullets {
             list-style-type: none;
@@ -1072,9 +1176,16 @@
                 border: 1px solid rgba(255, 255, 255, 0.25) !important;
             }
 
+            .client-badge {
+                background: rgba(42, 168, 226, 0.15) !important;
+                color: #0284c7 !important;
+            }
+
             .top-toolbar,
             .dev-footer,
             .del-btn,
+            .squad-del-btn,
+            .add-subexp-btn,
             .skill-del-btn,
             .soft-del-btn,
             .add-item-btn,
@@ -1291,11 +1402,11 @@
                 <div class="section-title" contenteditable="true">SOBRE MIM</div>
                 <div class="about-text" contenteditable="true" data-placeholder="Escreva aqui um breve resumo sobre sua trajetória profissional, principais qualificações técnicas e comportamentais, desafios superados e objetivos de carreira..."></div>
 
-                <!-- Seção Experiência Profissional -->
+                <!-- Seção Experiência Profissional (Totalmente em branco) -->
                 <div class="section-block" id="sec-exp">
                     <div class="section-title" contenteditable="true">EXPERIÊNCIA PROFISSIONAL</div>
                     <div class="items-list" id="expContainer">
-                        <!-- Experiências Dinâmicas -->
+                        <!-- Totalmente limpo: sem experiências ou sub-experiências de exemplo -->
                     </div>
                     <button class="add-content-btn" onclick="addNewExperience()"><i class="fa-solid fa-plus"></i> Adicionar Experiência</button>
                 </div>
@@ -1327,10 +1438,6 @@
         // =======================================================
         // 1. MOTOR DE COMPRESSÃO DE IMAGENS VIA CANVAS
         // =======================================================
-        /**
-         * Redimensiona e comprime uma imagem para reduzir de megabytes para míseros kilobytes,
-         * permitindo salvar no localStorage com segurança absoluta.
-         */
         async function compressImageFile(file, options = {}) {
             const {
                 maxWidth = 400,
@@ -1348,7 +1455,6 @@
                     img.onload = () => {
                         let { width, height } = img;
 
-                        // Cálculo proporcional das novas dimensões
                         if (width > maxWidth || height > maxHeight) {
                             const ratio = Math.min(maxWidth / width, maxHeight / height);
                             width = Math.round(width * ratio);
@@ -1360,7 +1466,6 @@
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
 
-                        // Preenche fundo branco se for JPEG para evitar transparência preta
                         if (format === 'image/jpeg') {
                             ctx.fillStyle = '#ffffff';
                             ctx.fillRect(0, 0, width, height);
@@ -1370,7 +1475,6 @@
                         ctx.imageSmoothingQuality = 'high';
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Exporta em Base64 ultraleve
                         const compressedBase64 = canvas.toDataURL(format, quality);
                         resolve(compressedBase64);
                     };
@@ -1381,17 +1485,17 @@
         }
 
         // =======================================================
-        // 2. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
+        // 2. SALVAMENTO AUTOMÁTICO (localStorage - Versão Limpa)
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_clean_html_v12';
-        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v12';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v12';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v12';
-        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v12';
-        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v12';
-        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v12';
-        const STORAGE_KEY_PHOTO_URL = 'curriculo_clean_photourl_v12';
-        const STORAGE_KEY_LOGO_URL = 'curriculo_clean_logourl_v12';
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v16';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v16';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v16';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v16';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v16';
+        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v16';
+        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v16';
+        const STORAGE_KEY_PHOTO_URL = 'curriculo_clean_photourl_v16';
+        const STORAGE_KEY_LOGO_URL = 'curriculo_clean_logourl_v16';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1449,7 +1553,7 @@
 
             const data = {
                 app: 'ResumeBuilder',
-                version: '12.0',
+                version: '16.0',
                 author: 'Ronei Costa Soares',
                 theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
                 fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
@@ -1553,7 +1657,7 @@
         // 5. RESETAR CURRÍCULO
         // =======================================================
         function resetAllData() {
-            if (confirm('Deseja realmente resetar o currículo para o modelo inicial?')) {
+            if (confirm('Deseja realmente resetar o currículo para o modelo inicial em branco?')) {
                 localStorage.removeItem(STORAGE_KEY_HTML);
                 localStorage.removeItem(STORAGE_KEY_THEME);
                 localStorage.removeItem(STORAGE_KEY_FONT_FAMILY);
@@ -1696,7 +1800,7 @@
         }
 
         // =======================================================
-        // 8. ADICIONAR E EXCLUIR ITENS
+        // 8. ADICIONAR E EXCLUIR ITENS & SUB-EXPERIÊNCIAS
         // =======================================================
         function deleteItem(btn) {
             const item = btn.closest('.timeline-item, .grid-row, .soft-skill-tag');
@@ -1707,6 +1811,58 @@
             }
         }
 
+        // Adicionar nova Sub-experiência totalmente em branco
+        function addNewSubExperience(btn) {
+            const timelineRight = btn.closest('.timeline-right');
+            const container = timelineRight.querySelector('.squads-container');
+            if (!container) return;
+
+            // Se a lista de bullets padrão estiver vazia, recolhe para dar lugar às sub-experiências
+            const mainBullets = timelineRight.querySelector('.main-bullets');
+            if (mainBullets && mainBullets.innerText.trim() === '') {
+                mainBullets.style.display = 'none';
+            }
+
+            const squadBlock = document.createElement('div');
+            squadBlock.className = 'squad-block';
+            squadBlock.innerHTML = `
+                    <div class="squad-header">
+                        <span class="client-badge" contenteditable="true" data-placeholder="CLIENTE / SQUAD"></span>
+                        <div class="squad-header-right">
+                            <span class="squad-period" contenteditable="true" data-placeholder="Mês Ano – Mês Ano"></span>
+                            <button class="squad-del-btn" title="Excluir Sub-experiência" onclick="deleteSquad(this)"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                    <ul class="job-bullets">
+                        <li contenteditable="true" data-placeholder="Descreva suas entregas e realizações nesta sub-experiência..."></li>
+                    </ul>
+                `;
+            container.appendChild(squadBlock);
+            squadBlock.querySelector('.client-badge').focus();
+            triggerAutoSave();
+            schedulePagination();
+        }
+
+        // Excluir Sub-experiência individual
+        function deleteSquad(btn) {
+            const squad = btn.closest('.squad-block');
+            if (squad) {
+                const container = squad.closest('.squads-container');
+                const timelineRight = squad.closest('.timeline-right');
+                squad.remove();
+
+                // Se não sobrar nenhuma sub-experiência, reativa a lista de tópicos principal
+                if (container && container.querySelectorAll('.squad-block').length === 0) {
+                    const mainBullets = timelineRight.querySelector('.main-bullets');
+                    if (mainBullets) mainBullets.style.display = 'block';
+                }
+
+                triggerAutoSave();
+                schedulePagination();
+            }
+        }
+
+        // Adicionar Experiência Principal totalmente em branco
         function addNewExperience() {
             const container = document.getElementById('expContainer');
             if (!container) return;
@@ -1722,9 +1878,17 @@
                     </div>
                     <div class="timeline-right">
                         <div class="job-role" contenteditable="true" data-placeholder="Seu Cargo / Função"></div>
-                        <ul class="job-bullets">
+
+                        <!-- Lista de tópicos padrão (para empresas convencionais) -->
+                        <ul class="job-bullets main-bullets">
                             <li contenteditable="true" data-placeholder="Descreva suas realizações, projetos ou entregas..."></li>
                         </ul>
+
+                        <!-- Contêiner de sub-experiências (para consultorias/squads) -->
+                        <div class="squads-container"></div>
+
+                        <!-- Botão exato solicitado -->
+                        <button class="add-subexp-btn" onclick="addNewSubExperience(this)" title="Adicionar Sub-experiência">+ Adicionar Sub-experiência</button>
                     </div>
                 `;
             container.appendChild(newItem);
@@ -1858,7 +2022,6 @@
                     const file = e.target.files[0];
                     if (file) {
                         try {
-                            // Comprime a foto para max 320x320px JPEG a 82% (pesa ~20KB)
                             const compressedBase64 = await compressImageFile(file, {
                                 maxWidth: 320,
                                 maxHeight: 320,
@@ -1893,7 +2056,6 @@
                             const isPng = file.type === 'image/png' || file.type === 'image/svg+xml';
                             const format = isPng ? 'image/png' : 'image/jpeg';
 
-                            // Comprime o logo para max 400x120px preservando transparência
                             const compressedBase64 = await compressImageFile(file, {
                                 maxWidth: 400,
                                 maxHeight: 120,
@@ -1920,7 +2082,6 @@
                 };
             }
 
-            // Hard skills
             document.querySelectorAll('.skill-item').forEach(setupSkillItem);
 
             const addSkillBtn = document.getElementById('addSkillBtn');
@@ -1946,7 +2107,6 @@
                 };
             }
 
-            // Placeholders
             document.addEventListener('input', (e) => {
                 const el = e.target;
                 if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
@@ -2142,7 +2302,6 @@
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // Restaura foto persistida (agora com tamanho seguro)
             const savedPhotoUrl = localStorage.getItem(STORAGE_KEY_PHOTO_URL);
             if (savedPhotoUrl) {
                 const pImg = document.getElementById('profileImg');
@@ -2155,7 +2314,6 @@
                 if (pAvatar) pAvatar.style.display = 'none';
             }
 
-            // Restaura logo persistido
             const savedLogoUrl = localStorage.getItem(STORAGE_KEY_LOGO_URL);
             if (savedLogoUrl) {
                 document.querySelectorAll('.logo-img').forEach(img => {
