@@ -542,6 +542,7 @@
             overflow: hidden;
             cursor: pointer;
             position: relative;
+            user-select: none;
         }
 
         .progress-fill {
@@ -651,9 +652,7 @@
             position: relative;
         }
 
-        /* ======================================================= */
-        /* LOGO GEOMÉTRICO INTEGRADO                               */
-        /* ======================================================= */
+        /* LOGO GEOMÉTRICO INTEGRADO */
         .geo-logo-box {
             position: absolute;
             top: 0;
@@ -840,16 +839,13 @@
                 opacity: 0.45;
             }
 
-        /* ======================================================= */
-        /* ITENS DINÂMICOS & SEPARADOR SÓLIDO DE EXPERIÊNCIAS      */
-        /* ======================================================= */
+        /* ITENS DINÂMICOS */
         .timeline-item {
             display: grid;
             grid-template-columns: 41mm 1fr;
             gap: 12px;
             margin-bottom: 11px;
             padding-bottom: 11px;
-            /* Linha sólida contínua com a mesma cor e espessura da divisão vertical */
             border-bottom: 1px solid var(--border-light);
             font-size: calc(9.4px * var(--font-scale));
             position: relative;
@@ -1023,8 +1019,12 @@
         /* ======================================================= */
         /* REGRAS DE IMPRESSÃO (Ctrl + P) COM CORES FORÇADAS       */
         /* ======================================================= */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
         @media print {
-            /* Força globalmente a fidelidade de cores para todos os elementos */
             *, *::before, *::after {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -1047,7 +1047,6 @@
                 overflow: hidden !important;
             }
 
-            /* Reforço explícito de cores de fundo dos blocos principais */
             .sidebar {
                 background-color: var(--sidebar-bg) !important;
             }
@@ -1073,7 +1072,6 @@
                 border: 1px solid rgba(255, 255, 255, 0.25) !important;
             }
 
-            /* Elementos que somem na impressão */
             .top-toolbar,
             .dev-footer,
             .del-btn,
@@ -1093,7 +1091,6 @@
                 content: "" !important;
             }
 
-            /* Contatos e links vazios somem do PDF impresso */
             .contact-item:has([data-placeholder]:empty) {
                 display: none !important;
             }
@@ -1102,9 +1099,7 @@
 </head>
 <body class="font-inter">
 
-    <!-- ======================================================= -->
-    <!-- HEADER COM FERRAMENTAS UNIFICADAS                       -->
-    <!-- ======================================================= -->
+    <!-- HEADER COM FERRAMENTAS UNIFICADAS -->
     <header class="top-toolbar">
         <!-- Cores -->
         <div class="toolbar-group">
@@ -1134,7 +1129,7 @@
             </select>
         </div>
 
-        <!-- Botões de Restauração -->
+        <!-- Botões de Restauração e Ações -->
         <div class="toolbar-group">
             <button class="icon-btn" id="restorePhotoBtn" style="display:none;" onclick="restorePhoto()" title="Adicionar / Restaurar Foto">
                 <i class="fa-solid fa-camera"></i> + Foto
@@ -1163,7 +1158,7 @@
     <!-- Input invisível para carregar arquivo JSON -->
     <input type="file" id="importJsonInput" accept=".json" style="display: none;">
 
-    <!-- RODAPÉ DO DESENVOLVEDOR (EXCLUSIVO WEB) -->
+    <!-- RODAPÉ DO DESENVOLVEDOR -->
     <footer class="dev-footer">
         <span>Designed &amp; Developed by <strong>Ronei Costa Soares</strong></span>
         <span class="sep">•</span>
@@ -1178,9 +1173,7 @@
     <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
     <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
 
-    <!-- ======================================================= -->
-    <!-- CONTÊINER DINÂMICO DE PÁGINAS DO CURRÍCULO              -->
-    <!-- ======================================================= -->
+    <!-- CONTÊINER DINÂMICO DE PÁGINAS DO CURRÍCULO -->
     <div id="cvWrapper">
 
         <!-- PÁGINA 1 INICIAL -->
@@ -1195,7 +1188,7 @@
                     <div class="profile-overlay">
                         <span style="font-size: 10px; font-weight: 700;">Foto de Perfil</span>
                         <div class="profile-overlay-btns">
-                            <button class="profile-btn-icon" title="Carregar do Computador" onclick="document.getElementById('photoFileInput').click()">
+                            <button class="profile-btn-icon" title="Carregar do Computador (Comprimida)" onclick="document.getElementById('photoFileInput').click()">
                                 <i class="fa-solid fa-upload"></i>
                             </button>
                             <button class="profile-btn-icon" title="Colar Link da Web" onclick="promptPhotoUrl()">
@@ -1272,7 +1265,7 @@
                 <!-- Logo Geométrico Integrado -->
                 <div class="geo-logo-box">
                     <div class="geo-logo-tools">
-                        <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
+                        <label title="Carregar do PC (Comprimido)" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
                         <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
                         <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
                         <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
@@ -1332,17 +1325,73 @@
 
     <script>
         // =======================================================
-        // 1. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
+        // 1. MOTOR DE COMPRESSÃO DE IMAGENS VIA CANVAS
         // =======================================================
-        const STORAGE_KEY_HTML = 'curriculo_clean_html_v10';
-        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v10';
-        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v10';
-        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v10';
-        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v10';
-        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v10';
-        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v10';
-        const STORAGE_KEY_PHOTO_URL = 'curriculo_clean_photourl_v10';
-        const STORAGE_KEY_LOGO_URL = 'curriculo_clean_logourl_v10';
+        /**
+         * Redimensiona e comprime uma imagem para reduzir de megabytes para míseros kilobytes,
+         * permitindo salvar no localStorage com segurança absoluta.
+         */
+        async function compressImageFile(file, options = {}) {
+            const {
+                maxWidth = 400,
+                maxHeight = 400,
+                quality = 0.82,
+                format = 'image/jpeg'
+            } = options;
+
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        let { width, height } = img;
+
+                        // Cálculo proporcional das novas dimensões
+                        if (width > maxWidth || height > maxHeight) {
+                            const ratio = Math.min(maxWidth / width, maxHeight / height);
+                            width = Math.round(width * ratio);
+                            height = Math.round(height * ratio);
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+
+                        // Preenche fundo branco se for JPEG para evitar transparência preta
+                        if (format === 'image/jpeg') {
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0, 0, width, height);
+                        }
+
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Exporta em Base64 ultraleve
+                        const compressedBase64 = canvas.toDataURL(format, quality);
+                        resolve(compressedBase64);
+                    };
+                    img.onerror = reject;
+                };
+                reader.onerror = reject;
+            });
+        }
+
+        // =======================================================
+        // 2. GERENCIAMENTO DE SALVAMENTO AUTOMÁTICO (localStorage)
+        // =======================================================
+        const STORAGE_KEY_HTML = 'curriculo_clean_html_v12';
+        const STORAGE_KEY_THEME = 'curriculo_clean_theme_v12';
+        const STORAGE_KEY_FONT_FAMILY = 'curriculo_clean_font_family_v12';
+        const STORAGE_KEY_FONT_SCALE = 'curriculo_clean_font_scale_v12';
+        const STORAGE_KEY_NOLOGO = 'curriculo_clean_nologo_v12';
+        const STORAGE_KEY_NOPHOTO = 'curriculo_clean_nophoto_v12';
+        const STORAGE_KEY_LOGO_INVERT = 'curriculo_clean_logoinvert_v12';
+        const STORAGE_KEY_PHOTO_URL = 'curriculo_clean_photourl_v12';
+        const STORAGE_KEY_LOGO_URL = 'curriculo_clean_logourl_v12';
 
         let saveTimeout = null;
         function triggerAutoSave() {
@@ -1350,14 +1399,18 @@
             saveTimeout = setTimeout(() => {
                 const cvWrapper = document.getElementById('cvWrapper');
                 if (cvWrapper) {
-                    localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
+                    try {
+                        localStorage.setItem(STORAGE_KEY_HTML, cvWrapper.innerHTML);
+                    } catch (e) {
+                        console.warn('Erro ao salvar no localStorage:', e);
+                    }
                 }
                 updateEmptyStates();
             }, 300);
         }
 
         // =======================================================
-        // 2. TEMAS, FONTES E TAMANHO (A- / A+)
+        // 3. TEMAS, FONTES E TAMANHO
         // =======================================================
         function applyTheme(themeClass) {
             document.body.classList.remove('theme-graphite', 'theme-emerald', 'theme-burgundy', 'theme-indigo');
@@ -1382,7 +1435,7 @@
         }
 
         // =======================================================
-        // 3. EXPORTAR E IMPORTAR JSON
+        // 4. EXPORTAR E IMPORTAR JSON
         // =======================================================
         function exportJSON() {
             const candidateNameEl = document.getElementById('candidateName');
@@ -1391,12 +1444,12 @@
 
             const profileImg = document.getElementById('profileImg');
             const logoImg = document.querySelector('.logo-img');
-            const photoUrl = (profileImg && profileImg.style.display !== 'none') ? profileImg.getAttribute('src') || profileImg.src : '';
-            const logoUrl = (logoImg && logoImg.style.display !== 'none') ? logoImg.getAttribute('src') || logoImg.src : '';
+            const photoUrl = (profileImg && profileImg.style.display !== 'none') ? (profileImg.getAttribute('src') || profileImg.src) : '';
+            const logoUrl = (logoImg && logoImg.style.display !== 'none') ? (logoImg.getAttribute('src') || logoImg.src) : '';
 
             const data = {
                 app: 'ResumeBuilder',
-                version: '10.0',
+                version: '12.0',
                 author: 'Ronei Costa Soares',
                 theme: localStorage.getItem(STORAGE_KEY_THEME) || '',
                 fontFamily: localStorage.getItem(STORAGE_KEY_FONT_FAMILY) || 'font-inter',
@@ -1497,10 +1550,10 @@
         });
 
         // =======================================================
-        // 4. RESETAR CURRÍCULO
+        // 5. RESETAR CURRÍCULO
         // =======================================================
         function resetAllData() {
-            if (confirm('Deseja realmente resetar o currículo para o modelo limpo inicial? Todas as suas alterações salvas serão perdidas.')) {
+            if (confirm('Deseja realmente resetar o currículo para o modelo inicial?')) {
                 localStorage.removeItem(STORAGE_KEY_HTML);
                 localStorage.removeItem(STORAGE_KEY_THEME);
                 localStorage.removeItem(STORAGE_KEY_FONT_FAMILY);
@@ -1515,7 +1568,7 @@
         }
 
         // =======================================================
-        // 5. ESTADOS VAZIOS
+        // 6. ESTADOS VAZIOS
         // =======================================================
         function updateEmptyStates() {
             document.querySelectorAll('.section-block').forEach(sec => {
@@ -1540,7 +1593,7 @@
         }
 
         // =======================================================
-        // 6. MOTOR DE PAGINAÇÃO AUTOMÁTICA
+        // 7. MOTOR DE PAGINAÇÃO AUTOMÁTICA SEGURO
         // =======================================================
         let paginationTimer = null;
         function schedulePagination() {
@@ -1557,8 +1610,10 @@
             for (let i = 0; i < pages.length; i++) {
                 let currentPage = pages[i];
                 let mainCol = currentPage.querySelector('.main');
+                let loopSafety = 0;
 
-                while (currentPage.scrollHeight > currentPage.clientHeight + 4) {
+                while (currentPage.scrollHeight > currentPage.clientHeight + 4 && loopSafety < 30) {
+                    loopSafety++;
                     let nextPage = pages[i + 1];
 
                     if (!nextPage) {
@@ -1582,9 +1637,9 @@
                             let titleText = itemType === 'exp' ? 'EXPERIÊNCIA PROFISSIONAL (CONT.)' :
                                 (itemType === 'edu' ? 'FORMAÇÃO' : 'CERTIFICAÇÕES');
                             secBlock.innerHTML = `
-                    <div class="section-title" contenteditable="true">${titleText}</div>
-                    <div class="items-list ${itemType}-target"></div>
-                  `;
+                                    <div class="section-title" contenteditable="true">${titleText}</div>
+                                    <div class="items-list ${itemType}-target"></div>
+                                `;
                             nextMain.appendChild(secBlock);
                             targetContainer = secBlock.querySelector(`.${itemType}-target`);
                         }
@@ -1617,31 +1672,31 @@
             const savedLogoUrl = localStorage.getItem(STORAGE_KEY_LOGO_URL) || '';
 
             newPage.innerHTML = `
-            <div class="sidebar">
-              <div style="height: 40px;"></div>
-            </div>
-            <div class="main">
-              <div class="geo-logo-box">
-                <div class="geo-logo-tools">
-                  <label title="Carregar do PC" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
-                  <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
-                  <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
-                  <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
-                </div>
-                <div class="logo-text-wrap" style="${savedLogoUrl ? 'display:none;' : ''}">
-                  <div class="logo-title" contenteditable="true" data-placeholder="SUA EMPRESA"></div>
-                  <div class="logo-sub" contenteditable="true" data-placeholder="CONSULTORIA & INOVAÇÃO"></div>
-                </div>
-                <img class="logo-img ${isLogoInvert ? 'inverted-logo' : ''}" src="${savedLogoUrl}" style="${savedLogoUrl ? 'display:block;' : 'display:none;'}" alt="Logo">
-              </div>
-              <div style="height: 48px;"></div>
-            </div>
-          `;
+                    <div class="sidebar">
+                        <div style="height: 40px;"></div>
+                    </div>
+                    <div class="main">
+                        <div class="geo-logo-box">
+                            <div class="geo-logo-tools">
+                                <label title="Carregar do PC (Comprimido)" onclick="document.getElementById('logoFileInput').click()"><i class="fa-solid fa-upload"></i></label>
+                                <button title="Colar Link da Web" onclick="promptLogoUrl()"><i class="fa-solid fa-link"></i></button>
+                                <button title="Inverter cores da imagem" onclick="toggleLogoInvert()"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                                <button title="Remover logo" class="btn-del-logo" onclick="removeLogos()"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <div class="logo-text-wrap" style="${savedLogoUrl ? 'display:none;' : ''}">
+                                <div class="logo-title" contenteditable="true" data-placeholder="SUA EMPRESA"></div>
+                                <div class="logo-sub" contenteditable="true" data-placeholder="CONSULTORIA & INOVAÇÃO"></div>
+                            </div>
+                            <img class="logo-img ${isLogoInvert ? 'inverted-logo' : ''}" src="${savedLogoUrl}" style="${savedLogoUrl ? 'display:block;' : 'display:none;'}" alt="Logo">
+                        </div>
+                        <div style="height: 48px;"></div>
+                    </div>
+                `;
             return newPage;
         }
 
         // =======================================================
-        // 7. ADICIONAR E EXCLUIR ITENS COM LINHA SÓLIDA
+        // 8. ADICIONAR E EXCLUIR ITENS
         // =======================================================
         function deleteItem(btn) {
             const item = btn.closest('.timeline-item, .grid-row, .soft-skill-tag');
@@ -1652,7 +1707,6 @@
             }
         }
 
-        // Adicionar Experiência
         function addNewExperience() {
             const container = document.getElementById('expContainer');
             if (!container) return;
@@ -1660,26 +1714,25 @@
             const newItem = document.createElement('div');
             newItem.className = 'timeline-item';
             newItem.innerHTML = `
-            <button class="del-btn" title="Excluir experiência" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
-            <div class="timeline-left">
-              <div class="company-name" contenteditable="true" data-placeholder="NOME DA EMPRESA"></div>
-              <div class="job-meta" contenteditable="true" data-placeholder="Cidade - UF | Mês Ano - Atual"></div>
-              <div class="job-techs" contenteditable="true" data-placeholder="Competências e ferramentas aplicadas"></div>
-            </div>
-            <div class="timeline-right">
-              <div class="job-role" contenteditable="true" data-placeholder="Seu Cargo / Função"></div>
-              <ul class="job-bullets">
-                <li contenteditable="true" data-placeholder="Descreva suas realizações, projetos ou entregas..."></li>
-              </ul>
-            </div>
-          `;
+                    <button class="del-btn" title="Excluir experiência" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="timeline-left">
+                        <div class="company-name" contenteditable="true" data-placeholder="NOME DA EMPRESA"></div>
+                        <div class="job-meta" contenteditable="true" data-placeholder="Cidade - UF | Mês Ano - Atual"></div>
+                        <div class="job-techs" contenteditable="true" data-placeholder="Competências e ferramentas aplicadas"></div>
+                    </div>
+                    <div class="timeline-right">
+                        <div class="job-role" contenteditable="true" data-placeholder="Seu Cargo / Função"></div>
+                        <ul class="job-bullets">
+                            <li contenteditable="true" data-placeholder="Descreva suas realizações, projetos ou entregas..."></li>
+                        </ul>
+                    </div>
+                `;
             container.appendChild(newItem);
             newItem.querySelector('.company-name').focus();
             updateEmptyStates();
             schedulePagination();
         }
 
-        // Adicionar Formação
         function addNewEducation() {
             const container = document.getElementById('eduContainer');
             if (!container) return;
@@ -1687,23 +1740,22 @@
             const newItem = document.createElement('div');
             newItem.className = 'grid-row';
             newItem.innerHTML = `
-            <button class="del-btn" title="Excluir formação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
-            <div class="grid-left">
-              <div class="inst-title" contenteditable="true" data-placeholder="INSTITUIÇÃO"></div>
-              <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
-            </div>
-            <div class="grid-right">
-              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome do Curso ou Graduação"></a>
-              <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-            </div>
-          `;
+                    <button class="del-btn" title="Excluir formação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="grid-left">
+                        <div class="inst-title" contenteditable="true" data-placeholder="INSTITUIÇÃO"></div>
+                        <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
+                    </div>
+                    <div class="grid-right">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome do Curso ou Graduação"></a>
+                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+                    </div>
+                `;
             container.appendChild(newItem);
             newItem.querySelector('.inst-title').focus();
             updateEmptyStates();
             schedulePagination();
         }
 
-        // Adicionar Certificação
         function addNewCertification() {
             const container = document.getElementById('certContainer');
             if (!container) return;
@@ -1711,23 +1763,22 @@
             const newItem = document.createElement('div');
             newItem.className = 'grid-row';
             newItem.innerHTML = `
-            <button class="del-btn" title="Excluir certificação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
-            <div class="grid-left">
-              <div class="inst-title" contenteditable="true" data-placeholder="EMISSOR"></div>
-              <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
-            </div>
-            <div class="grid-right">
-              <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome da Certificação"></a>
-              <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
-            </div>
-          `;
+                    <button class="del-btn" title="Excluir certificação" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="grid-left">
+                        <div class="inst-title" contenteditable="true" data-placeholder="EMISSOR"></div>
+                        <div class="inst-year" contenteditable="true" data-placeholder="Ano"></div>
+                    </div>
+                    <div class="grid-right">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-link smart-link" contenteditable="true" data-placeholder="Nome da Certificação"></a>
+                        <button class="cert-link-btn" title="Inserir / Editar Link" onclick="editCertLink(this)"><i class="fa-solid fa-link"></i></button>
+                    </div>
+                `;
             container.appendChild(newItem);
             newItem.querySelector('.inst-title').focus();
             updateEmptyStates();
             schedulePagination();
         }
 
-        // Adicionar Soft Skill
         function addSoftSkill() {
             const container = document.getElementById('softSkillsContainer');
             if (!container) return;
@@ -1735,9 +1786,9 @@
             const newTag = document.createElement('div');
             newTag.className = 'soft-skill-tag';
             newTag.innerHTML = `
-            <span contenteditable="true" data-placeholder="Nova Habilidade"></span>
-            <button class="soft-del-btn" title="Excluir" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
-          `;
+                    <span contenteditable="true" data-placeholder="Nova Habilidade"></span>
+                    <button class="soft-del-btn" title="Excluir" onclick="deleteItem(this)"><i class="fa-solid fa-xmark"></i></button>
+                `;
             container.appendChild(newTag);
             newTag.querySelector('span').focus();
             updateEmptyStates();
@@ -1745,7 +1796,7 @@
         }
 
         // =======================================================
-        // 8. INICIALIZAÇÃO DE EVENTOS E LINKS
+        // 9. EVENTOS INTERATIVOS E LINKS INTELIGENTES
         // =======================================================
         function initInteractiveEvents() {
             const candidateNameEl = document.getElementById('candidateName');
@@ -1761,7 +1812,6 @@
                 syncDocumentTitle();
             }
 
-            // Links Inteligentes
             const linkAddress = document.getElementById('linkAddress');
             const linkPhone = document.getElementById('linkPhone');
             const linkEmail = document.getElementById('linkEmail');
@@ -1798,35 +1848,81 @@
                 });
             });
 
-            // Upload de Foto via Arquivo Local
+            // UPLOAD COM COMPRESSÃO AUTOMÁTICA DE FOTO
             const photoFileInput = document.getElementById('photoFileInput');
             const profileImg = document.getElementById('profileImg');
             const profileAvatar = document.getElementById('profileAvatar');
 
             if (photoFileInput && profileImg) {
-                photoFileInput.onchange = (e) => {
+                photoFileInput.onchange = async (e) => {
                     const file = e.target.files[0];
                     if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (evt) => {
-                            const res = evt.target.result;
-                            profileImg.src = res;
-                            profileImg.setAttribute('src', res);
+                        try {
+                            // Comprime a foto para max 320x320px JPEG a 82% (pesa ~20KB)
+                            const compressedBase64 = await compressImageFile(file, {
+                                maxWidth: 320,
+                                maxHeight: 320,
+                                quality: 0.82,
+                                format: 'image/jpeg'
+                            });
+
+                            profileImg.src = compressedBase64;
+                            profileImg.setAttribute('src', compressedBase64);
                             profileImg.style.display = 'block';
                             if (profileAvatar) profileAvatar.style.display = 'none';
-                            localStorage.setItem(STORAGE_KEY_PHOTO_URL, res);
+
+                            localStorage.setItem(STORAGE_KEY_PHOTO_URL, compressedBase64);
                             restorePhoto();
                             triggerAutoSave();
-                        };
-                        reader.readAsDataURL(file);
+                        } catch (err) {
+                            console.error('Falha na compressão da foto:', err);
+                            alert('Erro ao processar imagem.');
+                        }
                     }
+                    e.target.value = '';
                 };
             }
 
-            // Barras de Hard Skills
+            // UPLOAD COM COMPRESSÃO AUTOMÁTICA DE LOGO
+            const logoFileInput = document.getElementById('logoFileInput');
+            if (logoFileInput) {
+                logoFileInput.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        try {
+                            const isPng = file.type === 'image/png' || file.type === 'image/svg+xml';
+                            const format = isPng ? 'image/png' : 'image/jpeg';
+
+                            // Comprime o logo para max 400x120px preservando transparência
+                            const compressedBase64 = await compressImageFile(file, {
+                                maxWidth: 400,
+                                maxHeight: 120,
+                                quality: 0.85,
+                                format: format
+                            });
+
+                            document.querySelectorAll('.logo-img').forEach(img => {
+                                img.src = compressedBase64;
+                                img.setAttribute('src', compressedBase64);
+                                img.style.display = 'block';
+                            });
+                            document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+
+                            localStorage.setItem(STORAGE_KEY_LOGO_URL, compressedBase64);
+                            restoreLogos();
+                            triggerAutoSave();
+                        } catch (err) {
+                            console.error('Falha na compressão do logo:', err);
+                            alert('Erro ao processar logo.');
+                        }
+                    }
+                    e.target.value = '';
+                };
+            }
+
+            // Hard skills
             document.querySelectorAll('.skill-item').forEach(setupSkillItem);
 
-            // Botão Adicionar Hard Skill
             const addSkillBtn = document.getElementById('addSkillBtn');
             const skillsContainer = document.getElementById('skillsContainer');
             if (addSkillBtn && skillsContainer) {
@@ -1834,14 +1930,14 @@
                     const newItem = document.createElement('div');
                     newItem.className = 'skill-item';
                     newItem.innerHTML = `
-                <div class="skill-header">
-                  <span class="skill-name" contenteditable="true" data-placeholder="Nome da Hard Skill"></span>
-                  <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="progress-bar-container" title="Clique ou arraste para ajustar">
-                  <div class="progress-fill" style="width: 75%;"></div>
-                </div>
-              `;
+                            <div class="skill-header">
+                                <span class="skill-name" contenteditable="true" data-placeholder="Nome da Hard Skill"></span>
+                                <button class="skill-del-btn" title="Excluir"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <div class="progress-bar-container" title="Clique ou arraste para ajustar">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                        `;
                     skillsContainer.appendChild(newItem);
                     setupSkillItem(newItem);
                     newItem.querySelector('.skill-name').focus();
@@ -1850,25 +1946,21 @@
                 };
             }
 
-            // Limpeza de texto vazio para garantir que o placeholder reapareça
+            // Placeholders
             document.addEventListener('input', (e) => {
                 const el = e.target;
                 if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
-                    if (el.innerText.trim() === '') {
-                        el.innerHTML = '';
-                    }
-                }
-            });
-            document.addEventListener('focusout', (e) => {
-                const el = e.target;
-                if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
-                    if (el.innerText.trim() === '') {
-                        el.innerHTML = '';
-                    }
+                    if (el.innerText.trim() === '') el.innerHTML = '';
                 }
             });
 
-            // Captura global de edição
+            document.addEventListener('focusout', (e) => {
+                const el = e.target;
+                if (el.isContentEditable && el.hasAttribute('data-placeholder')) {
+                    if (el.innerText.trim() === '') el.innerHTML = '';
+                }
+            });
+
             const cvWrapper = document.getElementById('cvWrapper');
             if (cvWrapper) {
                 cvWrapper.addEventListener('input', () => {
@@ -1879,10 +1971,10 @@
         }
 
         // =======================================================
-        // 9. FOTO E LOGO (UPLOAD / URL / REMOÇÃO / INVERSÃO)
+        // 10. GESTÃO DE FOTO E LOGO
         // =======================================================
         function promptPhotoUrl() {
-            const url = prompt('Cole o link da foto de perfil da internet:');
+            const url = prompt('Cole o link web da foto de perfil:');
             if (url && url.trim()) {
                 const clean = url.trim();
                 const profileImg = document.getElementById('profileImg');
@@ -1891,6 +1983,7 @@
                 profileImg.setAttribute('src', clean);
                 profileImg.style.display = 'block';
                 if (profileAvatar) profileAvatar.style.display = 'none';
+
                 localStorage.setItem(STORAGE_KEY_PHOTO_URL, clean);
                 restorePhoto();
                 triggerAutoSave();
@@ -1912,7 +2005,7 @@
         }
 
         function promptLogoUrl() {
-            const url = prompt('Cole o link da imagem do logo:');
+            const url = prompt('Cole o link web da imagem do logo:');
             if (url && url.trim()) {
                 const clean = url.trim();
                 document.querySelectorAll('.logo-img').forEach(img => {
@@ -1921,33 +2014,11 @@
                     img.style.display = 'block';
                 });
                 document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
+
                 localStorage.setItem(STORAGE_KEY_LOGO_URL, clean);
                 restoreLogos();
                 triggerAutoSave();
             }
-        }
-
-        const logoFileInput = document.getElementById('logoFileInput');
-        if (logoFileInput) {
-            logoFileInput.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (evt) => {
-                        const res = evt.target.result;
-                        document.querySelectorAll('.logo-img').forEach(img => {
-                            img.src = res;
-                            img.setAttribute('src', res);
-                            img.style.display = 'block';
-                        });
-                        document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
-                        localStorage.setItem(STORAGE_KEY_LOGO_URL, res);
-                        restoreLogos();
-                        triggerAutoSave();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
         }
 
         function toggleLogoInvert() {
@@ -1971,28 +2042,31 @@
         }
 
         // =======================================================
-        // 10. BARRAS DE PROGRESSO (HARD SKILLS)
+        // 11. BARRAS DE PROGRESSO (SEM MEMORY LEAK)
         // =======================================================
         function setupProgressBar(container) {
-            let isDragging = false;
             function updateFill(e) {
                 const rect = container.getBoundingClientRect();
                 let percent = Math.round(((e.clientX - rect.left) / rect.width) * 100);
                 percent = Math.max(0, Math.min(100, percent));
-                container.querySelector('.progress-fill').style.width = percent + '%';
+                const fill = container.querySelector('.progress-fill');
+                if (fill) fill.style.width = percent + '%';
                 triggerAutoSave();
             }
 
             container.onmousedown = (e) => {
-                isDragging = true;
+                e.preventDefault();
                 updateFill(e);
+
+                const onMouseMove = (moveEvent) => updateFill(moveEvent);
+                const onMouseUp = () => {
+                    window.removeEventListener('mousemove', onMouseMove);
+                    window.removeEventListener('mouseup', onMouseUp);
+                };
+
+                window.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('mouseup', onMouseUp);
             };
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) updateFill(e);
-            });
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
         }
 
         function setupSkillItem(item) {
@@ -2011,7 +2085,7 @@
         }
 
         // =======================================================
-        // 11. LINKS DE CERTIFICADOS
+        // 12. LINKS DE CERTIFICADOS
         // =======================================================
         function editCertLink(btn) {
             const linkEl = btn.parentElement.querySelector('.cert-link');
@@ -2030,14 +2104,12 @@
         }
 
         // =======================================================
-        // 12. INICIALIZAÇÃO GERAL E RESTAURAÇÃO DE IMAGENS
+        // 13. INICIALIZAÇÃO E RESTAURAÇÃO
         // =======================================================
         window.addEventListener('DOMContentLoaded', () => {
-            // 1. Restaura tema
             const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
             if (savedTheme) applyTheme(savedTheme);
 
-            // 2. Restaura fonte
             const savedFont = localStorage.getItem(STORAGE_KEY_FONT_FAMILY);
             if (savedFont) {
                 changeFontFamily(savedFont);
@@ -2045,37 +2117,32 @@
                 if (fontSelect) fontSelect.value = savedFont;
             }
 
-            // 3. Restaura escala de tamanho de fonte
             const savedScale = localStorage.getItem(STORAGE_KEY_FONT_SCALE);
             if (savedScale) {
                 currentFontScale = parseFloat(savedScale);
                 document.documentElement.style.setProperty('--font-scale', currentFontScale);
             }
 
-            // 4. Restaura estado do logo
             if (localStorage.getItem(STORAGE_KEY_NOLOGO) === 'true') {
                 document.body.classList.add('no-logo');
                 document.getElementById('restoreLogoBtn').style.display = 'flex';
             }
 
-            // 5. Restaura estado da foto
             if (localStorage.getItem(STORAGE_KEY_NOPHOTO) === 'true') {
                 document.body.classList.add('no-photo');
                 document.getElementById('restorePhotoBtn').style.display = 'flex';
             }
 
-            // 6. Restaura inversão do logo
             if (localStorage.getItem(STORAGE_KEY_LOGO_INVERT) === 'true') {
                 document.querySelectorAll('.logo-img').forEach(img => img.classList.add('inverted-logo'));
             }
 
-            // 7. Restaura conteúdo salvo
             const savedHtml = localStorage.getItem(STORAGE_KEY_HTML);
             if (savedHtml) {
                 document.getElementById('cvWrapper').innerHTML = savedHtml;
             }
 
-            // 8. Garante a restauração da foto se houver URL salva
+            // Restaura foto persistida (agora com tamanho seguro)
             const savedPhotoUrl = localStorage.getItem(STORAGE_KEY_PHOTO_URL);
             if (savedPhotoUrl) {
                 const pImg = document.getElementById('profileImg');
@@ -2088,7 +2155,7 @@
                 if (pAvatar) pAvatar.style.display = 'none';
             }
 
-            // 9. Garante a restauração do logo se houver URL salva
+            // Restaura logo persistido
             const savedLogoUrl = localStorage.getItem(STORAGE_KEY_LOGO_URL);
             if (savedLogoUrl) {
                 document.querySelectorAll('.logo-img').forEach(img => {
@@ -2099,7 +2166,6 @@
                 document.querySelectorAll('.logo-text-wrap').forEach(t => t.style.display = 'none');
             }
 
-            // 10. Ativa eventos, monitora estados e paginação
             initInteractiveEvents();
             updateEmptyStates();
             schedulePagination();
