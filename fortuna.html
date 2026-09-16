@@ -660,7 +660,7 @@
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     this.ctx = new AudioContext();
                     this.masterMusicGain = this.ctx.createGain();
-                    this.masterMusicGain.gain.value = 0.05; // Volume confortável para música de fundo
+                    this.masterMusicGain.gain.value = 1.0; // Volume confortável para música de fundo
                     this.masterMusicGain.connect(this.ctx.destination);
                     this.startBGM();
                 }
