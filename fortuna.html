@@ -864,7 +864,23 @@
         const sound = new SoundEngine();
 
         // Iniciar áudio no primeiro clique do usuário em qualquer lugar da tela
-        window.addEventListener('click', () => sound.init(), { once: true });
+        // 1. Tenta iniciar a música imediatamente ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            sound.init();
+        });
+
+        // 2. Destrava instantaneamente no primeiro toque, clique ou tecla
+        // caso o navegador tenha colocado o áudio em espera
+        const unlockAudio = () => {
+            sound.init();
+            ['click', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+                window.removeEventListener(evt, unlockAudio);
+            });
+        };
+
+        ['click', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+            window.addEventListener(evt, unlockAudio);
+        });
 
         // Controles de Música e Efeitos
         const toggleMusicBtn = document.getElementById('toggleMusicBtn');
